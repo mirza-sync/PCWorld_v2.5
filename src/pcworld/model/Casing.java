@@ -20,13 +20,15 @@ public class Casing extends Components {
 		this.height = height;
 		this.color = color;
 	}
+	public Casing(int id, String brand, String model, double price, String image, String type, String form, int length, int width, int height, String color) {
+		super(id, brand, model, price, image, type);
+		this.form = form;
+		this.length = length;
+		this.width = width;
+		this.height = height;
+		this.color = color;
+	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getForm() {
 		return form;
 	}

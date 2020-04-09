@@ -16,7 +16,7 @@ public class StorageDAO {
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
 	int id, capacity, r_speed, w_speed;
-	String storage_type, form;
+	String storage_type, form, imageName;
 
 	//new storage
 	public void add(Storage storage){
@@ -109,12 +109,17 @@ public class StorageDAO {
 			
 			while (rs.next()) {
 				Storage storage = new Storage();
-
+				
+				if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
 				storage.setId(rs.getInt("id"));
 				storage.setBrand(rs.getString("brand"));
 				storage.setModel(rs.getString("model"));
 				storage.setPrice(rs.getDouble("price"));
-				storage.setImage(rs.getString("image"));
+				storage.setImage(imageName);
 				storage.setBrand(rs.getString("model"));
 				storage.setType(rs.getString("type"));
 				storage.setStorage_type(rs.getString("storage_type"));
@@ -158,7 +163,7 @@ public class StorageDAO {
 		return storages;
 	}
 	
-	public Storage getstorageById(int id) {
+	public Storage getStorageById(int id) {
 		Storage storage = new Storage();
 		
 		System.out.println("storage id : " + id);
@@ -171,11 +176,16 @@ public class StorageDAO {
             rs = stmt.executeQuery(q);
             
             if (rs.next()) {
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	storage.setId(rs.getInt("id"));
             	storage.setBrand(rs.getString("brand"));
             	storage.setModel(rs.getString("model"));
             	storage.setPrice(rs.getDouble("price"));
-            	storage.setImage(rs.getString("image"));
+            	storage.setImage(imageName);
             	storage.setType(rs.getString("type"));
             	storage.setStorage_type(rs.getString("storage_type"));
             	storage.setCapacity(rs.getInt("capacity"));
@@ -196,7 +206,7 @@ public class StorageDAO {
 	}
 	
 	//delete storage
-	public void deletestorage(int id) {
+	public void deleteStorage(int id) {
 		String q = "delete from storage where id=" + id;
 		
 		try {

@@ -11,7 +11,6 @@ public class Storage extends Components {
 	public Storage() {
 		super();
 	}
-
 	public Storage(int id, String storage_type, int capacity, String form, int read_speed,
 			int write_speed) {
 		super();
@@ -22,13 +21,14 @@ public class Storage extends Components {
 		this.read_speed = read_speed;
 		this.write_speed = write_speed;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public Storage(int id, String brand, String model, double price, String image, String type, String storage_type, int capacity, String form, int read_speed,
+			int write_speed) {
+		super(id, brand, model, price, image, type);
+		this.storage_type = storage_type;
+		this.capacity = capacity;
+		this.form = form;
+		this.read_speed = read_speed;
+		this.write_speed = write_speed;
 	}
 
 	public String getStorage_type() {

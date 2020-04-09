@@ -2,20 +2,22 @@ package pcworld.model;
 
 public class Input {
 	private int budget;
-	private String usage;
+	private String[] usage;
 	private String size;
 	private String style;
+	private String color;
 	//private int speciality;
 	
 	public Input() {
 		super();
 	}
-	public Input(int budget, String usage, String size, String style) {
+	public Input(int budget, String[] usage, String style, String color) {
 		super();
 		this.budget = budget;
 		this.usage = usage;
-		this.size = size;
+		//this.size = size;
 		this.style = style;
+		this.color = color;
 	}
 	
 	public int getBudget() {
@@ -24,10 +26,10 @@ public class Input {
 	public void setBudget(int budget) {
 		this.budget = budget;
 	}
-	public String getUsage() {
+	public String[] getUsage() {
 		return usage;
 	}
-	public void setUsage(String usage) {
+	public void setUsage(String[] usage) {
 		this.usage = usage;
 	}
 	public String getSize() {
@@ -41,5 +43,11 @@ public class Input {
 	}
 	public void setStyle(String style) {
 		this.style = style;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
 	}
 }

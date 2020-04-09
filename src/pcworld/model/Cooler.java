@@ -20,13 +20,15 @@ public class Cooler extends Components {
 		this.height = height;
 		this.color = color;
 	}
+	public Cooler(int id, String brand, String model, double price, String image, String type, String cooler_type, int length, int width, int height, String color) {
+		super(id, brand, model, price, image, type);
+		this.cooler_type = cooler_type;
+		this.length = length;
+		this.width = width;
+		this.height = height;
+		this.color = color;
+	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getCooler_type() {
 		return cooler_type;
 	}

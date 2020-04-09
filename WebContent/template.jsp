@@ -9,5 +9,10 @@
 <title>Template</title>
 </head>
 <body>
+<div class="row">
+	<%@include file="sidebar.jsp"%>
+	<div class="row">
+	</div>
+</div>
 </body>
 </html>

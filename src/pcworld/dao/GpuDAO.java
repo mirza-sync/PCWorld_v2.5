@@ -17,7 +17,7 @@ public class GpuDAO {
 	static java.sql.Statement stmt = null;
 	String event_description;
 	int id, num_vram, length, width, height, clock, watt;
-	String chipset, vram_type, color;
+	String chipset, vram_type, color, imageName;
 
 	//new gpu
 	public void add(GPU gpu){
@@ -116,11 +116,17 @@ public class GpuDAO {
             while(rs.next()) {
             	GPU gpu = new GPU();
             	
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
+            	
             	gpu.setId(rs.getInt("id"));
 				gpu.setBrand(rs.getString("brand"));
 				gpu.setModel(rs.getString("model"));
 				gpu.setPrice(rs.getDouble("price"));
-				gpu.setImage(rs.getString("image"));
+				gpu.setImage(imageName);
 				gpu.setType(rs.getString("type"));
             	gpu.setChipset(rs.getString("chipset"));
             	gpu.setNum_vram(rs.getInt("num_vram"));
@@ -152,11 +158,16 @@ public class GpuDAO {
             rs = stmt.executeQuery(q);
             
             if (rs.next()) {
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	gpu.setId(rs.getInt("id"));
 				gpu.setBrand(rs.getString("brand"));
 				gpu.setModel(rs.getString("model"));
 				gpu.setPrice(rs.getDouble("price"));
-				gpu.setImage(rs.getString("image"));
+				gpu.setImage(imageName);
 				gpu.setType(rs.getString("type"));
             	gpu.setChipset(rs.getString("chipset"));
             	gpu.setNum_vram(rs.getInt("num_vram"));
@@ -181,7 +192,7 @@ public class GpuDAO {
 	}
 	
 	//delete event
-	public void deleteGPU(int id) {
+	public void deleteGpu(int id) {
 		String q = "delete from gpu where id=" + id;
 		
 		try {

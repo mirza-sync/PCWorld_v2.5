@@ -1,14 +1,16 @@
-<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html> --%>
-
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/bootstrap.min.js"></script>
+<style>
+	a{
+		color: purple;
+		text-decoration: none;
+	}
+	a:hover{
+		color: grey;
+		text-decoration: none;
+	}
+	td img{
+		width: 50px;
+		height: 50px;
+	}
+</style>

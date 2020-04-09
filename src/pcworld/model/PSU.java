@@ -18,12 +18,14 @@ public class PSU extends Components {
 		this.efficiency = efficiency;
 		this.color = color;
 	}
-	public int getId() {
-		return id;
+	public PSU(int id, String brand, String model, double price, String image, String type, int wattage, String psu_type, String efficiency, String color) {
+		super(id, brand, model, price, image, type);
+		this.wattage = wattage;
+		this.psu_type = psu_type;
+		this.efficiency = efficiency;
+		this.color = color;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public int getWattage() {
 		return wattage;
 	}

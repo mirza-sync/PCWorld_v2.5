@@ -15,8 +15,8 @@ public class RamDAO {
 	static ResultSet rs = null;
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
-	int id, capacity, speed;
-	String ram_type;
+	int id, capacity, speed, module;
+	String ram_type, color, imageName;
 
 	//new ram
 	public void add(RAM ram){
@@ -25,16 +25,20 @@ public class RamDAO {
 		capacity = ram.getCapacity();
 		ram_type = ram.getRam_type();
 		speed = ram.getSpeed();
+		module = ram.getModule();
+		color = ram.getColor();
 		
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
            						
-			ps=currentCon.prepareStatement("insert into ram (id, capacity, ram_type, speed) values (?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into ram (id, capacity, ram_type, speed, module, color) values (?,?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setInt(2, capacity);
 			ps.setString(3, ram_type);
 			ps.setInt(4, speed);
+			ps.setInt(5, module);
+			ps.setString(6, color);
 			ps.executeUpdate();
 			
 			ps.close();
@@ -72,8 +76,10 @@ public class RamDAO {
 		capacity = ram.getCapacity();
 		ram_type = ram.getRam_type();
 		speed = ram.getSpeed();
+		module = ram.getModule();
+		color = ram.getColor();
 		
-		String q = "UPDATE ram SET capacity = '"+capacity+"', ram_type = '"+ram_type+"', speed = '"+speed+"' WHERE id = '"+id+"'";
+		String q = "UPDATE ram SET capacity = '"+capacity+"', ram_type = '"+ram_type+"', speed = '"+speed+"', module = '"+module+"', color = '"+color+"' WHERE id = '"+id+"'";
 		
 		System.out.println("Update query : "+q);
 		
@@ -103,16 +109,23 @@ public class RamDAO {
 			
 			while (rs.next()) {
 				RAM ram = new RAM();
-
+				
+				if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
 				ram.setId(rs.getInt("id"));
 				ram.setBrand(rs.getString("brand"));
 				ram.setModel(rs.getString("model"));
 				ram.setPrice(rs.getDouble("price"));
-				ram.setImage(rs.getString("image"));
+				ram.setImage(imageName);
 				ram.setType(rs.getString("type"));
             	ram.setCapacity(rs.getInt("capacity"));
             	ram.setRam_type(rs.getString("ram_type"));
             	ram.setSpeed(rs.getInt("speed"));
+            	ram.setModule(rs.getInt("module"));
+            	ram.setColor(rs.getString("color"));
             	
 				rams.add(ram);
 			}
@@ -164,15 +177,22 @@ public class RamDAO {
             System.out.println("ram!");
             
             if (rs.next()) {
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	ram.setId(rs.getInt("id"));
             	ram.setBrand(rs.getString("brand"));
             	ram.setModel(rs.getString("model"));
             	ram.setPrice(rs.getDouble("price"));
-            	ram.setImage(rs.getString("image"));
+            	ram.setImage(imageName);
             	ram.setType(rs.getString("type"));
             	ram.setCapacity(rs.getInt("capacity"));
             	ram.setRam_type(rs.getString("ram_type"));
             	ram.setSpeed(rs.getInt("speed"));
+            	ram.setModule(rs.getInt("module"));
+            	ram.setColor(rs.getString("color"));
            	}
            
             else {

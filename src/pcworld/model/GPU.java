@@ -30,15 +30,21 @@ public class GPU extends Components {
 		this.core_clock = core_clock;
 		this.wattage = wattage;
 	}
-
-	public int getId() {
-		return id;
+	
+	public GPU(int id, String brand, String model, double price, String image, String type, String chipset, int num_vram, String vram_type, int length, int width, int height, String color,
+			int core_clock, int wattage) {
+		super(id, brand, model, price, image, type);
+		this.chipset = chipset;
+		this.num_vram = num_vram;
+		this.vram_type = vram_type;
+		this.length = length;
+		this.width = width;
+		this.height = height;
+		this.color = color;
+		this.core_clock = core_clock;
+		this.wattage = wattage;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public String getChipset() {
 		return chipset;
 	}

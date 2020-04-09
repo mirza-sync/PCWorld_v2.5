@@ -10,12 +10,13 @@ public class Motherboard extends Components {
 	public String memory_type;
 	public int memory_slot;
 	public int max_memory;
+	public String color;
 	
 	public Motherboard() {
 		super();
 	}
 	public Motherboard(int id, String formfactor, int length, int width, int height, String socket, String memory_type, int memory_slot,
-			int max_memory) {
+			int max_memory, String color) {
 		super();
 		this.id = id;
 		this.formfactor = formfactor;
@@ -26,13 +27,22 @@ public class Motherboard extends Components {
 		this.memory_type = memory_type;
 		this.memory_slot = memory_slot;
 		this.max_memory = max_memory;
+		this.color = color;
 	}
-	public int getId() {
-		return id;
+	public Motherboard(int id, String brand, String model, double price, String image, String type, String formfactor, int length, int width, int height, String socket, String memory_type, int memory_slot,
+			int max_memory, String color) {
+		super(id, brand, model, price, image, type);
+		this.formfactor = formfactor;
+		this.length = length;
+		this.width = width;
+		this.height = height;
+		this.socket = socket;
+		this.memory_type = memory_type;
+		this.memory_slot = memory_slot;
+		this.max_memory = max_memory;
+		this.color = color;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public String getFormfactor() {
 		return formfactor;
 	}
@@ -80,5 +90,11 @@ public class Motherboard extends Components {
 	}
 	public void setMax_memory(int max_memory) {
 		this.max_memory = max_memory;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
 	}
 }

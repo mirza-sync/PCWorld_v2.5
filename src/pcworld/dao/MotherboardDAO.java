@@ -17,7 +17,7 @@ public class MotherboardDAO {
 	static java.sql.Statement stmt = null;
 	String event_description;
 	int id, length, width, height, mem_slot, max_mem;
-	String form, socket, mem_type, color;
+	String form, socket, mem_type, color, imageName;
 
 	//new mobo
 	public void add(Motherboard mobo){
@@ -31,6 +31,7 @@ public class MotherboardDAO {
 		mem_type = mobo.getMemory_type();
 		mem_slot = mobo.getMemory_slot();
 		max_mem = mobo.getMax_memory();
+		color = mobo.getColor();
 		
 		try {
 			currentCon = ConnectionManager.getConnection();
@@ -43,9 +44,9 @@ public class MotherboardDAO {
 			ps.setInt(4, width);
 			ps.setInt(5, height);
 			ps.setString(6, socket);
-			ps.setString(6, mem_type);
-			ps.setInt(7, mem_slot);
-			ps.setInt(8, max_mem);
+			ps.setString(7, mem_type);
+			ps.setInt(8, mem_slot);
+			ps.setInt(9, max_mem);
 			ps.setString(10, color);
 			ps.executeUpdate();
 			
@@ -87,6 +88,7 @@ public class MotherboardDAO {
 		mem_type = mobo.getMemory_type();
 		mem_slot = mobo.getMemory_slot();
 		max_mem = mobo.getMax_memory();
+		color = mobo.getColor();
 		
 		String q = "UPDATE motherboard SET formfactor='"+form+"', length='"+length+"', width='"+width+"', height='"+height+"', socket='"+socket+"', memory_type='"+mem_type+"', memory_slot='"+mem_slot+"', max_memory='"+max_mem+"', color='"+color+"' WHERE id='"+id+"'";
 
@@ -114,11 +116,16 @@ public class MotherboardDAO {
             while(rs.next()) {
             	Motherboard mobo = new Motherboard();
             	
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	mobo.setId(rs.getInt("id"));
 				mobo.setBrand(rs.getString("brand"));
 				mobo.setModel(rs.getString("model"));
 				mobo.setPrice(rs.getDouble("price"));
-				mobo.setImage(rs.getString("image"));
+				mobo.setImage(imageName);
 				mobo.setType(rs.getString("type"));
 				mobo.setFormfactor(rs.getString("formfactor"));
             	mobo.setLength(rs.getInt("length"));
@@ -128,6 +135,7 @@ public class MotherboardDAO {
             	mobo.setMemory_type(rs.getString("memory_type"));
             	mobo.setMemory_slot(rs.getInt("memory_slot"));
             	mobo.setMax_memory(rs.getInt("max_memory"));
+            	mobo.setColor(rs.getString("color"));
             	
             	mobos.add(mobo);
            	}
@@ -149,11 +157,16 @@ public class MotherboardDAO {
             rs = stmt.executeQuery(q);
             
             if (rs.next()) {
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	mobo.setId(rs.getInt("id"));
 				mobo.setBrand(rs.getString("brand"));
 				mobo.setModel(rs.getString("model"));
 				mobo.setPrice(rs.getDouble("price"));
-				mobo.setImage(rs.getString("image"));
+				mobo.setImage(imageName);
 				mobo.setType(rs.getString("type"));
 				mobo.setFormfactor(rs.getString("formfactor"));
             	mobo.setLength(rs.getInt("length"));
@@ -163,6 +176,7 @@ public class MotherboardDAO {
             	mobo.setMemory_type(rs.getString("memory_type"));
             	mobo.setMemory_slot(rs.getInt("memory_slot"));
             	mobo.setMax_memory(rs.getInt("max_memory"));
+            	mobo.setColor(rs.getString("color"));
            	}
            
             else {
@@ -177,7 +191,7 @@ public class MotherboardDAO {
 	}
 	
 	//delete
-	public void deletemobo(int id) {
+	public void deleteMotherboard(int id) {
 		String q = "delete from motherboard where id=" + id;
 		
 		try {

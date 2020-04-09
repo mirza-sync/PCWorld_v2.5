@@ -17,7 +17,7 @@ public class CasingDAO {
 	static java.sql.Statement stmt = null;
 	String event_description;
 	int id, length, width, height;
-	String form, color;
+	String form, color, imageName;
 
 	//new casing
 	public void add(Casing casing){
@@ -104,13 +104,18 @@ public class CasingDAO {
             while(rs.next()) {
             	Casing casing = new Casing();
             	
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	casing.setId(rs.getInt("id"));
 				casing.setBrand(rs.getString("brand"));
 				casing.setModel(rs.getString("model"));
 				casing.setPrice(rs.getDouble("price"));
-				casing.setImage(rs.getString("image"));
+				casing.setImage(imageName);
 				casing.setType(rs.getString("type"));
-				casing.setForm(rs.getString("form"));
+				casing.setForm(rs.getString("formfactor"));
             	casing.setLength(rs.getInt("length"));
             	casing.setWidth(rs.getInt("width"));
             	casing.setHeight(rs.getInt("height"));
@@ -136,13 +141,18 @@ public class CasingDAO {
             rs = stmt.executeQuery(q);
             
             if (rs.next()) {
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	casing.setId(rs.getInt("id"));
 				casing.setBrand(rs.getString("brand"));
 				casing.setModel(rs.getString("model"));
 				casing.setPrice(rs.getDouble("price"));
-				casing.setImage(rs.getString("image"));
+				casing.setImage(imageName);
 				casing.setType(rs.getString("type"));
-				casing.setForm(rs.getString("form"));
+				casing.setForm(rs.getString("formfactor"));
             	casing.setLength(rs.getInt("length"));
             	casing.setWidth(rs.getInt("width"));
             	casing.setHeight(rs.getInt("height"));
@@ -165,7 +175,6 @@ public class CasingDAO {
 		String q = "delete from casing where id=" + id;
 		
 		try {
-	
 	        currentCon = ConnectionManager.getConnection();
 	        stmt = currentCon.createStatement();
 	        stmt.executeUpdate(q);

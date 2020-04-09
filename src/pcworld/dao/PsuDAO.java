@@ -17,7 +17,7 @@ public class PsuDAO {
 	static java.sql.Statement stmt = null;
 	String event_description;
 	int id, watt;
-	String psu_type, eff, color;
+	String psu_type, eff, color, imageName;
 
 	//new psu
 	public void add(PSU psu){
@@ -32,7 +32,7 @@ public class PsuDAO {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			
-			ps=currentCon.prepareStatement("insert into psu (id, wattage, psu_type, efficiency, color) values (?,?,?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into psu (id, wattage, psu_type, efficiency, color) values (?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setInt(2, watt);
 			ps.setString(3, psu_type);
@@ -101,11 +101,16 @@ public class PsuDAO {
             while(rs.next()) {
             	PSU psu = new PSU();
             	
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	psu.setId(rs.getInt("id"));
 				psu.setBrand(rs.getString("brand"));
 				psu.setModel(rs.getString("model"));
 				psu.setPrice(rs.getDouble("price"));
-				psu.setImage(rs.getString("image"));
+				psu.setImage(imageName);
 				psu.setType(rs.getString("type"));
 				psu.setWattage(rs.getInt("wattage"));
 				psu.setPsu_type(rs.getString("psu_type"));
@@ -124,7 +129,7 @@ public class PsuDAO {
 	public PSU getPsuById(int id) {
 		PSU psu = new PSU();
 		
-		String q = "select * from psuer join components using(id) where id='" + id + "'";
+		String q = "select * from psu join components using(id) where id='" + id + "'";
 
         try {
             currentCon = ConnectionManager.getConnection();
@@ -132,11 +137,16 @@ public class PsuDAO {
             rs = stmt.executeQuery(q);
             
             if (rs.next()) {
+            	if(rs.getString("image")==null) {
+					imageName = "noimage2.png";
+				} else {
+					imageName = rs.getString("image");
+				}
             	psu.setId(rs.getInt("id"));
 				psu.setBrand(rs.getString("brand"));
 				psu.setModel(rs.getString("model"));
 				psu.setPrice(rs.getDouble("price"));
-				psu.setImage(rs.getString("image"));
+				psu.setImage(imageName);
 				psu.setType(rs.getString("type"));
 				psu.setWattage(rs.getInt("wattage"));
 				psu.setPsu_type(rs.getString("psu_type"));
@@ -160,7 +170,6 @@ public class PsuDAO {
 		String q = "delete from psu where id=" + id;
 		
 		try {
-	
 	        currentCon = ConnectionManager.getConnection();
 	        stmt = currentCon.createStatement();
 	        stmt.executeUpdate(q);

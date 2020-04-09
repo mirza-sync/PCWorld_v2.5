@@ -11,12 +11,14 @@
 <%@include file="header.jsp"%>
 </head>
 <body>
+<div class="row">
+<%@include file="sidebar.jsp"%>
 <div class="container my-5">
 	<div class="row">
 		<div class="col-md-8 offset-md-2">
 			<div class="card">
 				<div class="card-header">
-					<h5>Add Component</h5>
+					<h5 id="add_title">Add New Component</h5>
 				</div>
 				<form method="POST" action="ComponentController" enctype="multipart/form-data">
 					<input type="hidden" name="action" value="add"/>
@@ -24,16 +26,16 @@
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Type</label>
 							<div class="col-md-9">
-								<select id="opts" name="component_type" class="form-control" onchange="showForm()">
+								<select id="opts" name="type" class="form-control" onchange="showForm()">
 									<option value="">Select Component Type</option>
-									<option value="cpu">CPU</option>
-									<option value="gpu">GPU</option>
-									<option value="mobo">Motherboard</option>
-									<option value="ram">RAM</option>
-									<option value="storage">Storage</option>
-									<option value="psu">PSU</option>
-									<option value="cooler">Cooler</option>
-									<option value="casing">Casing</option>
+									<option value="CPU">CPU</option>
+									<option value="GPU">GPU</option>
+									<option value="Motherboard">Motherboard</option>
+									<option value="RAM">RAM</option>
+									<option value="Storage">Storage</option>
+									<option value="PSU">PSU</option>
+									<option value="Cooler">Cooler</option>
+									<option value="Casing">Casing</option>
 								</select>
 							</div>
 						</div>
@@ -52,13 +54,13 @@
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Price</label>
 							<div class="col-md-9">
-								<input type="number" class="form-control" name="price"/>
+								<input type="text" class="form-control" name="price"/>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Image</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="image"/>
+								<input type="file" class="form-control" name="image"/>
 							</div>
 						</div>
 						<!-- Hidden forms inside card body-->
@@ -73,14 +75,26 @@
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
-										<h6>Clock Speed</h6>
-										<input type="text" class="form-control" name="clock_speed" placeholder="Enter clock speed">
+										<h6>Base Clock</h6>
+										<input type="number" class="form-control" name="base_clock" placeholder="Enter clock speed">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
-										<h6>Num. of Cores</h6>
-										<input type="text" class="form-control" name="num_core" placeholder="Enter number of cores">
+										<h6>Max Clock</h6>
+										<input type="number" class="form-control" name="max_clock" placeholder="Enter clock speed">
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="mb-3">
+										<h6>Number of Cores</h6>
+										<input type="number" class="form-control" name="num_core" placeholder="Enter number of cores">
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="mb-3">
+										<h6>Number of Threads</h6>
+										<input type="number" class="form-control" name="thread" placeholder="Enter number of threads">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -97,13 +111,16 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Chipset</h6>
-										<input type="text" class="form-control" name="chipset" placeholder="NVIDIA / AMD">
+										<select id="form" name="chipset" class="form-control">
+											<option value="Nvidia">Nvidia</option>
+											<option value="AMD">AMD</option>
+										</select>
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Number of VRAM</h6>
-										<input type="text" class="form-control" name="vram_num" placeholder="Enter Number of VRAM">
+										<input type="text" class="form-control" name="num_vram" placeholder="Enter Number of VRAM">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -115,19 +132,19 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Length</h6>
-										<input type="text" class="form-control" name="gpu_length" placeholder="Enter length">
+										<input type="number" class="form-control" value="0" name="gpu_length" placeholder="Enter length">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Width</h6>
-										<input type="text" class="form-control" name="gpu_width" placeholder="Enter width">
+										<input type="number" class="form-control" value="0" name="gpu_width" placeholder="Enter width">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Height</h6>
-										<input type="text" class="form-control" name="gpu_height" placeholder="Enter height">
+										<input type="number" class="form-control" value="0" name="gpu_height" placeholder="Enter height">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -145,7 +162,7 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Wattage</h6>
-										<input type="text" class="form-control" name="gpu_watt" placeholder="Enter power in watt">
+										<input type="number" class="form-control" name="gpu_watt" placeholder="Enter power in watt">
 									</div>
 								</li>
 							</ul>
@@ -166,19 +183,19 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Length</h6>
-										<input type="text" class="form-control" name="mobo_length" placeholder="Enter length">
+										<input type="number" class="form-control" value="0" name="mobo_length" placeholder="Enter length">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Width</h6>
-										<input type="text" class="form-control" name="mobo_width" placeholder="Enter width">
+										<input type="number" class="form-control" value="0" name="mobo_width" placeholder="Enter width">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Height</h6>
-										<input type="text" class="form-control" name="mobo_height" placeholder="Enter height">
+										<input type="number" class="form-control" value="0" name="mobo_height" placeholder="Enter height">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -196,13 +213,19 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Memory Slot</h6>
-										<input type="text" class="form-control" name="mem_slot" placeholder="Enter number of RAM slot">
+										<input type="number" class="form-control" name="mem_slot" placeholder="Enter number of RAM slot">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Maximum Memory</h6>
-										<input type="text" class="form-control" name="max_mem" placeholder="Enter maximum supported memory">
+										<input type="number" class="form-control" name="max_mem" placeholder="Enter maximum supported memory">
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="mb-3">
+										<h6>Color</h6>
+										<input type="text" class="form-control" name="mobo_color" placeholder="Enter color">
 									</div>
 								</li>
 							</ul>
@@ -213,7 +236,13 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Capacity</h6>
-										<input type="text" class="form-control" name="ram_capacity" placeholder="Enter RAM capacity">
+										<input type="number" class="form-control" name="ram_capacity" placeholder="Enter capacity for a single RAM module">
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="mb-3">
+										<h6>Number of Module</h6>
+										<input type="number" class="form-control" name="module" placeholder="Enter number of module">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -225,7 +254,13 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>RAM Speed</h6>
-										<input type="text" class="form-control" name="speed" placeholder="Enter RAM speed">
+										<input type="number" class="form-control" name="speed" placeholder="Enter RAM speed">
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="mb-3">
+										<h6>Color</h6>
+										<input type="text" class="form-control" name="ram_color" placeholder="Enter color">
 									</div>
 								</li>
 							</ul>
@@ -236,7 +271,7 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Storage Type</h6>
-										<select id="s_type" name="s_tpye" class="form-control">
+										<select id="storage_type" name="storage_tpye" class="form-control">
 											<option value="HDD">HDD</option>
 											<option value="SSD">SSD</option>
 										</select>
@@ -245,7 +280,7 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Capacity</h6>
-										<input type="text" class="form-control" name="storage_capacity" placeholder="Enter Storage capacity">
+										<input type="number" class="form-control" name="storage_capacity" placeholder="Enter Storage capacity">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -262,13 +297,13 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Read Speed</h6>
-										<input type="text" class="form-control" name="r_speed" placeholder="Enter read speed">
+										<input type="number" class="form-control" name="r_speed" placeholder="Enter read speed">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Write Speed</h6>
-										<input type="text" class="form-control" name="w_speed" placeholder="Enter write speed">
+										<input type="number" class="form-control" name="w_speed" placeholder="Enter write speed">
 									</div>
 								</li>
 							</ul>
@@ -279,7 +314,7 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Wattage</h6>
-										<input type="text" class="form-control" name="psu_wattage" placeholder="Enter wattage">
+										<input type="number" class="form-control" name="psu_wattage" placeholder="Enter wattage">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -288,7 +323,7 @@
 										<select id="psu_type" name="psu_type" class="form-control">
 											<option value="Non Modular">Non Modular</option>
 											<option value="Semi Modular">Semi Modular</option>
-											<option value="Modular">Modular</option>
+											<option value="Fully Modular">Fully Modular</option>
 										</select>
 									</div>
 								</li>
@@ -296,10 +331,11 @@
 									<div class="mb-3">
 										<h6>Efficiency Rating</h6>
 										<select id="efficiency" name="efficiency" class="form-control">
-											<option value="Bronze">Bronze</option>
-											<option value="Silver">Silver</option>
-											<option value="Gold">Gold</option>
-											<option value="Platinum">Platinum</option>
+											<option value="80+">80+</option>
+											<option value="80+ Bronze">80+ Bronze</option>
+											<option value="80+ Silver">80+Silver</option>
+											<option value="80+ Gold">80+ Gold</option>
+											<option value="80+ Platinum">80+ Platinum</option>
 										</select>
 									</div>
 								</li>
@@ -326,19 +362,19 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Length</h6>
-										<input type="text" class="form-control" name="cooler_length" placeholder="Enter length">
+										<input type="number" class="form-control" value="0" name="cooler_length" placeholder="Enter length">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Width</h6>
-										<input type="text" class="form-control" name="cooler_width" placeholder="Enter width">
+										<input type="number" class="form-control" value="0" name="cooler_width" placeholder="Enter width">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Height</h6>
-										<input type="text" class="form-control" name="cooler_height" placeholder="Enter height">
+										<input type="number" class="form-control" value="0" name="cooler_height" placeholder="Enter height">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -355,7 +391,7 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Form Factor</h6>
-										<select id="case_type" name="case_type" class="form-control">
+										<select id="case_form" name="case_form" class="form-control">
 											<option value="ATX">ATX</option>
 											<option value="Micro ATX">Micro ATX</option>
 											<option value="Mini ITX">Mini ITX</option>
@@ -397,11 +433,13 @@
 		</div>
 	</div>
 </div>
+</div> <!-- Close main row : nav + main-->
 
 <script type="text/javascript">
 function showForm() {
 	var selopt = document.getElementById("opts").value;
-	if (selopt == "cpu") {
+	document.getElementById("add_title").innerHTML = "Add " + selopt;
+	if (selopt == "CPU") {
 		document.getElementById("f1").style.display = "block";
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f3").style.display = "none";
@@ -411,7 +449,7 @@ function showForm() {
 		document.getElementById("f7").style.display = "none";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "gpu") {
+	if (selopt == "GPU") {
 		document.getElementById("f1").style.display = "none";
 		document.getElementById("f2").style.display = "block";
 		document.getElementById("f3").style.display = "none";
@@ -421,7 +459,7 @@ function showForm() {
 		document.getElementById("f7").style.display = "none";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "mobo") {
+	if (selopt == "Motherboard") {
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f1").style.display = "none";
 		document.getElementById("f3").style.display = "block";
@@ -431,7 +469,7 @@ function showForm() {
 		document.getElementById("f7").style.display = "none";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "ram") {
+	if (selopt == "RAM") {
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f1").style.display = "none";
 		document.getElementById("f3").style.display = "none";
@@ -441,7 +479,7 @@ function showForm() {
 		document.getElementById("f7").style.display = "none";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "storage") {
+	if (selopt == "Storage") {
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f1").style.display = "none";
 		document.getElementById("f3").style.display = "none";
@@ -451,7 +489,7 @@ function showForm() {
 		document.getElementById("f7").style.display = "none";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "psu") {
+	if (selopt == "PSU") {
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f1").style.display = "none";
 		document.getElementById("f3").style.display = "none";
@@ -461,7 +499,7 @@ function showForm() {
 		document.getElementById("f7").style.display = "none";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "cooler") {
+	if (selopt == "Cooler") {
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f1").style.display = "none";
 		document.getElementById("f3").style.display = "none";
@@ -471,7 +509,7 @@ function showForm() {
 		document.getElementById("f7").style.display = "block";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "casing") {
+	if (selopt == "Casing") {
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f1").style.display = "none";
 		document.getElementById("f3").style.display = "none";

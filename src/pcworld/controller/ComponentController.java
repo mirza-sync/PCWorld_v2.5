@@ -1,13 +1,17 @@
 package pcworld.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import pcworld.dao.CasingDAO;
 import pcworld.dao.ComponentDAO;
@@ -30,11 +34,16 @@ import pcworld.model.RAM;
 import pcworld.model.Storage;
 
 @WebServlet("/ComponentController")
+@MultipartConfig
 public class ComponentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String SAVE_DIR="img";
 	
-	String VIEW_COMPONENT = "viewComponent.jsp";
+	String MAIN = "main.jsp";
+	String ADD_COMPONENT = "addComponent.jsp";
+	String VIEW_COMPONENTS = "viewAllComponents.jsp";
 	String UPDATE_FORM = "updateComponent.jsp";
+	String TEST_FORM = "testEdit.jsp";
 	
     
 	ComponentDAO compdao = new ComponentDAO();
@@ -47,7 +56,6 @@ public class ComponentController extends HttpServlet {
 	CasingDAO casingdao = new CasingDAO();
 	CoolerDAO coolerdao = new CoolerDAO();
 	
-	String type;	
 	String forward = "";
 	
     public ComponentController() {
@@ -57,31 +65,103 @@ public class ComponentController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
+		System.out.println("Get action : "+action);
 		
 		//View component
-		if(action.equalsIgnoreCase("viewComponent")) {
+		if(action.equalsIgnoreCase("viewComponents")) {
 			System.out.println("Viewing...");
-			forward = VIEW_COMPONENT;
-			request.setAttribute("cpus", cpudao.getAllCpu());
-			request.setAttribute("gpus", gpudao.getAllGpu());
-			request.setAttribute("mobos", mobodao.getAllMobo());
-			request.setAttribute("rams", ramdao.getAllRam());
-			request.setAttribute("stors", storagedao.getAllStorage());
-			request.setAttribute("psus", psudao.getAllPsu());
-			request.setAttribute("cases", casingdao.getAllCasing());
+			String type = request.getParameter("type");
+			
+			forward = VIEW_COMPONENTS;
+			request.setAttribute("type", type);
+			
+			if(type.equals("CPU")) {
+				request.setAttribute("cpus", cpudao.getAllCpu());
+			}
+			else if(type.equals("GPU")) {			
+				request.setAttribute("gpus", gpudao.getAllGpu());
+			}
+			else if(type.equals("Motherboard")) {
+				request.setAttribute("mobos", mobodao.getAllMobo());
+			}
+			else if(type.equals("RAM")) {
+				request.setAttribute("rams", ramdao.getAllRam());
+			}
+			else if(type.equals("Storage")) {
+				request.setAttribute("stors", storagedao.getAllStorage());
+			}
+			else if(type.equals("PSU")) {
+				request.setAttribute("psus", psudao.getAllPsu());
+			}
+			else if(type.equals("Casing")) {
+				request.setAttribute("cases", casingdao.getAllCasing());
+			}
+			else {
+				System.out.println("Component type not found.");
+			}
 		}
-		//Show add component form
-		else if(action.equalsIgnoreCase("showAddComp")) {
-			request.setAttribute("comps", compdao.getAllComponentByType(type)); 
+		else if(action.equalsIgnoreCase("viewCompById")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String type = request.getParameter("type");
+			forward = UPDATE_FORM;
+			if(type.equals("CPU")) {
+				request.setAttribute("cpu", cpudao.getCpuById(id));
+			}
+			else if(type.equals("GPU")) {			
+				request.setAttribute("gpu", gpudao.getGpuById(id));
+			}
+			else if(type.equals("Motherboard")) {
+				request.setAttribute("mobo", mobodao.getMotherboardById(id));
+			}
+			else if(type.equals("RAM")) {
+				request.setAttribute("ram", ramdao.getRamById(id));
+			}
+			else if(type.equals("Storage")) {
+				request.setAttribute("stor", storagedao.getStorageById(id));
+			}
+			else if(type.equals("PSU")) {
+				request.setAttribute("psu", psudao.getPsuById(id));
+			}
+			else if(type.equals("Casing")) {
+				request.setAttribute("case", casingdao.getCasingById(id));
+			}
+			else {
+				System.out.println("Component not found.");
+			}
 		}
 		//Show update form
-		else if(action.equalsIgnoreCase("showUpdateComp")) {
+		else if(action.equalsIgnoreCase("showEdit")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			forward = UPDATE_FORM;
-			request.setAttribute("comps", compdao.getComponentById(id)); 
+			String type = request.getParameter("type");
+			//forward = UPDATE_FORM;
+			forward = TEST_FORM;
+			if(type.equals("CPU")) {
+				request.setAttribute("cpu", cpudao.getCpuById(id));
+			}
+			else if(type.equals("GPU")) {			
+				request.setAttribute("gpu", gpudao.getGpuById(id));
+			}
+			else if(type.equals("Motherboard")) {
+				request.setAttribute("mobo", mobodao.getMotherboardById(id));
+			}
+			else if(type.equals("RAM")) {
+				request.setAttribute("ram", ramdao.getRamById(id));
+			}
+			else if(type.equals("Storage")) {
+				request.setAttribute("stor", storagedao.getStorageById(id));
+			}
+			else if(type.equals("PSU")) {
+				request.setAttribute("psu", psudao.getPsuById(id));
+			}
+			else if(type.equals("Casing")) {
+				request.setAttribute("case", casingdao.getCasingById(id));
+			}
+			else {
+				System.out.println("Component not found.");
+			}
 		}
 		//Delete component
-		else if(action.equalsIgnoreCase("deleteComp")) {
+		else if(action.equalsIgnoreCase("delete")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			compdao.deleteComponent(id); 
 		}
@@ -92,43 +172,76 @@ public class ComponentController extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+		System.out.println("Action is : " + action);
 		
-		String brand, model, image, type;
+		if(action.equalsIgnoreCase("recommend")) {
+			System.out.println("Recommending...");
+			int budget;
+			String size, style, color;
+			
+			budget = Integer.parseInt(request.getParameter("budget"));
+			String[] usage = request.getParameterValues("c_usage");
+			style = request.getParameter("r_style");
+			color = request.getParameter("r_color");
+			
+			Input input = new Input(budget, usage, style, color);
+			
+			forward = "recommend2.jsp";
+			request.setAttribute("pc", compdao.recommendPC(input));
+			RequestDispatcher view = request.getRequestDispatcher(forward);
+			view.forward(request, response);
+			return;
+		}
+		
+		String brand, model, type, imageName, imageLast;
 		int comp_id;
 		double price;
+		Part image;
 		
-		String action = request.getParameter("action");
-
-		brand = request.getParameter("brand");
+		// gets absolute path of the web application
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        String savePath = appPath + File.separator + SAVE_DIR;
+        
+        File fileSaveDir=new File(savePath);
+        if(!fileSaveDir.exists()){
+            fileSaveDir.mkdir();
+        }
+        
+        brand = request.getParameter("brand");
 		model = request.getParameter("model");
 		price = Double.parseDouble(request.getParameter("price"));
-		image = request.getParameter("image");
+		image = request.getPart("image");
+		imageName=extractFileName(image);
 		type = request.getParameter("type");
 		
-		System.out.println("Action is : " + action);
+		image.write(savePath + File.separator + imageName);
+		imageLast = imageName;
+		System.out.println("SAVE PATH is : " + savePath);
 		System.out.println("Brand is : " + brand);
 		System.out.println("Model is : " + model);
 		System.out.println("Price is : " + price);
 		System.out.println("Type is : " + type);
 		
 		//Add component
-		if(action.equalsIgnoreCase("add")) {
-			
-			Components comp = new Components(brand, model, price, image, type);
+		if(action.equalsIgnoreCase("add")) {	
+			Components comp = new Components(brand, model, price, imageLast, type);
 			comp_id = compdao.add(comp);
 			
-			System.out.println("Id is : " + comp_id);
-			System.out.println("Type is : " + comp.getType());
+			System.out.println("New Id is : " + comp_id);
 
-			if (comp.getType().equalsIgnoreCase("cpu")) {
+			if (comp.getType().equalsIgnoreCase("CPU")) {
 				String socket = request.getParameter("cpu_socket");
-				int clock_speed = Integer.parseInt(request.getParameter("clock_speed"));
+				float base_clock = Float.parseFloat(request.getParameter("base_clock"));
+				float max_clock = Float.parseFloat(request.getParameter("max_clock"));
 				int num_core = Integer.parseInt(request.getParameter("num_core"));
+				int thread = Integer.parseInt(request.getParameter("thread"));
 				int watt = Integer.parseInt(request.getParameter("cpu_watt"));
-				CPU cpu = new CPU(comp_id, socket, clock_speed, num_core, watt);
+				CPU cpu = new CPU(comp_id, socket, base_clock, max_clock, num_core, thread, watt);
 				cpudao.add(cpu);
 			}
-			else if (comp.getType().equalsIgnoreCase("gpu")){
+			else if (comp.getType().equalsIgnoreCase("GPU")){
 				String chipset = request.getParameter("chipset");
 				int num_vram = Integer.parseInt(request.getParameter("num_vram"));
 				String vram_type = request.getParameter("vram_type");
@@ -141,7 +254,7 @@ public class ComponentController extends HttpServlet {
 				GPU gpu = new GPU(comp_id, chipset, num_vram, vram_type, length, width, height, color, core_clock, watt);
 				gpudao.add(gpu);
 			}
-			else if (comp.getType().equalsIgnoreCase("mobo")){
+			else if (comp.getType().equalsIgnoreCase("Motherboard")){
 				String form = request.getParameter("mobo_form");
 				int length = Integer.parseInt(request.getParameter("mobo_length"));
 				int width = Integer.parseInt(request.getParameter("mobo_width"));
@@ -150,17 +263,20 @@ public class ComponentController extends HttpServlet {
 				String memory_type = request.getParameter("mem_type");
 				int memory_slot = Integer.parseInt(request.getParameter("mem_slot"));
 				int max_memory = Integer.parseInt(request.getParameter("max_mem"));
+				String color = request.getParameter("mobo_color");
 				Motherboard mobo = new Motherboard(comp_id, form, length, width, height, socket, memory_type, memory_slot, max_memory, color);
 				mobodao.add(mobo);
 			}
-			else if(comp.getType().equalsIgnoreCase("ram")){
+			else if(comp.getType().equalsIgnoreCase("RAM")){
 				int capacity = Integer.parseInt(request.getParameter("ram_capacity"));
 				String ram_type = request.getParameter("ram_type");
 				int speed = Integer.parseInt(request.getParameter("speed"));
-				RAM ram = new RAM(comp_id, capacity, ram_type, speed);
+				int module = Integer.parseInt(request.getParameter("module"));
+				String color = request.getParameter("ram_color");
+				RAM ram = new RAM(comp_id, capacity, ram_type, speed, module, color);
 				ramdao.add(ram);
 			}
-			else if (comp.getType().equalsIgnoreCase("storage")){
+			else if (comp.getType().equalsIgnoreCase("Storage")){
 				String storage_type = request.getParameter("storage_type");
 				int capacity = Integer.parseInt(request.getParameter("storage_capacity"));
 				String form = request.getParameter("storage_form");
@@ -169,7 +285,7 @@ public class ComponentController extends HttpServlet {
 				Storage storage = new Storage(comp_id, storage_type, capacity, form, read_speed, write_speed);
 				storagedao.add(storage);
 			}
-			else if (comp.getType().equalsIgnoreCase("psu")){
+			else if (comp.getType().equalsIgnoreCase("PSU")){
 				int wattage = Integer.parseInt(request.getParameter("psu_wattage"));
 				String psu_type = request.getParameter("psu_type");
 				String efficiency = request.getParameter("efficiency");
@@ -177,7 +293,7 @@ public class ComponentController extends HttpServlet {
 				PSU psu = new PSU(comp_id, wattage, psu_type, efficiency, color);
 				psudao.add(psu);
 			}
-			else if (comp.getType().equalsIgnoreCase("cooler")){
+			else if (comp.getType().equalsIgnoreCase("Cooler")){
 				String cooler_type = request.getParameter("cooler_type");
 				int length = Integer.parseInt(request.getParameter("cooler_length"));
 				int width = Integer.parseInt(request.getParameter("cooler_width"));
@@ -186,7 +302,7 @@ public class ComponentController extends HttpServlet {
 				Cooler cooler = new Cooler(comp_id, cooler_type, length, width, height, color);
 				coolerdao.add(cooler);
 			}
-			else if (comp.getType().equalsIgnoreCase("casing")){
+			else if (comp.getType().equalsIgnoreCase("Casing")){
 				String form = request.getParameter("case_form");
 				int length = Integer.parseInt(request.getParameter("case_length"));
 				int width = Integer.parseInt(request.getParameter("case_width"));
@@ -195,66 +311,114 @@ public class ComponentController extends HttpServlet {
 				Casing casing = new Casing(comp_id, form, length, width, height, color);
 				casingdao.add(casing);
 			}
-			forward = VIEW_COMPONENT;
-			request.setAttribute("comps", compdao.getAllComponent());
+			forward = ADD_COMPONENT;
 			RequestDispatcher view = request.getRequestDispatcher(forward);
 			view.forward(request, response);
 		}
+		
+		else if(action.equalsIgnoreCase("edit")) {
+			comp_id = Integer.parseInt(request.getParameter("id"));
+			
+			System.out.println("Component ID is : " + comp_id);
+			
+			Components comp = new Components(comp_id, brand, model, price, imageLast, type);
+			compdao.update(comp);
 
-//		else if(action.equalsIgnoreCase("update")){
-//			rph_id = Integer.parseInt(request.getParameter("rph_id"));
-//			RPHS rph = new RPHS(rph_id, rph_date, rph_time, rph_type, rph_submitStatus, teacher_id, subject_id);
-//			rphdao.updateRph(rph);
-//			System.out.println("Do update");
-//			if (rph.getRph_type().equalsIgnoreCase("Lessons")) {
-//				String topic_name = request.getParameter("topic_name");
-//				String rph_activities = request.getParameter("rph_activities");
-//				int rph_numstudents = Integer.parseInt(request.getParameter("rph_numstudents"));
-//				String rph_moralvalue = request.getParameter("rph_moralvalue");
-//				String rph_kbat = request.getParameter("rph_kbat");
-//				String rph_bbb = request.getParameter("rph_bbb");
-//				Lessons lesson = new Lessons(rph_id, rph_date, rph_time, rph_type, rph_submitStatus, teacher_id, subject_id, topic_name, rph_activities, rph_numstudents, rph_moralvalue,rph_kbat,rph_bbb);
-//				lessondao.updateLesson(lesson);
-//				
-////				request.setAttribute("lessons", lessondao.getLessonById(rph));
-////				forward = REDIRECT_VIEW+rph_id;
-////				RequestDispatcher view = request.getRequestDispatcher(forward);
-////				view.forward(request, response);
-//			} 
-//			else if (rph.getRph_type().equalsIgnoreCase("Events")) {
-//				String event_description = request.getParameter("event_description");
-//				Events event = new Events(rph_id, rph_date, rph_time, rph_type, rph_submitStatus, teacher_id, subject_id, event_description);
-//				eventdao.updateEvent(event);
-//				
-////				request.setAttribute("events", eventdao.getEventById(rph));
-////				forward = REDIRECT_VIEW+rph_id;
-////				RequestDispatcher view = request.getRequestDispatcher(forward);
-////				view.forward(request, response);
-//			}
-//			forward = VIEW_OWN_RPH;
-//			request.setAttribute("rphs", rphdao.getAllRphByTeacher(teacher_id));
-//			RequestDispatcher view = request.getRequestDispatcher(forward);
-//			view.forward(request, response);
-//		}
-		else if(action.equalsIgnoreCase("recommend")) {
-			System.out.println("Recommending...");
-			int budget;
-			String usage, size, style;
-			
-//			budget = Integer.parseInt(request.getParameter("budget"));
-//			usage = request.getParameter("usage");
-//			size = request.getParameter("size");
-//			style = request.getParameter("style");
-//			
-//			Input input = new Input(budget, usage, size, style);
-			Input input = new Input(1000, "office", "big", "gamer");
-			System.out.println("Input initialized...");
-			
-			forward = "main.jsp";
-			request.setAttribute("comps", compdao.recommendPC(input));
+			if (comp.getType().equalsIgnoreCase("CPU")) {
+				String socket = request.getParameter("cpu_socket");
+				float base_clock = Float.parseFloat(request.getParameter("base_clock"));
+				float max_clock = Float.parseFloat(request.getParameter("max_clock"));
+				int num_core = Integer.parseInt(request.getParameter("num_core"));
+				int thread = Integer.parseInt(request.getParameter("thread"));
+				int watt = Integer.parseInt(request.getParameter("cpu_watt"));
+				CPU cpu = new CPU(comp_id, socket, base_clock, max_clock, num_core, thread, watt);
+				cpudao.update(cpu);
+			}
+			else if (comp.getType().equalsIgnoreCase("GPU")){
+				String chipset = request.getParameter("chipset");
+				int num_vram = Integer.parseInt(request.getParameter("num_vram"));
+				String vram_type = request.getParameter("vram_type");
+				int length = Integer.parseInt(request.getParameter("gpu_length"));
+				int width = Integer.parseInt(request.getParameter("gpu_width"));
+				int height = Integer.parseInt(request.getParameter("gpu_height"));
+				String color = request.getParameter("gpu_color");
+				int core_clock = Integer.parseInt(request.getParameter("core_clock"));
+				int watt = Integer.parseInt(request.getParameter("gpu_watt"));
+				GPU gpu = new GPU(comp_id, chipset, num_vram, vram_type, length, width, height, color, core_clock, watt);
+				gpudao.update(gpu);
+			}
+			else if (comp.getType().equalsIgnoreCase("Motherboard")){
+				String form = request.getParameter("mobo_form");
+				int length = Integer.parseInt(request.getParameter("mobo_length"));
+				int width = Integer.parseInt(request.getParameter("mobo_width"));
+				int height = Integer.parseInt(request.getParameter("mobo_height"));
+				String socket = request.getParameter("mobo_socket");
+				String memory_type = request.getParameter("mem_type");
+				int memory_slot = Integer.parseInt(request.getParameter("mem_slot"));
+				int max_memory = Integer.parseInt(request.getParameter("max_mem"));
+				String color = request.getParameter("mobo_color");
+				Motherboard mobo = new Motherboard(comp_id, form, length, width, height, socket, memory_type, memory_slot, max_memory, color);
+				mobodao.update(mobo);
+			}
+			else if(comp.getType().equalsIgnoreCase("RAM")){
+				int capacity = Integer.parseInt(request.getParameter("ram_capacity"));
+				String ram_type = request.getParameter("ram_type");
+				int speed = Integer.parseInt(request.getParameter("speed"));
+				int module = Integer.parseInt(request.getParameter("module"));
+				String color = request.getParameter("ram_color");
+				RAM ram = new RAM(comp_id, capacity, ram_type, speed, module, color);
+				ramdao.update(ram);
+			}
+			else if (comp.getType().equalsIgnoreCase("Storage")){
+				String storage_type = request.getParameter("storage_type");
+				int capacity = Integer.parseInt(request.getParameter("storage_capacity"));
+				String form = request.getParameter("storage_form");
+				int read_speed = Integer.parseInt(request.getParameter("r_speed"));
+				int write_speed = Integer.parseInt(request.getParameter("w_speed"));
+				Storage storage = new Storage(comp_id, storage_type, capacity, form, read_speed, write_speed);
+				storagedao.update(storage);
+			}
+			else if (comp.getType().equalsIgnoreCase("PSU")){
+				int wattage = Integer.parseInt(request.getParameter("psu_wattage"));
+				String psu_type = request.getParameter("psu_type");
+				String efficiency = request.getParameter("efficiency");
+				String color = request.getParameter("psu_color");
+				PSU psu = new PSU(comp_id, wattage, psu_type, efficiency, color);
+				psudao.update(psu);
+			}
+			else if (comp.getType().equalsIgnoreCase("Cooler")){
+				String cooler_type = request.getParameter("cooler_type");
+				int length = Integer.parseInt(request.getParameter("cooler_length"));
+				int width = Integer.parseInt(request.getParameter("cooler_width"));
+				int height = Integer.parseInt(request.getParameter("cooler_height"));
+				String color = request.getParameter("cooler_color");
+				Cooler cooler = new Cooler(comp_id, cooler_type, length, width, height, color);
+				coolerdao.update(cooler);
+			}
+			else if (comp.getType().equalsIgnoreCase("Casing")){
+				String form = request.getParameter("case_form");
+				int length = Integer.parseInt(request.getParameter("case_length"));
+				int width = Integer.parseInt(request.getParameter("case_width"));
+				int height = Integer.parseInt(request.getParameter("case_height"));
+				String color = request.getParameter("case_color");
+				Casing casing = new Casing(comp_id, form, length, width, height, color);
+				casingdao.update(casing);
+			}
+			forward = MAIN;
 			RequestDispatcher view = request.getRequestDispatcher(forward);
 			view.forward(request, response);
 		}
 	}
+	
+	private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length()-1);
+            }
+        }
+        return "";
+    }
 
 }
