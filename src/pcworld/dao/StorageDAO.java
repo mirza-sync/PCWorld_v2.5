@@ -31,6 +31,7 @@ public class StorageDAO {
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
+			System.out.println("Storage ID : "+id);
            						
 			ps=currentCon.prepareStatement("insert into storage (id, storage_type, capacity, formfactor, read_speed, write_speed) values (?,?,?,?,?,?)");
 			ps.setInt(1, id);

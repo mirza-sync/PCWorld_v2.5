@@ -135,6 +135,7 @@ public class ComponentController extends HttpServlet {
 			String type = request.getParameter("type");
 			//forward = UPDATE_FORM;
 			forward = TEST_FORM;
+			request.setAttribute("comp", compdao.getComponentById(id));
 			if(type.equals("CPU")) {
 				request.setAttribute("cpu", cpudao.getCpuById(id));
 			}
@@ -177,10 +178,10 @@ public class ComponentController extends HttpServlet {
 		
 		if(action.equalsIgnoreCase("recommend")) {
 			System.out.println("Recommending...");
-			int budget;
+			double budget;
 			String size, style, color;
 			
-			budget = Integer.parseInt(request.getParameter("budget"));
+			budget = Double.parseDouble(request.getParameter("budget"));
 			String[] usage = request.getParameterValues("c_usage");
 			style = request.getParameter("r_style");
 			color = request.getParameter("r_color");
@@ -199,29 +200,36 @@ public class ComponentController extends HttpServlet {
 		double price;
 		Part image;
 		
-		// gets absolute path of the web application
-        String appPath = request.getServletContext().getRealPath("");
-        // constructs path of the directory to save uploaded file
-        String savePath = appPath + File.separator + SAVE_DIR;
-        
-        File fileSaveDir=new File(savePath);
-        if(!fileSaveDir.exists()){
-            fileSaveDir.mkdir();
-        }
-        
-        brand = request.getParameter("brand");
+		image = request.getPart("image");
+		if(image != null) {
+			// gets absolute path of the web application
+	        String appPath = request.getServletContext().getRealPath("");
+	        // constructs path of the directory to save uploaded file
+	        String savePath = appPath + File.separator + SAVE_DIR;
+	        
+	        File fileSaveDir=new File(savePath);
+	        if(!fileSaveDir.exists()){
+	            fileSaveDir.mkdir();
+	        }
+			imageName=extractFileName(image);
+			
+			
+			image.write(savePath + File.separator + imageName);
+			imageLast = imageName;
+			System.out.println("SAVE PATH is : " + savePath);
+		}
+		else {
+			imageLast = "noimage.png";
+		}
+		brand = request.getParameter("brand");
 		model = request.getParameter("model");
 		price = Double.parseDouble(request.getParameter("price"));
-		image = request.getPart("image");
-		imageName=extractFileName(image);
 		type = request.getParameter("type");
 		
-		image.write(savePath + File.separator + imageName);
-		imageLast = imageName;
-		System.out.println("SAVE PATH is : " + savePath);
 		System.out.println("Brand is : " + brand);
 		System.out.println("Model is : " + model);
 		System.out.println("Price is : " + price);
+		System.out.println("Image name is : " + imageLast);
 		System.out.println("Type is : " + type);
 		
 		//Add component
@@ -277,12 +285,14 @@ public class ComponentController extends HttpServlet {
 				ramdao.add(ram);
 			}
 			else if (comp.getType().equalsIgnoreCase("Storage")){
+				System.out.println("ID in controller: "+comp_id);
 				String storage_type = request.getParameter("storage_type");
 				int capacity = Integer.parseInt(request.getParameter("storage_capacity"));
 				String form = request.getParameter("storage_form");
 				int read_speed = Integer.parseInt(request.getParameter("r_speed"));
 				int write_speed = Integer.parseInt(request.getParameter("w_speed"));
 				Storage storage = new Storage(comp_id, storage_type, capacity, form, read_speed, write_speed);
+				System.out.println("Storage ID before passed : "+storage.getId());
 				storagedao.add(storage);
 			}
 			else if (comp.getType().equalsIgnoreCase("PSU")){

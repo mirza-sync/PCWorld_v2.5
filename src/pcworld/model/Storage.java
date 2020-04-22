@@ -30,7 +30,15 @@ public class Storage extends Components {
 		this.read_speed = read_speed;
 		this.write_speed = write_speed;
 	}
-
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getStorage_type() {
 		return storage_type;
 	}

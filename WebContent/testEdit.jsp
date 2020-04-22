@@ -21,35 +21,43 @@
 				<input type="hidden" name="action" value="edit"/>
 				<input type="hidden" name="id" value="${comp.id}"/>
 				<div class="card-body">
-					<div class="form-group row">
-						<label class="col-md-3 col-form-label">Type</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control-plaintext" name="type" value="${comp.type}" readonly/>
+					<div class="row d-flex align-items-center">
+						<div class="col-md-3">
+							<img src="${pageContext.request.contextPath}/img/${cpu.image}" style="width:200px; height:200px;"/>
 						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-md-3 col-form-label">Brand</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="brand" value="${comp.brand}"/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-md-3 col-form-label">Model</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="model" value="${comp.model}"/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-md-3 col-form-label">Price</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="price" value="${comp.price}"/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-md-3 col-form-label">Image</label>
-						<div class="col-md-9">
-							<input type="file" class="form-control" name="image"/>
-							<img src="img/noimage.png" style="width:50px; height:50px"/>
+						<div class="col-md-9 pl-4">
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">Type</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control-plaintext pl-2" name="type" value="${comp.type}" readonly/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">Brand</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="brand" value="${comp.brand}"/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">Model</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="model" value="${comp.model}"/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">Price</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="price" value="${comp.price}"/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-2">
+									<label class="col-form-label">Image</label>
+								</div>
+								<div class="col-md-10">
+									<input type="file" class="form-control" name="image"/>
+								</div>
+							</div>
 						</div>
 					</div>
 					<!-- Hidden forms inside card body-->
@@ -94,7 +102,10 @@
 							</li>
 						</ul>
 					</div> <!--Close CPU-->
-					<button class="btn btn-primary float-right">Save</button>
+					<div class="col-md-12 d-flex justify-content-between px-0">
+						<a href="ComponentController?action=viewComponents&type=<c:out value="${comp.type}" />" class="btn btn-primary float-right">Back</a>
+						<button class="btn btn-primary float-right">Save</button>
+					</div>
 				</div> <!-- Close card body -->
 			</form> <!-- Close form -->
 		</div> <!--Close card-->

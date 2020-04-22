@@ -12,7 +12,6 @@ public class CPU extends Components {
 	
 	public CPU() {
 		super();
-		this.comp = new Components();
 	}
 
 	public CPU(int id, String socket, float base_clock, float max_clock, int num_core, int thread, int wattage) {
@@ -34,6 +33,14 @@ public class CPU extends Components {
 		this.num_core = num_core;
 		this.thread = thread;
 		this.wattage = wattage;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getSocket() {

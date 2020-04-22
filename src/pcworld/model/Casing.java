@@ -29,6 +29,12 @@ public class Casing extends Components {
 		this.color = color;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getForm() {
 		return form;
 	}

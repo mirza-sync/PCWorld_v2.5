@@ -1,7 +1,8 @@
 package pcworld.model;
 
 public class Input {
-	private int budget;
+	//private int budget;
+	private double budget;
 	private String[] usage;
 	private String size;
 	private String style;
@@ -11,7 +12,7 @@ public class Input {
 	public Input() {
 		super();
 	}
-	public Input(int budget, String[] usage, String style, String color) {
+	public Input(double budget, String[] usage, String style, String color) {
 		super();
 		this.budget = budget;
 		this.usage = usage;
@@ -20,7 +21,7 @@ public class Input {
 		this.color = color;
 	}
 	
-	public int getBudget() {
+	public double getBudget() {
 		return budget;
 	}
 	public void setBudget(int budget) {

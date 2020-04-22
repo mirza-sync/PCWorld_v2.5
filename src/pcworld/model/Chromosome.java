@@ -1,6 +1,6 @@
 package pcworld.model;
 
-public class Chromosome {
+public class Chromosome implements Comparable<Chromosome>{
 	public Components[] gene;
 	public CPU cpu;
 	public GPU gpu;
@@ -10,7 +10,8 @@ public class Chromosome {
 	public PSU psu;
 	public Casing casing;
 	public double totalPrice;
-	public int fitness;
+	//public int fitness;
+	public double fitness;
     
 //	public Chromosome(CPU cpu, GPU gpu, Motherboard mobo, RAM ram, Storage storage, PSU psu, Casing casing,
 //			float totalPrice, int fitness) {
@@ -40,7 +41,7 @@ public class Chromosome {
 //    	gene[6] = casing;
 //    }
     
-    public Chromosome(Components components, float totalPrice, int fitness) {
+    public Chromosome(Components components, float totalPrice, double fitness) {
     	gene = new Components[7];
     	
     	gene[0] = components.getRandomCpu();
@@ -149,8 +150,17 @@ public class Chromosome {
     	return totalPrice;
     }
     
-    public int getFitness() {
+    public double getFitness() {
     	
     	return fitness;
     }
+
+	@Override
+	public int compareTo(Chromosome c) {
+		if(this.getFitness() < c.getFitness())
+            return 1;
+        else if (this.getFitness() == c.getFitness())
+            return 0 ;
+        return -1 ;
+	}
 }

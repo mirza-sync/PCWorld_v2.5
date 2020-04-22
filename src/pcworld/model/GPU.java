@@ -45,6 +45,14 @@ public class GPU extends Components {
 		this.wattage = wattage;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getChipset() {
 		return chipset;
 	}

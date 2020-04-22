@@ -29,6 +29,12 @@ public class Cooler extends Components {
 		this.color = color;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getCooler_type() {
 		return cooler_type;
 	}
