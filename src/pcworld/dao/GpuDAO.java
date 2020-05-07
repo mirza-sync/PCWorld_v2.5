@@ -16,8 +16,8 @@ public class GpuDAO {
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
 	String event_description;
-	int id, num_vram, length, width, height, clock, watt;
-	String chipset, vram_type, color, imageName;
+	int id, num_vram, clock;
+	String chipset, color, imageName;
 
 	//new gpu
 	public void add(GPU gpu){
@@ -25,29 +25,19 @@ public class GpuDAO {
 		id = gpu.getId();
 		chipset = gpu.getChipset();
 		num_vram = gpu.getNum_vram();
-		vram_type = gpu.getVram_type();
-		length = gpu.getLength();
-		width = gpu.getWidth();
-		height = gpu.getHeight();
 		color = gpu.getColor();
 		clock = gpu.getCore_clock();
-		watt = gpu.getWattage();
 		
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			
-			ps=currentCon.prepareStatement("insert into gpu (id, chipset, num_vram, vram_type, length, width, height, color, core_clock, wattage) values (?,?,?,?,?,?,?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into gpu (id, chipset, num_vram, color, core_clock) values (?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, chipset);
 			ps.setInt(3, num_vram);
-			ps.setString(4, vram_type);
-			ps.setInt(5, length);
-			ps.setInt(6, width);
-			ps.setInt(7, height);
-			ps.setString(8, color);
-			ps.setInt(9, clock);
-			ps.setInt(10, watt);
+			ps.setString(4, color);
+			ps.setInt(5, clock);
 			ps.executeUpdate();
 			
 			ps.close();
@@ -82,15 +72,10 @@ public class GpuDAO {
 		id = gpu.getId();
 		chipset = gpu.getChipset();
 		num_vram = gpu.getNum_vram();
-		vram_type = gpu.getVram_type();
-		length = gpu.getLength();
-		width = gpu.getWidth();
-		height = gpu.getHeight();
 		color = gpu.getColor();
 		clock = gpu.getCore_clock();
-		watt = gpu.getWattage();
 		
-		String q = "UPDATE gpu SET chipset='"+chipset+"', num_vram='"+num_vram+"', vram_type='"+vram_type+"', length='"+length+"', width='"+width+"', height='"+height+"', color='"+color+"', core_clock='"+clock+"', wattage='"+watt+"' WHERE id='"+id+"'";
+		String q = "UPDATE gpu SET chipset='"+chipset+"', num_vram='"+num_vram+"', color='"+color+"', core_clock='"+clock+"' WHERE id='"+id+"'";
 
 		try {
 
@@ -130,13 +115,8 @@ public class GpuDAO {
 				gpu.setType(rs.getString("type"));
             	gpu.setChipset(rs.getString("chipset"));
             	gpu.setNum_vram(rs.getInt("num_vram"));
-            	gpu.setVram_type(rs.getString("vram_type"));
-            	gpu.setLength(rs.getInt("length"));
-            	gpu.setWidth(rs.getInt("width"));
-            	gpu.setHeight(rs.getInt("height"));
             	gpu.setColor(rs.getString("color"));
             	gpu.setCore_clock(rs.getInt("core_clock"));
-            	gpu.setWattage(rs.getInt("wattage"));
             	
             	gpus.add(gpu);
            	}
@@ -171,13 +151,8 @@ public class GpuDAO {
 				gpu.setType(rs.getString("type"));
             	gpu.setChipset(rs.getString("chipset"));
             	gpu.setNum_vram(rs.getInt("num_vram"));
-            	gpu.setVram_type(rs.getString("vram_type"));
-            	gpu.setLength(rs.getInt("length"));
-            	gpu.setWidth(rs.getInt("width"));
-            	gpu.setHeight(rs.getInt("height"));
             	gpu.setColor(rs.getString("color"));
             	gpu.setCore_clock(rs.getInt("core_clock"));
-            	gpu.setWattage(rs.getInt("wattage"));
            	}
            
             else {

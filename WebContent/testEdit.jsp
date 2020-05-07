@@ -23,7 +23,7 @@
 				<div class="card-body">
 					<div class="row d-flex align-items-center">
 						<div class="col-md-3">
-							<img src="${pageContext.request.contextPath}/img/${cpu.image}" style="width:200px; height:200px;"/>
+							<img src="${cpu.image}" style="width:200px; height:200px;"/>
 						</div>
 						<div class="col-md-9 pl-4">
 							<div class="form-group row">
@@ -90,8 +90,12 @@
 							</li>
 							<li class="list-group-item">
 								<div class="mb-3">
-									<h6>Number of Threads</h6>
-									<input type="number" class="form-control" name="thread" value="${cpu.thread}">
+									<h6>Multi-Thread</h6>
+									<select id="multithread" name="multithread" class="form-control">
+										<option selected hidden disabled value="${cpu.multithread}"><c:out value="${cpu.multithread}"/></option>
+										<option value="1">Yes</option>
+										<option value="0">No</option>
+									</select>
 								</div>
 							</li>
 							<li class="list-group-item">

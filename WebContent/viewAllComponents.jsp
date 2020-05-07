@@ -12,7 +12,7 @@
 <div class="container-fluid">
 <div class="row">
 <%@include file="sidebar.jsp"%>
-<div class="col-10 bg-secondary">
+<div class="col-10">
 	<div>
 		<c:choose>
 		<c:when test="${type == 'CPU'}">
@@ -27,7 +27,7 @@
 					<th>Base Clock</th>
 					<th>Max Clock</th>
 					<th>Core Count</th>
-					<th>Thread</th>
+					<th>Multi-Thread</th>
 					<th>Wattage</th>
 					<th>Price</th>
 					<th>Action</th>
@@ -37,7 +37,7 @@
 			<c:forEach items="${cpus}" var="cpus">
 			<tr>
 				<td><c:out value="${cpus.id}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${cpus.image}"/></td>
+				<td><img src="${cpus.image}"/></td>
 				<td>
 					<a href="ComponentController?action=viewCompById&id=${cpus.id}">
 						<c:out value="${cpus.brand}" /> <c:out value="${cpus.model}" />
@@ -47,7 +47,7 @@
 				<td><c:out value="${cpus.base_clock}" /> Ghz</td>
 				<td><c:out value="${cpus.max_clock}" /> Ghz</td>
 				<td><c:out value="${cpus.num_core}" /></td>
-				<td><c:out value="${cpus.thread}" /></td>
+				<td><c:out value="${cpus.multithread}" /></td>
 				<td><c:out value="${cpus.wattage}" /> Watt</td>
 				<td>RM<c:out value="${cpus.price}" /></td>
 				<td class="">
@@ -81,14 +81,14 @@
 			<c:forEach items="${gpus}" var="gpus">
 			<tr>
 				<td><c:out value="${gpus.id}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${gpus.image}"/></td>
+				<td><img src="${gpus.image}"/></td>
 				<td>
 					<a href="ComponentController?action=viewCompById&id=${gpus.id}">
 						<c:out value="${gpus.brand}" /> <c:out value="${gpus.model}" />
 					</a>
 				</td>
 				<td><c:out value="${gpus.chipset}" /></td>
-				<td><c:out value="${gpus.num_vram}" />GB <c:out value="${gpus.vram_type}" /></td>
+				<td><c:out value="${gpus.num_vram}" />GB</td>
 				<td><c:out value="${gpus.core_clock}" /> Mhz</td>
 				<td><c:out value="${gpus.color}" /></td>
 				<td><c:out value="${gpus.wattage}" /> Watt</td>
@@ -113,7 +113,6 @@
 					<th>Name</th>
 					<th>Form Factor</th>
 					<th>Socket</th>
-					<th>Supported Memory</th>
 					<th>Num. of RAM Slot</th>
 					<th>Maximum Memory</th>
 					<th>Color</th>
@@ -125,7 +124,7 @@
 			<c:forEach items="${mobos}" var="mobos">
 			<tr>
 				<td><c:out value="${mobos.id}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${mobos.image}"/></td>
+				<td><img src="${mobos.image}"/></td>
 				<td>
 					<a href="ComponentController?action=viewCompById&id=${mobos.id}">
 						<c:out value="${mobos.brand}" /> <c:out value="${mobos.model}" />
@@ -133,7 +132,6 @@
 				</td>
 				<td><c:out value="${mobos.formfactor}" /></td>
 				<td><c:out value="${mobos.socket}" /></td>
-				<td><c:out value="${mobos.memory_type}" /></td>
 				<td><c:out value="${mobos.memory_slot}" /></td>
 				<td><c:out value="${mobos.max_memory}" /></td>
 				<td><c:out value="${mobos.color}" /></td>
@@ -168,7 +166,7 @@
 			<c:forEach items="${rams}" var="rams">
 			<tr>
 				<td><c:out value="${rams.id}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${rams.image}"/></td>
+				<td><img src="${rams.image}"/></td>
 				<td>
 					<a href="ComponentController?action=viewCompById&id=${rams.id}">
 						<c:out value="${rams.brand}" /> <c:out value="${rams.model}" />
@@ -210,7 +208,7 @@
 			<c:forEach items="${stors}" var="stors">
 			<tr>
 				<td><c:out value="${stors.id}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${stors.image}"/></td>
+				<td><img src="${stors.image}"/></td>
 				<td>
 					<a href="ComponentController?action=viewCompById&id=${stors.id}">
 						<c:out value="${stors.brand}" /> <c:out value="${stors.model}" />
@@ -252,14 +250,14 @@
 			<c:forEach items="${psus}" var="psus">
 			<tr>
 				<td><c:out value="${psus.id}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${psus.image}"/></td>
+				<td><img src="${psus.image}"/></td>
 				<td>
 					<a href="ComponentController?action=viewCompById&id=${psus.id}">
 						<c:out value="${psus.brand}" /> <c:out value="${psus.model}" />
 					</a>
 				</td>
 				<td><c:out value="${psus.wattage}" /> Watt</td>
-				<td><c:out value="${psus.psu_type}" /></td>
+				<td><c:out value="${psus.modularity}" /></td>
 				<td><c:out value="${psus.efficiency}" /></td>
 				<td><c:out value="${psus.color}" /></td>
 				<td>RM<c:out value="${psus.price}" /></td>
@@ -294,7 +292,7 @@
 			<c:forEach items="${cases}" var="cases">
 			<tr>
 				<td><c:out value="${cases.id}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${cases.image}"/></td>
+				<td><img src="${cases.image}"/></td>
 				<td>
 					<a href="ComponentController?action=viewCompById&id=${cases.id}">
 						<c:out value="${cases.brand}" /> <c:out value="${cases.model}" />

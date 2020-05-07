@@ -16,19 +16,15 @@ public class MotherboardDAO {
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
 	String event_description;
-	int id, length, width, height, mem_slot, max_mem;
-	String form, socket, mem_type, color, imageName;
+	int id, mem_slot, max_mem;
+	String form, socket, color, imageName;
 
 	//new mobo
 	public void add(Motherboard mobo){
 		
 		id = mobo.getId();
 		form = mobo.getFormfactor();
-		length = mobo.getLength();
-		width = mobo.getWidth();
-		height = mobo.getHeight();
 		socket = mobo.getSocket();
-		mem_type = mobo.getMemory_type();
 		mem_slot = mobo.getMemory_slot();
 		max_mem = mobo.getMax_memory();
 		color = mobo.getColor();
@@ -37,17 +33,13 @@ public class MotherboardDAO {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			
-			ps=currentCon.prepareStatement("insert into motherboard (id, formfactor, length, width, height, socket, memory_type, memory_slot, max_memory, color) values (?,?,?,?,?,?,?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into motherboard (id, formfactor, socket, memory_slot, max_memory, color) values (?,?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, form);
-			ps.setInt(3, length);
-			ps.setInt(4, width);
-			ps.setInt(5, height);
-			ps.setString(6, socket);
-			ps.setString(7, mem_type);
-			ps.setInt(8, mem_slot);
-			ps.setInt(9, max_mem);
-			ps.setString(10, color);
+			ps.setString(3, socket);
+			ps.setInt(4, mem_slot);
+			ps.setInt(5, max_mem);
+			ps.setString(6, color);
 			ps.executeUpdate();
 			
 			ps.close();
@@ -81,16 +73,12 @@ public class MotherboardDAO {
 
 		id = mobo.getId();
 		form = mobo.getFormfactor();
-		length = mobo.getLength();
-		width = mobo.getWidth();
-		height = mobo.getHeight();
 		socket = mobo.getSocket();
-		mem_type = mobo.getMemory_type();
 		mem_slot = mobo.getMemory_slot();
 		max_mem = mobo.getMax_memory();
 		color = mobo.getColor();
 		
-		String q = "UPDATE motherboard SET formfactor='"+form+"', length='"+length+"', width='"+width+"', height='"+height+"', socket='"+socket+"', memory_type='"+mem_type+"', memory_slot='"+mem_slot+"', max_memory='"+max_mem+"', color='"+color+"' WHERE id='"+id+"'";
+		String q = "UPDATE motherboard SET formfactor='"+form+"', socket='"+socket+"', memory_slot='"+mem_slot+"', max_memory='"+max_mem+"', color='"+color+"' WHERE id='"+id+"'";
 
 		try {
 
@@ -128,11 +116,7 @@ public class MotherboardDAO {
 				mobo.setImage(imageName);
 				mobo.setType(rs.getString("type"));
 				mobo.setFormfactor(rs.getString("formfactor"));
-            	mobo.setLength(rs.getInt("length"));
-            	mobo.setWidth(rs.getInt("width"));
-            	mobo.setHeight(rs.getInt("height"));
             	mobo.setSocket(rs.getString("socket"));
-            	mobo.setMemory_type(rs.getString("memory_type"));
             	mobo.setMemory_slot(rs.getInt("memory_slot"));
             	mobo.setMax_memory(rs.getInt("max_memory"));
             	mobo.setColor(rs.getString("color"));
@@ -169,11 +153,7 @@ public class MotherboardDAO {
 				mobo.setImage(imageName);
 				mobo.setType(rs.getString("type"));
 				mobo.setFormfactor(rs.getString("formfactor"));
-            	mobo.setLength(rs.getInt("length"));
-            	mobo.setWidth(rs.getInt("width"));
-            	mobo.setHeight(rs.getInt("height"));
             	mobo.setSocket(rs.getString("socket"));
-            	mobo.setMemory_type(rs.getString("memory_type"));
             	mobo.setMemory_slot(rs.getInt("memory_slot"));
             	mobo.setMax_memory(rs.getInt("max_memory"));
             	mobo.setColor(rs.getString("color"));

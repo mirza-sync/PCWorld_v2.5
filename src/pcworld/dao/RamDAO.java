@@ -15,8 +15,8 @@ public class RamDAO {
 	static ResultSet rs = null;
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
-	int id, capacity, speed, module;
-	String ram_type, color, imageName;
+	int id, capacity, speed;
+	String ram_type, module, color, imageName;
 
 	//new ram
 	public void add(RAM ram){
@@ -37,7 +37,7 @@ public class RamDAO {
 			ps.setInt(2, capacity);
 			ps.setString(3, ram_type);
 			ps.setInt(4, speed);
-			ps.setInt(5, module);
+			ps.setString(5, module);
 			ps.setString(6, color);
 			ps.executeUpdate();
 			
@@ -124,7 +124,7 @@ public class RamDAO {
             	ram.setCapacity(rs.getInt("capacity"));
             	ram.setRam_type(rs.getString("ram_type"));
             	ram.setSpeed(rs.getInt("speed"));
-            	ram.setModule(rs.getInt("module"));
+            	ram.setModule(rs.getString("module"));
             	ram.setColor(rs.getString("color"));
             	
 				rams.add(ram);
@@ -191,7 +191,7 @@ public class RamDAO {
             	ram.setCapacity(rs.getInt("capacity"));
             	ram.setRam_type(rs.getString("ram_type"));
             	ram.setSpeed(rs.getInt("speed"));
-            	ram.setModule(rs.getInt("module"));
+            	ram.setModule(rs.getString("module"));
             	ram.setColor(rs.getString("color"));
            	}
            

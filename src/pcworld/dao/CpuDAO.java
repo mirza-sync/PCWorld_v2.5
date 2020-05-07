@@ -16,7 +16,7 @@ public class CpuDAO {
 	static ResultSet rs = null;
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
-	int id, core, thread, watt;
+	int id, core, multithread, watt;
 	float base_clock, max_clock;
 	String socket, imageName;
 
@@ -28,20 +28,20 @@ public class CpuDAO {
 		base_clock = cpu.getBase_clock();
 		max_clock = cpu.getMax_clock();
 		core = cpu.getNum_core();
-		thread = cpu.getThread();
+		multithread = cpu.getMultithread();
 		watt = cpu.getWattage();
 		
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
            						
-			ps=currentCon.prepareStatement("insert into cpu (id, socket, base_clock, max_clock, num_core, thread, wattage) values (?,?,?,?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into cpu (id, socket, base_clock, max_clock, num_core, multithread, wattage) values (?,?,?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, socket);
 			ps.setFloat(3, base_clock);
 			ps.setFloat(4, max_clock);
 			ps.setInt(5, core);
-			ps.setInt(6, thread);
+			ps.setInt(6, multithread);
 			ps.setInt(7, watt);
 			ps.executeUpdate();
 			
@@ -81,10 +81,10 @@ public class CpuDAO {
 		base_clock = cpu.getBase_clock();
 		max_clock = cpu.getMax_clock();
 		core = cpu.getNum_core();
-		thread = cpu.getThread();
+		multithread = cpu.getMultithread();
 		watt = cpu.getWattage();
 		
-		String q = "UPDATE cpu SET socket = '"+socket+"', base_clock = '"+base_clock+"', max_clock = '"+max_clock+"', num_core = '"+core+"', thread = '"+thread+"', wattage = '"+watt+"' WHERE id = '"+id+"'";
+		String q = "UPDATE cpu SET socket = '"+socket+"', base_clock = '"+base_clock+"', max_clock = '"+max_clock+"', num_core = '"+core+"', multithread = '"+multithread+"', wattage = '"+watt+"' WHERE id = '"+id+"'";
 		
 		System.out.println("Update query : "+q);
 		
@@ -123,6 +123,7 @@ public class CpuDAO {
 
 				cpu.setId(rs.getInt("id"));
 				cpu.setBrand(rs.getString("brand"));
+				System.out.println("Brand : "+cpu.getBrand());
 				cpu.setModel(rs.getString("model"));
 				cpu.setPrice(rs.getDouble("price"));
 				cpu.setImage(imageName);
@@ -131,8 +132,9 @@ public class CpuDAO {
             	cpu.setBase_clock(rs.getFloat("base_clock"));
             	cpu.setMax_clock(rs.getFloat("max_clock"));
             	cpu.setNum_core(rs.getInt("num_core"));
-            	cpu.setThread(rs.getInt("thread"));
+            	cpu.setMultithread(rs.getInt("multithread"));
             	cpu.setWattage(rs.getInt("wattage"));
+            	System.out.println("Multi : "+cpu.getMultithread());
             	
 				cpus.add(cpu);
 			}
@@ -199,7 +201,7 @@ public class CpuDAO {
             	cpu.setBase_clock(rs.getFloat("base_clock"));
             	cpu.setMax_clock(rs.getFloat("max_clock"));
             	cpu.setNum_core(rs.getInt("num_core"));
-            	cpu.setThread(rs.getInt("thread"));
+            	cpu.setMultithread(rs.getInt("multithread"));
             	cpu.setNum_core(rs.getInt("num_core"));
             	cpu.setWattage(rs.getInt("wattage"));
            	}

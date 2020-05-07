@@ -16,7 +16,7 @@ public class CasingDAO {
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
 	String event_description;
-	int id, length, width, height;
+	int id;
 	String form, color, imageName;
 
 	//new casing
@@ -24,22 +24,16 @@ public class CasingDAO {
 		
 		id = casing.getId();
 		form = casing.getForm();
-		length = casing.getLength();
-		width = casing.getWidth();
-		height = casing.getHeight();
 		color = casing.getColor();
 		
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			
-			ps=currentCon.prepareStatement("insert into Casing (id, formfactor, length, width, height, color) values (?,?,?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into Casing (id, formfactor, color) values (?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, form);
-			ps.setInt(3, length);
-			ps.setInt(4, width);
-			ps.setInt(5, height);
-			ps.setString(6, color);
+			ps.setString(3, color);
 			ps.executeUpdate();
 			
 			ps.close();
@@ -73,12 +67,9 @@ public class CasingDAO {
 
 		id = casing.getId();
 		form = casing.getForm();
-		length = casing.getLength();
-		width = casing.getWidth();
-		height = casing.getHeight();
 		color = casing.getColor();
 		
-		String q = "UPDATE Casing SET formfactor='"+form+"', length='"+length+"', width='"+width+"', height='"+height+"', color='"+color+"' WHERE id='"+id+"'";
+		String q = "UPDATE Casing SET formfactor='"+form+"', color='"+color+"' WHERE id='"+id+"'";
 
 		try {
 
@@ -116,9 +107,6 @@ public class CasingDAO {
 				casing.setImage(imageName);
 				casing.setType(rs.getString("type"));
 				casing.setForm(rs.getString("formfactor"));
-            	casing.setLength(rs.getInt("length"));
-            	casing.setWidth(rs.getInt("width"));
-            	casing.setHeight(rs.getInt("height"));
             	casing.setColor(rs.getString("color"));
             	
             	casings.add(casing);
@@ -153,9 +141,6 @@ public class CasingDAO {
 				casing.setImage(imageName);
 				casing.setType(rs.getString("type"));
 				casing.setForm(rs.getString("formfactor"));
-            	casing.setLength(rs.getInt("length"));
-            	casing.setWidth(rs.getInt("width"));
-            	casing.setHeight(rs.getInt("height"));
             	casing.setColor(rs.getString("color"));
            	}
            

@@ -2,7 +2,6 @@ package pcworld.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +14,6 @@ import javax.servlet.http.Part;
 
 import pcworld.dao.CasingDAO;
 import pcworld.dao.ComponentDAO;
-import pcworld.dao.CoolerDAO;
 import pcworld.dao.CpuDAO;
 import pcworld.dao.GpuDAO;
 import pcworld.dao.MotherboardDAO;
@@ -25,7 +23,6 @@ import pcworld.dao.StorageDAO;
 import pcworld.model.CPU;
 import pcworld.model.Casing;
 import pcworld.model.Components;
-import pcworld.model.Cooler;
 import pcworld.model.GPU;
 import pcworld.model.Input;
 import pcworld.model.Motherboard;
@@ -54,7 +51,6 @@ public class ComponentController extends HttpServlet {
 	StorageDAO storagedao = new StorageDAO();
 	PsuDAO psudao = new PsuDAO();
 	CasingDAO casingdao = new CasingDAO();
-	CoolerDAO coolerdao = new CoolerDAO();
 	
 	String forward = "";
 	
@@ -244,42 +240,33 @@ public class ComponentController extends HttpServlet {
 				float base_clock = Float.parseFloat(request.getParameter("base_clock"));
 				float max_clock = Float.parseFloat(request.getParameter("max_clock"));
 				int num_core = Integer.parseInt(request.getParameter("num_core"));
-				int thread = Integer.parseInt(request.getParameter("thread"));
+				int multithread = Integer.parseInt(request.getParameter("multithread"));
 				int watt = Integer.parseInt(request.getParameter("cpu_watt"));
-				CPU cpu = new CPU(comp_id, socket, base_clock, max_clock, num_core, thread, watt);
+				CPU cpu = new CPU(comp_id, socket, base_clock, max_clock, num_core, multithread, watt);
 				cpudao.add(cpu);
 			}
 			else if (comp.getType().equalsIgnoreCase("GPU")){
 				String chipset = request.getParameter("chipset");
 				int num_vram = Integer.parseInt(request.getParameter("num_vram"));
-				String vram_type = request.getParameter("vram_type");
-				int length = Integer.parseInt(request.getParameter("gpu_length"));
-				int width = Integer.parseInt(request.getParameter("gpu_width"));
-				int height = Integer.parseInt(request.getParameter("gpu_height"));
 				String color = request.getParameter("gpu_color");
 				int core_clock = Integer.parseInt(request.getParameter("core_clock"));
-				int watt = Integer.parseInt(request.getParameter("gpu_watt"));
-				GPU gpu = new GPU(comp_id, chipset, num_vram, vram_type, length, width, height, color, core_clock, watt);
+				GPU gpu = new GPU(comp_id, chipset, num_vram, color, core_clock);
 				gpudao.add(gpu);
 			}
 			else if (comp.getType().equalsIgnoreCase("Motherboard")){
 				String form = request.getParameter("mobo_form");
-				int length = Integer.parseInt(request.getParameter("mobo_length"));
-				int width = Integer.parseInt(request.getParameter("mobo_width"));
-				int height = Integer.parseInt(request.getParameter("mobo_height"));
 				String socket = request.getParameter("mobo_socket");
-				String memory_type = request.getParameter("mem_type");
 				int memory_slot = Integer.parseInt(request.getParameter("mem_slot"));
 				int max_memory = Integer.parseInt(request.getParameter("max_mem"));
 				String color = request.getParameter("mobo_color");
-				Motherboard mobo = new Motherboard(comp_id, form, length, width, height, socket, memory_type, memory_slot, max_memory, color);
+				Motherboard mobo = new Motherboard(comp_id, form, socket, memory_slot, max_memory, color);
 				mobodao.add(mobo);
 			}
 			else if(comp.getType().equalsIgnoreCase("RAM")){
 				int capacity = Integer.parseInt(request.getParameter("ram_capacity"));
 				String ram_type = request.getParameter("ram_type");
 				int speed = Integer.parseInt(request.getParameter("speed"));
-				int module = Integer.parseInt(request.getParameter("module"));
+				String module = request.getParameter("module");
 				String color = request.getParameter("ram_color");
 				RAM ram = new RAM(comp_id, capacity, ram_type, speed, module, color);
 				ramdao.add(ram);
@@ -287,11 +274,9 @@ public class ComponentController extends HttpServlet {
 			else if (comp.getType().equalsIgnoreCase("Storage")){
 				System.out.println("ID in controller: "+comp_id);
 				String storage_type = request.getParameter("storage_type");
-				int capacity = Integer.parseInt(request.getParameter("storage_capacity"));
+				String capacity = request.getParameter("storage_capacity");
 				String form = request.getParameter("storage_form");
-				int read_speed = Integer.parseInt(request.getParameter("r_speed"));
-				int write_speed = Integer.parseInt(request.getParameter("w_speed"));
-				Storage storage = new Storage(comp_id, storage_type, capacity, form, read_speed, write_speed);
+				Storage storage = new Storage(comp_id, storage_type, capacity, form);
 				System.out.println("Storage ID before passed : "+storage.getId());
 				storagedao.add(storage);
 			}
@@ -303,22 +288,10 @@ public class ComponentController extends HttpServlet {
 				PSU psu = new PSU(comp_id, wattage, psu_type, efficiency, color);
 				psudao.add(psu);
 			}
-			else if (comp.getType().equalsIgnoreCase("Cooler")){
-				String cooler_type = request.getParameter("cooler_type");
-				int length = Integer.parseInt(request.getParameter("cooler_length"));
-				int width = Integer.parseInt(request.getParameter("cooler_width"));
-				int height = Integer.parseInt(request.getParameter("cooler_height"));
-				String color = request.getParameter("cooler_color");
-				Cooler cooler = new Cooler(comp_id, cooler_type, length, width, height, color);
-				coolerdao.add(cooler);
-			}
 			else if (comp.getType().equalsIgnoreCase("Casing")){
 				String form = request.getParameter("case_form");
-				int length = Integer.parseInt(request.getParameter("case_length"));
-				int width = Integer.parseInt(request.getParameter("case_width"));
-				int height = Integer.parseInt(request.getParameter("case_height"));
 				String color = request.getParameter("case_color");
-				Casing casing = new Casing(comp_id, form, length, width, height, color);
+				Casing casing = new Casing(comp_id, form, color);
 				casingdao.add(casing);
 			}
 			forward = ADD_COMPONENT;
@@ -339,53 +312,42 @@ public class ComponentController extends HttpServlet {
 				float base_clock = Float.parseFloat(request.getParameter("base_clock"));
 				float max_clock = Float.parseFloat(request.getParameter("max_clock"));
 				int num_core = Integer.parseInt(request.getParameter("num_core"));
-				int thread = Integer.parseInt(request.getParameter("thread"));
+				int multithread = Integer.parseInt(request.getParameter("multithread"));
 				int watt = Integer.parseInt(request.getParameter("cpu_watt"));
-				CPU cpu = new CPU(comp_id, socket, base_clock, max_clock, num_core, thread, watt);
+				CPU cpu = new CPU(comp_id, socket, base_clock, max_clock, num_core, multithread, watt);
 				cpudao.update(cpu);
 			}
 			else if (comp.getType().equalsIgnoreCase("GPU")){
 				String chipset = request.getParameter("chipset");
 				int num_vram = Integer.parseInt(request.getParameter("num_vram"));
-				String vram_type = request.getParameter("vram_type");
-				int length = Integer.parseInt(request.getParameter("gpu_length"));
-				int width = Integer.parseInt(request.getParameter("gpu_width"));
-				int height = Integer.parseInt(request.getParameter("gpu_height"));
 				String color = request.getParameter("gpu_color");
 				int core_clock = Integer.parseInt(request.getParameter("core_clock"));
-				int watt = Integer.parseInt(request.getParameter("gpu_watt"));
-				GPU gpu = new GPU(comp_id, chipset, num_vram, vram_type, length, width, height, color, core_clock, watt);
+				GPU gpu = new GPU(comp_id, chipset, num_vram, color, core_clock);
 				gpudao.update(gpu);
 			}
 			else if (comp.getType().equalsIgnoreCase("Motherboard")){
 				String form = request.getParameter("mobo_form");
-				int length = Integer.parseInt(request.getParameter("mobo_length"));
-				int width = Integer.parseInt(request.getParameter("mobo_width"));
-				int height = Integer.parseInt(request.getParameter("mobo_height"));
 				String socket = request.getParameter("mobo_socket");
-				String memory_type = request.getParameter("mem_type");
 				int memory_slot = Integer.parseInt(request.getParameter("mem_slot"));
 				int max_memory = Integer.parseInt(request.getParameter("max_mem"));
 				String color = request.getParameter("mobo_color");
-				Motherboard mobo = new Motherboard(comp_id, form, length, width, height, socket, memory_type, memory_slot, max_memory, color);
+				Motherboard mobo = new Motherboard(comp_id, form, socket, memory_slot, max_memory, color);
 				mobodao.update(mobo);
 			}
 			else if(comp.getType().equalsIgnoreCase("RAM")){
 				int capacity = Integer.parseInt(request.getParameter("ram_capacity"));
 				String ram_type = request.getParameter("ram_type");
 				int speed = Integer.parseInt(request.getParameter("speed"));
-				int module = Integer.parseInt(request.getParameter("module"));
+				String module = request.getParameter("module");
 				String color = request.getParameter("ram_color");
 				RAM ram = new RAM(comp_id, capacity, ram_type, speed, module, color);
 				ramdao.update(ram);
 			}
 			else if (comp.getType().equalsIgnoreCase("Storage")){
 				String storage_type = request.getParameter("storage_type");
-				int capacity = Integer.parseInt(request.getParameter("storage_capacity"));
+				String capacity = request.getParameter("storage_capacity");
 				String form = request.getParameter("storage_form");
-				int read_speed = Integer.parseInt(request.getParameter("r_speed"));
-				int write_speed = Integer.parseInt(request.getParameter("w_speed"));
-				Storage storage = new Storage(comp_id, storage_type, capacity, form, read_speed, write_speed);
+				Storage storage = new Storage(comp_id, storage_type, capacity, form);
 				storagedao.update(storage);
 			}
 			else if (comp.getType().equalsIgnoreCase("PSU")){
@@ -396,22 +358,10 @@ public class ComponentController extends HttpServlet {
 				PSU psu = new PSU(comp_id, wattage, psu_type, efficiency, color);
 				psudao.update(psu);
 			}
-			else if (comp.getType().equalsIgnoreCase("Cooler")){
-				String cooler_type = request.getParameter("cooler_type");
-				int length = Integer.parseInt(request.getParameter("cooler_length"));
-				int width = Integer.parseInt(request.getParameter("cooler_width"));
-				int height = Integer.parseInt(request.getParameter("cooler_height"));
-				String color = request.getParameter("cooler_color");
-				Cooler cooler = new Cooler(comp_id, cooler_type, length, width, height, color);
-				coolerdao.update(cooler);
-			}
 			else if (comp.getType().equalsIgnoreCase("Casing")){
 				String form = request.getParameter("case_form");
-				int length = Integer.parseInt(request.getParameter("case_length"));
-				int width = Integer.parseInt(request.getParameter("case_width"));
-				int height = Integer.parseInt(request.getParameter("case_height"));
 				String color = request.getParameter("case_color");
-				Casing casing = new Casing(comp_id, form, length, width, height, color);
+				Casing casing = new Casing(comp_id, form, color);
 				casingdao.update(casing);
 			}
 			forward = MAIN;

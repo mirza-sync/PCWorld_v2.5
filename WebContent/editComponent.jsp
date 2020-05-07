@@ -85,7 +85,11 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Number of Threads</h6>
-										<input type="number" class="form-control" name="thread" value="${comp.thread}">
+										<select id="multithread" name="multithread" class="form-control">
+											<option selected hidden disabled value="${comp.multithread}"><c:out value="${comp.multithread}"></c:out></option>
+											<option value="1">Yes</option>
+											<option value="0">No</option>
+										</select>
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -112,30 +116,6 @@
 									<div class="mb-3">
 										<h6>Number of VRAM</h6>
 										<input type="text" class="form-control" name="num_vram" placeholder="Enter Number of VRAM">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Type of VRAM</h6>
-										<input type="text" class="form-control" name="vram_type" placeholder="DDR4, DDR5, etc">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Length</h6>
-										<input type="number" class="form-control" value="0" name="gpu_length" placeholder="Enter length">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Width</h6>
-										<input type="number" class="form-control" value="0" name="gpu_width" placeholder="Enter width">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Height</h6>
-										<input type="number" class="form-control" value="0" name="gpu_height" placeholder="Enter height">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -173,32 +153,8 @@
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
-										<h6>Length</h6>
-										<input type="number" class="form-control" value="0" name="mobo_length" placeholder="Enter length">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Width</h6>
-										<input type="number" class="form-control" value="0" name="mobo_width" placeholder="Enter width">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Height</h6>
-										<input type="number" class="form-control" value="0" name="mobo_height" placeholder="Enter height">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
 										<h6>Socket</h6>
 										<input type="text" class="form-control" name="mobo_socket" placeholder="AM4, LG1150, etc">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Supported Memory Type</h6>
-										<input type="text" class="form-control" name="mem_type" placeholder="Enter supported memory">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -311,10 +267,10 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>PSU type</h6>
-										<select id="psu_type" name="psu_type" class="form-control">
-											<option value="Non Modular">Non Modular</option>
-											<option value="Semi Modular">Semi Modular</option>
-											<option value="Fully Modular">Fully Modular</option>
+										<select id="modularity" name="modularity" class="form-control">
+											<option value="No">No</option>
+											<option value="Semi">Semi</option>
+											<option value="Full">Full</option>
 										</select>
 									</div>
 								</li>

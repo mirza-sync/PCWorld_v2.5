@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -13,11 +14,11 @@
 <div class="row">
 <%@include file="sidebar.jsp"%>
 <div class="col-md-10">
-	<div>
+	<div class="my-5">
 		<ul class="list-group mb-3">
 			<li id="c1" class="list-group-item d-flex justify-content-between">
 				<div>
-					<img src="${pageContext.request.contextPath}/img/${cpu.image}" style="width:80px; height:80px"/>
+					<img src="${pc.cpu.image}" style="width:80px; height:80px"/>
 				</div>
 				<div>
 					<div>Model : <c:out value="${pc.cpu.model}" /></div>
@@ -25,102 +26,134 @@
 					<div>Max Clock : <c:out value="${pc.cpu.max_clock}" /></div>
 				</div>
 				<div>
-					<div>Num. of Thread : <c:out value="${pc.cpu.thread}" /></div>
+					<div>Multi-Thread : <c:out value="${pc.cpu.multithread}" /></div>
 					<div>Price : <c:out value="${pc.cpu.price}" /></div>
 				</div>
 			</li>
-			<li class="list-group-item">
-				<div class="mb-3">
-					<h6>GPU</h6>
+			<li class="list-group-item d-flex justify-content-between">
+					<!-- <h6>GPU</h6> -->
 					<div>
-						<c:out value="${pc.gpu.model}" />
+						<img src="${pc.gpu.image}" style="width:80px; height:80px"/>
 					</div>
 					<div>
-						<c:out value="${pc.gpu.color}" />
-						<c:out value="${pc.gpu.core_clock}" />
+						<div>
+							<c:out value="${pc.gpu.model}" />
+						</div>
+						<div>
+							<c:out value="${pc.gpu.color}" />
+						</div>
 					</div>
-					<div class="float-right">
-						<c:out value="${pc.gpu.price}" />
+					<div>
+						<div>
+							<c:out value="${pc.gpu.core_clock}" />
+						</div>
+						<div class="float-right">
+							<c:out value="${pc.gpu.price}" />
+						</div>
 					</div>
-				</div>
 			</li>
-			<li class="list-group-item">
-				<div class="mb-3">
-					<h6>Motherboard</h6>
+			<li class="list-group-item d-flex justify-content-between">
+					<!-- <h6>Motherboard</h6> -->
 					<div>
-						<c:out value="${pc.mobo.model}" />
+						<img src="${pc.mobo.image}" style="width:80px; height:80px"/>
 					</div>
 					<div>
-						<c:out value="${pc.mobo.formfactor}" />
-						<c:out value="${pc.mobo.socket}" />
-						<c:out value="${pc.mobo.color}" />
+						<div>
+							<c:out value="${pc.mobo.model}" />
+						</div>
+						<div>
+							<c:out value="${pc.mobo.formfactor}" />
+						</div>
+						<div>
+							<c:out value="${pc.mobo.socket}" />
+						</div>
 					</div>
-					<div class="float-right">
-						<c:out value="${pc.mobo.price}" />
+					<div>
+						<div>
+							<c:out value="${pc.mobo.color}" />
+						</div>
+						<div class="float-right">
+							<c:out value="${pc.mobo.price}" />
+						</div>
 					</div>
-				</div>
 			</li>
-			<li class="list-group-item">
-				<div class="mb-3">
-					<h6>RAM</h6>
+			<li class="list-group-item d-flex justify-content-between">
+					<!-- <h6>RAM</h6> -->
 					<div>
-						<c:out value="${pc.ram.model}" />
+						<img src="${pc.ram.image}" style="width:80px; height:80px"/>
 					</div>
 					<div>
-						<c:out value="${pc.ram.color}" />
+						<div>
+							<c:out value="${pc.ram.model}" />
+						</div>
+						<div>
+							<c:out value="${pc.ram.color}" />
+						</div>
 					</div>
-					<div class="float-right">
-						<c:out value="${pc.ram.price}" />
+					<div>
+						<div class="float-right">
+							<c:out value="${pc.ram.price}" />
+						</div>
 					</div>
-				</div>
 			</li>
-			<li class="list-group-item">
-				<div class="mb-3">
-					<h6>Storage</h6>
+			<li class="list-group-item d-flex justify-content-between">
+					<!-- <h6>Storage</h6> -->
 					<div>
-						<c:out value="${pc.storage.model}" />
+						<img src="${pc.storage.image}" style="width:80px; height:80px"/>
 					</div>
 					<div>
-						<c:out value="${pc.storage.storage_type}" />
+						<div>
+							<c:out value="${pc.storage.model}" />
+						</div>
+						<div>
+							<c:out value="${pc.storage.storage_type}" />
+						</div>
 					</div>
 					<div class="float-right">
 						<c:out value="${pc.storage.price}" />
 					</div>
-				</div>
 			</li>
-			<li class="list-group-item">
-				<div class="mb-3">
-					<h6>PSU</h6>
+			<li class="list-group-item d-flex justify-content-between">
+					<!-- <h6>PSU</h6> -->
 					<div>
-						<c:out value="${pc.psu.model}" />
+						<img src="${pc.psu.image}" style="width:80px; height:80px"/>
 					</div>
 					<div>
-						<c:out value="${pc.psu.wattage}" />
+						<div>
+							<c:out value="${pc.psu.model}" />
+						</div>
+						<div>
+							<c:out value="${pc.psu.wattage}" />
+						</div>
 					</div>
 					<div class="float-right">
 						<c:out value="${pc.psu.price}" />
 					</div>
-				</div>
 			</li>
-			<li class="list-group-item">
-				<div class="mb-3">
-					<h6>Casing</h6>
+			<li class="list-group-item d-flex justify-content-between">
+					<!-- <h6>Casing</h6> -->
 					<div>
-						<c:out value="${pc.casing.model}" />
+						<img src="${pc.casing.image}" style="width:80px; height:80px"/>
 					</div>
 					<div>
-						<c:out value="${pc.casing.color}" />
-						<c:out value="${pc.casing.form}" />
+						<div>
+							<c:out value="${pc.casing.model}" />
+						</div>
+						<div>
+							<c:out value="${pc.casing.color}" />
+							<c:out value="${pc.casing.form}" />
+						</div>
 					</div>
 					<div class="float-right">
 						<c:out value="${pc.casing.price}" />
 					</div>
-				</div>
 			</li>
 		</ul>
 		<hr>
 	<div>
-		Total Price : <c:out value="${pc.totalPrice}" />
+		<strong>
+		Total Price : <fmt:formatNumber value="${pc.totalPrice}" minFractionDigits="2"/>
+		</strong>
 	</div>
 	<div id="ga"></div>
 	</div>

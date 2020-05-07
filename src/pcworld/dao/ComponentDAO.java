@@ -607,7 +607,7 @@ public class ComponentDAO {
 					if(((CPU)x.gene[0]).num_core >= 6){
 						fitness++;
 					}
-					if(((CPU)x.gene[0]).thread >= 6){
+					if(((CPU)x.gene[0]).multithread == 1){
 						fitness++;
 					}
 					if(((GPU)x.gene[1]).num_vram >= 4){
@@ -690,19 +690,19 @@ public class ComponentDAO {
 		else{
 			fitness--;
 		}
-		if(((Motherboard)x.gene[2]).memory_type.equals(((RAM)x.gene[3]).ram_type)){
-			fitness++;
-		}
-		else{
-			fitness--;
-		}
+//		if(((Motherboard)x.gene[2]).memory_type.equals(((RAM)x.gene[3]).ram_type)){
+//			fitness++;
+//		}
+//		else{
+//			fitness--;
+//		}
 		if(((Motherboard)x.gene[2]).max_memory <= ((RAM)x.gene[3]).capacity){
 			fitness++;
 		}
 		else{
 			fitness--;
 		}
-		if(((PSU)x.gene[5]).wattage >= (((CPU)x.gene[0]).wattage + ((GPU)x.gene[1]).wattage)){
+		if(((PSU)x.gene[5]).wattage >= (((CPU)x.gene[0]).wattage + 300)){
 			fitness++;
 		}
 		else{

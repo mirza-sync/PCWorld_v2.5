@@ -26,7 +26,7 @@
 					<th>Base Clock</th>
 					<th>Max Clock</th>
 					<th>Number of Cores</th>
-					<th>Thread</th>
+					<th>Multi-Thread</th>
 					<th>Wattage</th>
 					<th>Action</th>
 				</tr>
@@ -38,13 +38,13 @@
 				<td><c:out value="${cpus.id}" /></td>
 				<td><c:out value="${cpus.brand}" /></td>
 				<td><c:out value="${cpus.model}" /></td>
-				<td><img src="${pageContext.request.contextPath}/img/${cpus.image}"/></td>
+				<td><img src="${cpus.image}"/></td>
 				<td>RM<c:out value="${cpus.price}" /></td>
 				<td><c:out value="${cpus.socket}" /></td>
 				<td><c:out value="${cpus.base_clock}" /> Ghz</td>
 				<td><c:out value="${cpus.max_clock}" /> Ghz</td>
 				<td><c:out value="${cpus.num_core}" /></td>
-				<td><c:out value="${cpus.thread}" /></td>
+				<td><c:out value="${cpus.multithread}" /></td>
 				<td><c:out value="${cpus.wattage}" /> Watt</td>
 				<td>
 					<input type="hidden" name="action" value="showEdit">
@@ -82,7 +82,7 @@
 				<td><c:out value="${gpus.model}" /></td>
 				<td>RM<c:out value="${gpus.price}" /></td>
 				<td><c:out value="${gpus.chipset}" /></td>
-				<td><c:out value="${gpus.num_vram}" />GB <c:out value="${gpus.vram_type}" /></td>
+				<td><c:out value="${gpus.num_vram}" />GB</td>
 				<td><c:out value="${gpus.core_clock}" /> Mhz</td>
 				<td><c:out value="${gpus.color}" /></td>
 				<td><c:out value="${gpus.wattage}" /> Watt</td>
@@ -103,7 +103,6 @@
 					<th>Price</th>
 					<th>Form Factor</th>
 					<th>Socket</th>
-					<th>Supported Memory</th>
 					<th>Num. of RAM Slot</th>
 					<th>Maximum Memory</th>
 					<th>Color</th>
@@ -118,7 +117,6 @@
 				<td>RM<c:out value="${mobos.price}" /></td>
 				<td><c:out value="${mobos.formfactor}" /></td>
 				<td><c:out value="${mobos.socket}" /></td>
-				<td><c:out value="${mobos.memory_type}" /></td>
 				<td><c:out value="${mobos.memory_slot}" /></td>
 				<td><c:out value="${mobos.max_memory}" /></td>
 				<td><c:out value="${mobos.color}" /></td>

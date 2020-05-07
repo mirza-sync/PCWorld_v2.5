@@ -17,14 +17,14 @@ public class PsuDAO {
 	static java.sql.Statement stmt = null;
 	String event_description;
 	int id, watt;
-	String psu_type, eff, color, imageName;
+	String modularity, eff, color, imageName;
 
 	//new psu
 	public void add(PSU psu){
 		
 		id = psu.getId();
 		watt = psu.getWattage();
-		psu_type = psu.getPsu_type();
+		modularity = psu.getModularity();
 		eff = psu.getEfficiency();
 		color = psu.getColor();
 		
@@ -32,10 +32,10 @@ public class PsuDAO {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			
-			ps=currentCon.prepareStatement("insert into psu (id, wattage, psu_type, efficiency, color) values (?,?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into psu (id, wattage, modularity, efficiency, color) values (?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setInt(2, watt);
-			ps.setString(3, psu_type);
+			ps.setString(3, modularity);
 			ps.setString(4, eff);
 			ps.setString(5, color);
 			ps.executeUpdate();
@@ -71,11 +71,11 @@ public class PsuDAO {
 
 		id = psu.getId();
 		watt = psu.getWattage();
-		psu_type = psu.getPsu_type();
+		modularity = psu.getModularity();
 		eff = psu.getEfficiency();
 		color = psu.getColor();
 		
-		String q = "UPDATE psu SET wattage='"+watt+"', psu_type='"+psu_type+"', efficiency='"+eff+"',, color='"+color+"' WHERE id='"+id+"'";
+		String q = "UPDATE psu SET wattage='"+watt+"', modularity='"+modularity+"', efficiency='"+eff+"',, color='"+color+"' WHERE id='"+id+"'";
 
 		try {
 
@@ -113,7 +113,7 @@ public class PsuDAO {
 				psu.setImage(imageName);
 				psu.setType(rs.getString("type"));
 				psu.setWattage(rs.getInt("wattage"));
-				psu.setPsu_type(rs.getString("psu_type"));
+				psu.setModularity(rs.getString("modularity"));
 				psu.setEfficiency(rs.getString("efficiency"));
             	psu.setColor(rs.getString("color"));
             	
@@ -149,7 +149,7 @@ public class PsuDAO {
 				psu.setImage(imageName);
 				psu.setType(rs.getString("type"));
 				psu.setWattage(rs.getInt("wattage"));
-				psu.setPsu_type(rs.getString("psu_type"));
+				psu.setModularity(rs.getString("modularity"));
 				psu.setEfficiency(rs.getString("efficiency"));
             	psu.setColor(rs.getString("color"));
            	}

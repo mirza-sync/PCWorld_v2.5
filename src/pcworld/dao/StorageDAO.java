@@ -15,8 +15,8 @@ public class StorageDAO {
 	static ResultSet rs = null;
 	static PreparedStatement ps = null;
 	static java.sql.Statement stmt = null;
-	int id, capacity, r_speed, w_speed;
-	String storage_type, form, imageName;
+	int id;
+	String storage_type, capacity, form, imageName;
 
 	//new storage
 	public void add(Storage storage){
@@ -25,21 +25,17 @@ public class StorageDAO {
 		storage_type = storage.getStorage_type();
 		capacity = storage.getCapacity();
 		form = storage.getForm();
-		r_speed = storage.getRead_speed();
-		w_speed = storage.getWrite_speed();
 		
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			System.out.println("Storage ID : "+id);
            						
-			ps=currentCon.prepareStatement("insert into storage (id, storage_type, capacity, formfactor, read_speed, write_speed) values (?,?,?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into storage (id, storage_type, capacity, formfactor) values (?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, storage_type);
-			ps.setInt(3, capacity);
+			ps.setString(3, capacity);
 			ps.setString(4, form);
-			ps.setInt(5, r_speed);
-			ps.setInt(6, w_speed);
 			ps.executeUpdate();
 			
 			ps.close();
@@ -77,10 +73,8 @@ public class StorageDAO {
 		storage_type = storage.getStorage_type();
 		capacity = storage.getCapacity();
 		form = storage.getForm();
-		r_speed = storage.getRead_speed();
-		w_speed = storage.getWrite_speed();
 		
-		String q = "UPDATE storage SET storage_type = '"+storage_type+"',  capacity = '"+capacity+"', formfactor = '"+form+"',   read_speed = '"+r_speed+"', write_speed = '"+w_speed+"' WHERE id = '"+id+"'";
+		String q = "UPDATE storage SET storage_type = '"+storage_type+"',  capacity = '"+capacity+"', formfactor = '"+form+"' WHERE id = '"+id+"'";
 		
 		System.out.println("Update query : "+q);
 		
@@ -124,10 +118,8 @@ public class StorageDAO {
 				storage.setBrand(rs.getString("model"));
 				storage.setType(rs.getString("type"));
 				storage.setStorage_type(rs.getString("storage_type"));
-            	storage.setCapacity(rs.getInt("capacity"));
+            	storage.setCapacity(rs.getString("capacity"));
             	storage.setForm(rs.getString("formfactor"));
-            	storage.setRead_speed(rs.getInt("read_speed"));
-            	storage.setWrite_speed(rs.getInt("write_speed"));
             	
 				storages.add(storage);
 			}
@@ -189,10 +181,8 @@ public class StorageDAO {
             	storage.setImage(imageName);
             	storage.setType(rs.getString("type"));
             	storage.setStorage_type(rs.getString("storage_type"));
-            	storage.setCapacity(rs.getInt("capacity"));
+            	storage.setCapacity(rs.getString("capacity"));
             	storage.setForm(rs.getString("formfactor"));
-            	storage.setRead_speed(rs.getInt("read_speed"));
-            	storage.setWrite_speed(rs.getInt("write_speed"));
            	}
            
             else {

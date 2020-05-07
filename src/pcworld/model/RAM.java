@@ -5,13 +5,13 @@ public class RAM extends Components {
 	public int capacity;
 	public String ram_type;
 	public int speed;
-	public int module;
+	public String module;
 	public String color;
 	
 	public RAM() {
 		super();
 	}
-	public RAM(int id, int capacity, String ram_type, int speed, int module, String color) {
+	public RAM(int id, int capacity, String ram_type, int speed, String module, String color) {
 		super();
 		this.id = id;
 		this.capacity = capacity;
@@ -20,7 +20,7 @@ public class RAM extends Components {
 		this.module = module;
 		this.color = color;
 	}
-	public RAM(int id, String brand, String model, double price, String image, String type, int capacity, String ram_type, int speed, int module, String color) {
+	public RAM(int id, String brand, String model, double price, String image, String type, int capacity, String ram_type, int speed, String module, String color) {
 		super(id, brand, model, price, image, type);
 		this.id = id;
 		this.capacity = capacity;
@@ -54,10 +54,10 @@ public class RAM extends Components {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	public int getModule() {
+	public String getModule() {
 		return module;
 	}
-	public void setModule(int module) {
+	public void setModule(String module) {
 		this.module = module;
 	}
 	public String getColor() {
