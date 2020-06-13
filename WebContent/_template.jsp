@@ -9,10 +9,11 @@
 <title>Template</title>
 </head>
 <body>
-<div class="row">
-	<%@include file="sidebar.jsp"%>
-	<div class="row">
-	</div>
+<div class="container-fluid">
+<%@include file="sidebar.jsp"%>
+<div id="main" class="row">
 </div>
+</div>
+<script src="js/myjs.js"></script>
 </body>
 </html>

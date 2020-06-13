@@ -4,23 +4,23 @@ public class Storage extends Components {
 	public int id;
 	public String storage_type;
 	public String capacity;
-	public String form;
+	public String formfactor;
 	
 	public Storage() {
 		super();
 	}
-	public Storage(int id, String storage_type, String capacity, String form) {
+	public Storage(int id, String storage_type, String capacity, String formfactor) {
 		super();
 		this.id = id;
 		this.storage_type = storage_type;
 		this.capacity = capacity;
-		this.form = form;
+		this.formfactor = formfactor;
 	}
-	public Storage(int id, String brand, String model, double price, String image, String type, String storage_type, String capacity, String form) {
+	public Storage(int id, String brand, String model, double price, String image, String type, String storage_type, String capacity, String formfactor) {
 		super(id, brand, model, price, image, type);
 		this.storage_type = storage_type;
 		this.capacity = capacity;
-		this.form = form;
+		this.formfactor = formfactor;
 	}
 	
 	public int getId() {
@@ -48,10 +48,10 @@ public class Storage extends Components {
 	}
 
 	public String getForm() {
-		return form;
+		return formfactor;
 	}
 
-	public void setForm(String form) {
-		this.form = form;
+	public void setForm(String formfactor) {
+		this.formfactor = formfactor;
 	}
 }

@@ -9,10 +9,10 @@
 <title>View Components</title>
 </head>
 <body>
-<div class="container-fluid">
-<div class="row">
 <%@include file="sidebar.jsp"%>
-<div class="col-10">
+<div id="main">
+<div class="row">
+<div class="col-12">
 	<div>
 		<c:choose>
 		<c:when test="${type == 'CPU'}">
@@ -39,7 +39,7 @@
 				<td><c:out value="${cpus.id}" /></td>
 				<td><img src="${cpus.image}"/></td>
 				<td>
-					<a href="ComponentController?action=viewCompById&id=${cpus.id}">
+					<a href="ComponentController?action=viewCompById&id=${cpus.id}&type=${cpus.type}">
 						<c:out value="${cpus.brand}" /> <c:out value="${cpus.model}" />
 					</a>
 				</td>
@@ -50,9 +50,30 @@
 				<td><c:out value="${cpus.multithread}" /></td>
 				<td><c:out value="${cpus.wattage}" /> Watt</td>
 				<td>RM<c:out value="${cpus.price}" /></td>
-				<td class="">
-					<a href="ComponentController?action=showEdit&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary">E</a>
-					<a href="ComponentController?action=delete&id=${cpus.id}" class="btn btn-danger">X</a>
+				<td>
+					<c:choose>
+						<c:when test="${session.role == 'staff'}">
+							<a href="ComponentController?action=showEdit&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a href="ComponentController?action=delete&id=${cpus.id}&type=${cpus.type}" class="btn btn-danger btn-sm">
+								<i class="fa fa-times"></i>
+							</a>
+						</c:when>
+						<c:when test="${session.role == 'customer'}">
+							<a href="ComponentController?action=showEdit&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a href="OrderController?action=add&items=${cpus.id}&cust_id=${session.id}" class="btn btn-success btn-sm">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="ComponentController?action=showEdit&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			</c:forEach>
@@ -72,7 +93,6 @@
 					<th>VRAM</th>
 					<th>Core Clock</th>
 					<th>Color</th>
-					<th>Wattage</th>
 					<th>Price</th>
 					<th>Action</th>
 				</tr>
@@ -83,7 +103,7 @@
 				<td><c:out value="${gpus.id}" /></td>
 				<td><img src="${gpus.image}"/></td>
 				<td>
-					<a href="ComponentController?action=viewCompById&id=${gpus.id}">
+					<a href="ComponentController?action=viewCompById&id=${gpus.id}&type=${gpus.type}">
 						<c:out value="${gpus.brand}" /> <c:out value="${gpus.model}" />
 					</a>
 				</td>
@@ -91,11 +111,31 @@
 				<td><c:out value="${gpus.num_vram}" />GB</td>
 				<td><c:out value="${gpus.core_clock}" /> Mhz</td>
 				<td><c:out value="${gpus.color}" /></td>
-				<td><c:out value="${gpus.wattage}" /> Watt</td>
 				<td>RM<c:out value="${gpus.price}" /></td>
 				<td>
-					<a href="ComponentController?action=showEdit&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary">E</a>
-					<a href="ComponentController?action=delete&id=${gpus.id}" class="btn btn-danger">X</a>
+					<c:choose>
+						<c:when test="${session.role == 'staff'}">
+							<a href="ComponentController?action=showEdit&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a href="ComponentController?action=delete&id=${gpus.id}&type=${gpus.type}" class="btn btn-danger btn-sm">
+								<i class="fa fa-times"></i>
+							</a>
+						</c:when>
+						<c:when test="${session.role == 'customer'}">
+							<a href="ComponentController?action=showEdit&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a href="OrderController?action=add&id=${gpus.id}&type=${gpus.type}" class="btn btn-success btn-sm">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="ComponentController?action=showEdit&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			</c:forEach>
@@ -126,7 +166,7 @@
 				<td><c:out value="${mobos.id}" /></td>
 				<td><img src="${mobos.image}"/></td>
 				<td>
-					<a href="ComponentController?action=viewCompById&id=${mobos.id}">
+					<a href="ComponentController?action=viewCompById&id=${mobos.id}&type=${mobos.type}">
 						<c:out value="${mobos.brand}" /> <c:out value="${mobos.model}" />
 					</a>
 				</td>
@@ -137,8 +177,29 @@
 				<td><c:out value="${mobos.color}" /></td>
 				<td>RM<c:out value="${mobos.price}" /></td>
 				<td>
-					<a href="ComponentController?action=showEdit&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary">E</a>
-					<a href="ComponentController?action=delete&id=${mobos.id}" class="btn btn-danger">X</a>
+					<c:choose>
+						<c:when test="${session.role == 'staff'}">
+							<a href="ComponentController?action=showEdit&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a href="ComponentController?action=delete&id=${mobos.id}&type=${mobos.type}" class="btn btn-danger btn-sm">
+								<i class="fa fa-times"></i>
+							</a>
+						</c:when>
+						<c:when test="${session.role == 'customer'}">
+							<a href="ComponentController?action=showEdit&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a href="OrderController?action=add&id=${mobos.id}&type=${mobos.type}" class="btn btn-success btn-sm">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="ComponentController?action=showEdit&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			</c:forEach>
@@ -155,6 +216,7 @@
 					<th>Image</th>
 					<th>Name</th>
 					<th>Module</th>
+					<th>Capacity</th>
 					<th>RAM Type</th>
 					<th>RAM Speed</th>
 					<th>Color</th>
@@ -168,18 +230,40 @@
 				<td><c:out value="${rams.id}" /></td>
 				<td><img src="${rams.image}"/></td>
 				<td>
-					<a href="ComponentController?action=viewCompById&id=${rams.id}">
+					<a href="ComponentController?action=viewCompById&id=${rams.id}&type=${rams.type}">
 						<c:out value="${rams.brand}" /> <c:out value="${rams.model}" />
 					</a>
 				</td>
-				<td><c:out value="${rams.module}" /> x <c:out value="${rams.capacity}" />GB</td>
+				<td><c:out value="${rams.module}" /></td>
+				<td><c:out value="${rams.capacity}" />GB</td>
 				<td><c:out value="${rams.ram_type}" /></td>
 				<td><c:out value="${rams.speed}" /> Mhz</td>
 				<td><c:out value="${rams.color}" /></td>
 				<td>RM<c:out value="${rams.price}" /></td>
 				<td>
-					<a href="ComponentController?action=showEdit&id=${rams.id}&type=${rams.type}" class="btn btn-primary">E</a>
-					<a href="ComponentController?action=delete&id=${rams.id}" class="btn btn-danger">X</a>
+					<c:choose>
+						<c:when test="${session.role == 'staff'}">
+							<a href="ComponentController?action=showEdit&id=${rams.id}&type=${rams.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a href="ComponentController?action=delete&id=${rams.id}&type=${rams.type}" class="btn btn-danger btn-sm">
+								<i class="fa fa-times"></i>
+							</a>
+						</c:when>
+						<c:when test="${session.role == 'customer'}">
+							<a href="ComponentController?action=showEdit&id=${rams.id}&type=${rams.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a href="OrderController?action=add&id=${rams.id}&type=${rams.type}" class="btn btn-success btn-sm">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="ComponentController?action=showEdit&id=${rams.id}&type=${rams.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			</c:forEach>
@@ -198,8 +282,6 @@
 					<th>Type</th>
 					<th>Capacity</th>
 					<th>Form Factor</th>
-					<th>Read Speed</th>
-					<th>Write Speed</th>
 					<th>Price</th>
 					<th>Action</th>
 				</tr>
@@ -210,19 +292,38 @@
 				<td><c:out value="${stors.id}" /></td>
 				<td><img src="${stors.image}"/></td>
 				<td>
-					<a href="ComponentController?action=viewCompById&id=${stors.id}">
+					<a href="ComponentController?action=viewCompById&id=${stors.id}&type=${stors.type}">
 						<c:out value="${stors.brand}" /> <c:out value="${stors.model}" />
 					</a>
 				</td>
 				<td><c:out value="${stors.storage_type}" /></td>
-				<td><c:out value="${stors.capacity}" /> GB</td>
+				<td><c:out value="${stors.capacity}" /></td>
 				<td><c:out value="${stors.form}" /></td>
-				<td><c:out value="${stors.read_speed}" /> Mbps</td>
-				<td><c:out value="${stors.write_speed}" /> Mbps</td>
 				<td>RM<c:out value="${stors.price}" /></td>
 				<td>
-					<a href="ComponentController?action=showEdit&id=${stors.id}&type=${stors.type}" class="btn btn-primary">E</a>
-					<a href="ComponentController?action=delete&id=${stors.id}" class="btn btn-danger">X</a>
+					<c:choose>
+						<c:when test="${session.role == 'staff'}">
+							<a href="ComponentController?action=showEdit&id=${stors.id}&type=${stors.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a href="ComponentController?action=delete&id=${stors.id}&type=${stors.type}" class="btn btn-danger btn-sm">
+								<i class="fa fa-times"></i>
+							</a>
+						</c:when>
+						<c:when test="${session.role == 'customer'}">
+							<a href="ComponentController?action=showEdit&id=${stors.id}&type=${stors.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a href="OrderController?action=add&id=${stors.id}&type=${stors.type}" class="btn btn-success btn-sm">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="ComponentController?action=showEdit&id=${stors.id}&type=${stors.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			</c:forEach>
@@ -252,7 +353,7 @@
 				<td><c:out value="${psus.id}" /></td>
 				<td><img src="${psus.image}"/></td>
 				<td>
-					<a href="ComponentController?action=viewCompById&id=${psus.id}">
+					<a href="ComponentController?action=viewCompById&id=${psus.id}&type=${psus.type}">
 						<c:out value="${psus.brand}" /> <c:out value="${psus.model}" />
 					</a>
 				</td>
@@ -262,8 +363,29 @@
 				<td><c:out value="${psus.color}" /></td>
 				<td>RM<c:out value="${psus.price}" /></td>
 				<td>
-					<a href="ComponentController?action=showEdit&id=${psus.id}&type=${psus.type}" class="btn btn-primary">E</a>
-					<a href="ComponentController?action=delete&id=${psus.id}" class="btn btn-danger">X</a>
+					<c:choose>
+						<c:when test="${session.role == 'staff'}">
+							<a href="ComponentController?action=showEdit&id=${psus.id}&type=${psus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a href="ComponentController?action=delete&id=${psus.id}&type=${psus.type}" class="btn btn-danger btn-sm">
+								<i class="fa fa-times"></i>
+							</a>
+						</c:when>
+						<c:when test="${session.role == 'customer'}">
+							<a href="ComponentController?action=showEdit&id=${psus.id}&type=${psus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a href="OrderController?action=add&id=${psus.id}&type=${psus.type}" class="btn btn-success btn-sm">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="ComponentController?action=showEdit&id=${psus.id}&type=${psus.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			</c:forEach>
@@ -280,9 +402,6 @@
 					<th>Image</th>
 					<th>Name</th>
 					<th>Form Factor</th>
-					<th>Length</th>
-					<th>Width</th>
-					<th>Height</th>
 					<th>Color</th>
 					<th>Price</th>
 					<th>Action</th>
@@ -294,19 +413,37 @@
 				<td><c:out value="${cases.id}" /></td>
 				<td><img src="${cases.image}"/></td>
 				<td>
-					<a href="ComponentController?action=viewCompById&id=${cases.id}">
+					<a href="ComponentController?action=viewCompById&id=${cases.id}&type=${cases.type}">
 						<c:out value="${cases.brand}" /> <c:out value="${cases.model}" />
 					</a>
 				</td>
 				<td><c:out value="${cases.form}" /></td>
-				<td><c:out value="${cases.length}" /></td>
-				<td><c:out value="${cases.width}" /></td>
-				<td><c:out value="${cases.height}" /></td>
 				<td><c:out value="${cases.color}" /></td>
 				<td>RM<c:out value="${cases.price}" /></td>
 				<td>
-					<a href="ComponentController?action=showEdit&id=${cases.id}&type=${cases.type}" class="btn btn-primary">E</a>
-					<a href="ComponentController?action=delete&id=${cases.id}" class="btn btn-danger">X</a>
+					<c:choose>
+						<c:when test="${session.role == 'staff'}">
+							<a href="ComponentController?action=showEdit&id=${cases.id}&type=${cases.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-edit"></i>
+							</a>
+							<a href="ComponentController?action=delete&id=${cases.id}&type=${cases.type}" class="btn btn-danger btn-sm">
+								<i class="fa fa-times"></i>
+							</a>
+						</c:when>
+						<c:when test="${session.role == 'customer'}">
+							<a href="ComponentController?action=showEdit&id=${cases.id}&type=${cases.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a href="OrderController?action=add&id=${cases.id}&type=${cases.type}" class="btn btn-success btn-sm">
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="ComponentController?action=showEdit&id=${cases.id}&type=${cases.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			</c:forEach>
@@ -315,16 +452,16 @@
 		</c:when>
 		</c:choose>
 		
-		
 		<a href="addComponent.jsp">
-			<button class="btn btn-primary">Add New Component</button>
+			<button class="btn btn-success">Add New Component</button>
 		</a>
 		<a href="main.jsp">
 			<button class="btn btn-primary">Home</button>
 		</a>
 	</div>
-</div>	<!-- Close col-9 -->
-</div>	<!-- Close row nav+main -->
-</div>	<!-- Close container -->
+</div>	<!-- Close col-10 -->
+</div>	<!-- Close row -->
+</div>	<!-- Close main -->
+<script src="js/myjs.js"></script>
 </body>
 </html>

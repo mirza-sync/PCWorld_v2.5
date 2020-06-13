@@ -1,4 +1,4 @@
-.bd-placeholder-img {
+./* bd-placeholder-img {
 	font-size: 1.125rem;
 	text-anchor: middle;
 	-webkit-user-select: none;
@@ -76,6 +76,21 @@ style> <style>.bd-placeholder-img {
 	.bd-placeholder-img-lg {
 		font-size: 3.5rem;
 	}
+} */
+
+bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
 }
 
 .sidenav {
@@ -91,17 +106,24 @@ style> <style>.bd-placeholder-img {
 	padding-top: 60px;
 }
 
-.sidenav a {
-	padding: 8px 8px 8px 32px;
+.sidenav a, .dropdown-btn {
+	padding: 5px 5px 5px 32px;
 	text-decoration: none;
-	font-size: 25px;
-	color: #818181;
+	font-size: 20px;
+	color: #fff;
 	display: block;
 	transition: 0.3s;
+	
+	border: none;
+	background: none;
+	width: 100%;
+	cursor: pointer;
+	outline: none;
+	text-align: left;	
 }
 
 .sidenav a:hover {
-	color: #f1f1f1;
+	color: #fff;
 }
 
 .sidenav .closebtn {
@@ -125,4 +147,40 @@ style> <style>.bd-placeholder-img {
 	.sidenav a {
 		font-size: 18px;
 	}
+}
+
+</
+style> <style>.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+  transition: all 1s;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: green;
+  color: white;
 }

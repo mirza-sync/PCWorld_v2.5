@@ -123,7 +123,6 @@ public class CpuDAO {
 
 				cpu.setId(rs.getInt("id"));
 				cpu.setBrand(rs.getString("brand"));
-				System.out.println("Brand : "+cpu.getBrand());
 				cpu.setModel(rs.getString("model"));
 				cpu.setPrice(rs.getDouble("price"));
 				cpu.setImage(imageName);
@@ -134,7 +133,6 @@ public class CpuDAO {
             	cpu.setNum_core(rs.getInt("num_core"));
             	cpu.setMultithread(rs.getInt("multithread"));
             	cpu.setWattage(rs.getInt("wattage"));
-            	System.out.println("Multi : "+cpu.getMultithread());
             	
 				cpus.add(cpu);
 			}

@@ -10,8 +10,9 @@
 </head>
 <body>
 <div class="container-fluid">
-<div class="row">
 <%@include file="sidebar.jsp"%>
+<div class="row">
+<div class="bg-danger col-md-10 offset-md-2">
 	<div class="m-5 card">
 		<div class="card-header">
 			<h6>Lets answer a few questions :</h6>
@@ -27,15 +28,15 @@
 			<div class="form-group row">
 				<label class="col-md-3 col-form-label">What is the purpose of your PC?</label>
 				<div class="col-md-9">
-					<input type="checkbox" id="vehicle1" name="c_usage" value="office">
+					<input type="checkbox" name="c_usage" value="office">
 					<label for="vehicle1">Office work</label><br>
-					<input type="checkbox" id="vehicle3" name="c_usage" value="office">
+					<input type="checkbox" name="c_usage" value="office">
 					<label for="vehicle3">Web browsing</label><br>
-					<input type="checkbox" id="vehicle2" name="c_usage" value="gaming">
+					<input type="checkbox" name="c_usage" value="gaming">
 					<label for="vehicle2">Gaming</label><br>
-					<input type="checkbox" id="vehicle3" name="c_usage" value="video3d">
+					<input type="checkbox" name="c_usage" value="video3d">
 					<label for="vehicle3">Video editing</label><br>
-					<input type="checkbox" id="vehicle3" name="c_usage" value="video3d">
+					<input type="checkbox" name="c_usage" value="video3d">
 					<label for="vehicle3">3D modeling</label><br>
 				</div>
 			</div>
@@ -84,5 +85,7 @@
 	</div>
 </div>
 </div>
+</div>
+<script src="js/myjs.js"></script>
 </body>
 </html>

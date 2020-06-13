@@ -9,23 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pcworld.connection.ConnectionManager;
-import pcworld.model.Users;
+import pcworld.model.Customers;
 
-public class UserDAO {
+public class CustomerDAO {
 	static Connection currentCon = null;
 	static ResultSet rs = null; 
 	static PreparedStatement ps=null;
 	static Statement stmt=null;
 	static int id;
-	static String name, pass, email, phone, role;
+	static String name, pass, email, phone;
 
-	public static Users login(Users user) {
+	public Customers login(Customers customer) {
 		Statement stmt = null;
-		id = user.getId();
-		pass = user.getPassword();
-		String searchQuery = "select * from users where id = '"+id+"' AND password = '"+pass+"'";
+		email = customer.getEmail();
+		pass = customer.getPassword();
+		String searchQuery = "select * from customers where email = '"+email+"' AND password = '"+pass+"'";
 
-		System.out.println("Your user name is " + id);
+		System.out.println("Your email is " + email);
 		System.out.println("Your password is " + pass);
 		System.out.println("Query: " + searchQuery);
 		try {
@@ -38,17 +38,17 @@ public class UserDAO {
 			}
 			
 			boolean more = rs.next();
-			// if user does not exist set the isValid variable to false
+			// if customer does not exist set the isValid variable to false
 			if (!more) {
-				System.out.println("Sorry, you are not a registered user! Please signup first");
-				user.setValid(false);
+				System.out.println("Sorry, you are not a registered customer! Please signup first");
+				customer.setValid(false);
 			}
-			// if user exists set the isValid variable to true
+			// if customer exists set the isValid variable to true
 			else if (more) {
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setRole(rs.getString("role"));
-				user.setValid(true);
+				customer.setId(rs.getInt("id"));
+				customer.setName(rs.getString("name"));
+				customer.setEmail(rs.getString("email"));
+				customer.setValid(true);
 			}
 		}
 		catch (Exception ex) {
@@ -77,36 +77,38 @@ public class UserDAO {
 				currentCon = null;
 			}
 		}
-		return user;
+		return customer;
 	}
 	
 	//Register
-	public int add(Users user) {
+	public int add(Customers customer) {
 		int new_id = 0;
 		
-		name = user.getName();
-		email = user.getEmail();
-		pass = user.getPassword();
+		name = customer.getName();
+		email = customer.getEmail();
+		pass = customer.getPassword();
+		phone = customer.getPhone();
 		
-		String maxQuery = "select MAX(id) from users";
+		String maxQuery = "select MAX(id) from customers";
 
 		try {
 			currentCon = ConnectionManager.getConnection();
-			ps=currentCon.prepareStatement("insert into users (name, email, password)values(?,?,?)");
+			ps=currentCon.prepareStatement("insert into customers (name, email, password, phone) values(?,?,?,?)");
 			ps.setString(1,name);
 			ps.setString(2,email);
 			ps.setString(3,pass);
+			ps.setString(4,phone);
 			ps.executeUpdate();
 			
 			ps = currentCon.prepareStatement(maxQuery);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				new_id = rs.getInt("MAX(user_id)");
+				new_id = rs.getInt("MAX(id)");
 			}
 
 			ps.close();
 
-			System.out.println("Register success. Your Teacher ID is : " + new_id);
+			System.out.println("Register success. Your customer ID is : " + new_id);
 
 		}
 
@@ -134,11 +136,11 @@ public class UserDAO {
 		return new_id;
 	}
 
-	public static Users getUserById(Users user)  {
+	public static Customers getCustomer(Customers customer)  {
 
-		id = user.getId();
+		id = customer.getId();
 
-		String searchQuery = "select * from users where id='" + id + "'";
+		String searchQuery = "select * from customers where id='" + id + "'";
 
 		try {
 			currentCon = ConnectionManager.getConnection();
@@ -146,17 +148,17 @@ public class UserDAO {
 			rs = stmt.executeQuery(searchQuery);
 			boolean more = rs.next();
 
-			// if user exists set the isValid variable to true
+			// if customer exists set the isValid variable to true
 			if (more) {
 				id = rs.getInt("id");
 
-				user.setId(id);
-				user.setValid(true);
+				customer.setId(id);
+				customer.setValid(true);
 			}
 
 			else if (!more) {
-				System.out.println("Sorry");
-				user.setValid(false);
+				System.out.println("Sorry, customer does not exist");
+				customer.setValid(false);
 			}
 
 		}
@@ -192,19 +194,19 @@ public class UserDAO {
 			}
 		}
 
-		return user;
+		return customer;
 	}
 
 
-	public void updateAccount(Users user) {
+	public void updateAccount(Customers customer) {
 		
-		id = user.getId();
-		name = user.getName();
-		email = user.getEmail();
-		pass = user.getPassword();
-		phone = user.getPhone();
+		id = customer.getId();
+		name = customer.getName();
+		email = customer.getEmail();
+		pass = customer.getPassword();
+		phone = customer.getPhone();
 		
-	    String sql = "UPDATE users SET name='" + name  + "', password='"+pass+"', email='"+email+"', phone='"+phone+"' WHERE id= '" + id + "'";
+	    String sql = "UPDATE customers SET name='" + name  + "', password='"+pass+"', email='"+email+"', phone='"+phone+"' WHERE id= '" + id + "'";
 		
 		try {
 	
@@ -236,26 +238,24 @@ public class UserDAO {
 		}
 	}
 
-	public List<Users> getAllCustomer() {
-		List<Users> users = new ArrayList<Users>();
-		System.out.println("Enter allTeacher");
+	public List<Customers> getAllCustomer() {
+		List<Customers> customers = new ArrayList<Customers>();
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 
-			String q = "select * from users where user_role !='Headmaster'";
+			String q = "select * from customers";
 			ResultSet rs = stmt.executeQuery(q);
 
 			while (rs.next()) {
-				Users user = new Users();
+				Customers customer = new Customers();
 				
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setEmail(rs.getString("email"));
-				user.setPhone(rs.getString("phone"));
-				user.setRole(rs.getString("role"));
+				customer.setId(rs.getInt("id"));
+				customer.setName(rs.getString("name"));
+				customer.setEmail(rs.getString("email"));
+				customer.setPhone(rs.getString("phone"));
 				
-				users.add(user);
+				customers.add(customer);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -286,27 +286,26 @@ public class UserDAO {
 				currentCon = null;
 			}
 		}
-		System.out.println("Done allTeacher");
-		return users;
+		return customers;
 	}
 
-	public Users getTeacherById(int id) {
-		Users user = new Users();
+	public Customers getCustomerById(int id) {
+		Customers customer = new Customers();
 
 		try {
 			currentCon = ConnectionManager.getConnection();
-			ps=currentCon.prepareStatement("select * from users where user_id=?");
+			ps=currentCon.prepareStatement("select * from customers where id=?");
 
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 
 
 			if (rs.next()) {	       
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setEmail(rs.getString("email"));
-				user.setPhone(rs.getString("phone"));
-				user.setRole(rs.getString("role"));
+				customer.setId(rs.getInt("id"));
+				customer.setName(rs.getString("name"));
+				customer.setEmail(rs.getString("email"));
+				customer.setPhone(rs.getString("phone"));
+				customer.setPassword(rs.getString("password"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -339,11 +338,11 @@ public class UserDAO {
 			}
 		}
 
-		return user;
+		return customer;
 	}
 	
-	public void deleteTeacher(int user_id) {
-		String sql = "delete from users where user_id = '"+user_id+"'";
+	public void deleteCustomer(int id) {
+		String sql = "delete from customers where id = '"+id+"'";
 		
 		System.out.println(sql);
 		
@@ -376,88 +375,5 @@ public class UserDAO {
 			}
 		}
 		
-	}
-	
-	//Headmaster can view all user
-	public List<Users> getAllTeacher() {
-		List<Users> users = new ArrayList<Users>();
-		String sql = "select * from users where user_role !='Headmaster'";
-		
-		try {
-			currentCon = ConnectionManager.getConnection();
-			stmt = currentCon.createStatement();
-			rs = stmt.executeQuery(sql);
-			
-			while(rs.next()) {
-				Users user = new Users();
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setEmail(rs.getString("email"));
-				user.setPhone(rs.getString("phone"));
-				user.setRole(rs.getString("role"));
-				users.add(user);
-			}
-			
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e) {
-				}
-				rs = null;
-			}
-
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (Exception e) {
-				}
-				stmt = null;
-			}
-
-			if (currentCon != null) {
-				try {
-					currentCon.close();
-				} catch (Exception e) {
-				}
-
-				currentCon = null;
-			}
-		}
-		
-		return users;
-	}
-	
-	//Dropdown to show available mentors
-	public List<Users> getAllMentor(int id) {
-		List<Users> mentorArray = new ArrayList<Users>();
-		String sql = "select * from users where user_role = 'Mentor' AND user_id !='"+id+"'";
-		
-		try {
-			currentCon = ConnectionManager.getConnection();
-			stmt = currentCon.createStatement();
-			rs = stmt.executeQuery(sql);
-			
-			while(rs.next()) {
-				Users user = new Users();
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setEmail(rs.getString("email"));
-				user.setPhone(rs.getString("phone"));
-				user.setRole(rs.getString("role"));
-				
-				mentorArray.add(user);
-				System.out.println("The name : " + rs.getString("user_name"));
-			}
-			
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Mentor End");
-		return mentorArray;
 	}
 }

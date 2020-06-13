@@ -78,7 +78,7 @@ public class ComponentController extends HttpServlet {
 				request.setAttribute("gpus", gpudao.getAllGpu());
 			}
 			else if(type.equals("Motherboard")) {
-				request.setAttribute("mobos", mobodao.getAllMobo());
+				request.setAttribute("mobos", mobodao.getAllMotherboard());
 			}
 			else if(type.equals("RAM")) {
 				request.setAttribute("rams", ramdao.getAllRam());
@@ -151,7 +151,8 @@ public class ComponentController extends HttpServlet {
 				request.setAttribute("psu", psudao.getPsuById(id));
 			}
 			else if(type.equals("Casing")) {
-				request.setAttribute("case", casingdao.getCasingById(id));
+				request.setAttribute("casing", casingdao.getCasingById(id));
+				System.out.println("Casing form : " + casingdao.getCasingById(id).getForm());
 			}
 			else {
 				System.out.println("Component not found.");
@@ -160,7 +161,8 @@ public class ComponentController extends HttpServlet {
 		//Delete component
 		else if(action.equalsIgnoreCase("delete")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			compdao.deleteComponent(id); 
+			compdao.deleteComponent(id);
+			forward = MAIN;
 		}
 		RequestDispatcher view = request.getRequestDispatcher(forward);
 		view.forward(request, response);
@@ -175,7 +177,7 @@ public class ComponentController extends HttpServlet {
 		if(action.equalsIgnoreCase("recommend")) {
 			System.out.println("Recommending...");
 			double budget;
-			String size, style, color;
+			String style, color;
 			
 			budget = Double.parseDouble(request.getParameter("budget"));
 			String[] usage = request.getParameterValues("c_usage");

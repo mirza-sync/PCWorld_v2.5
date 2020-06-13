@@ -13,6 +13,8 @@ public class Components {
 	Casing casing;
 	double totalPrice;
 	
+	private int quantity;
+	
 	ArrayList<CPU> cpus;
 	ArrayList<GPU> gpus;
 	ArrayList<Motherboard> mobos;
@@ -122,8 +124,15 @@ public class Components {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	//======================================================================================
+	//======================Below are for Order purposes===========================
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	//======================Below are for GA purposes==============================
 	public CPU getRandomCpu() {
 		rnd = new Random();
 		CPU rndCpu = cpus.get(rnd.nextInt(cpus.size()));

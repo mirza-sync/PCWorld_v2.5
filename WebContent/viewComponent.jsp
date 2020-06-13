@@ -267,5 +267,6 @@
 		</a>
 	</div>
 </div>
+<script src="js/myjs.js"></script>
 </body>
 </html>

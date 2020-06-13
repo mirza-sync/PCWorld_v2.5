@@ -10,12 +10,12 @@
 </head>
 <body>
 <%@include file="sidebar.jsp"%>
-<div class="container-fluid">
+<div id="main">
 	<div class="row">
 		<div class="jumbotron col-md-12" style="background-image:url('img/pcbanner2.png'); background-size:cover; padding:100px 60px; border-radius:0px">
 			<div class="row">
-				<div class="col-md-3">
-					<h1 class="text-white display-4">Welcome to PCWorld</h1>
+				<div class="col-md-2">
+					<h1 class="text-white display-4" id="pcworld">Welcome to PCWorld</h1>
 				</div>
 			</div>
 		</div>
@@ -89,5 +89,6 @@
 		</div>
 	</div>
 </div>
+<script src="js/myjs.js"></script>
 </body>
 </html>

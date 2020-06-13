@@ -115,7 +115,6 @@ public class StorageDAO {
 				storage.setModel(rs.getString("model"));
 				storage.setPrice(rs.getDouble("price"));
 				storage.setImage(imageName);
-				storage.setBrand(rs.getString("model"));
 				storage.setType(rs.getString("type"));
 				storage.setStorage_type(rs.getString("storage_type"));
             	storage.setCapacity(rs.getString("capacity"));

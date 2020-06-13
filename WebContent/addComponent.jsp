@@ -76,13 +76,13 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Base Clock</h6>
-										<input type="number" class="form-control" name="base_clock" placeholder="Enter clock speed">
+										<input type="text" class="form-control" name="base_clock" placeholder="Enter clock speed">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Max Clock</h6>
-										<input type="number" class="form-control" name="max_clock" placeholder="Enter clock speed">
+										<input type="text" class="form-control" name="max_clock" placeholder="Enter clock speed">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -476,5 +476,6 @@ function showForm() {
 	}
 }
 </script>
+<script src="js/myjs.js"></script>
 </body>
 </html>

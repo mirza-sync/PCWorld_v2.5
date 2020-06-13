@@ -1,29 +1,14 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"/>
 <script src="js/bootstrap.min.js"></script>
-<script>
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-	document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-	document.getElementById("main").style.marginLeft = "0";
-}
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
-	a{
-		color: purple;
-		text-decoration: none;
-	}
-	a:hover{
-		color: grey;
-		text-decoration: none;
-	}
-	td img{
-		width: 50px;
-		height: 50px;
-	}
+td img {
+	width : 50px;
+	height : 50px;
+}
 </style>

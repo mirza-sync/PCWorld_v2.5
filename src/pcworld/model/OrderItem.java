@@ -1,14 +1,16 @@
 package pcworld.model;
 
-public class Carts {
-	public int order_id;
-	public int component_id;
-	public int quantity;
+public class OrderItem {
+	private int order_id;
+	private int component_id;
+	private int quantity;
+	private Components component;
+	private boolean exist;
 	
-	public Carts() {
+	public OrderItem() {
 		super();
 	}
-	public Carts(int order_id, int component_id, int quantity) {
+	public OrderItem(int order_id, int component_id, int quantity) {
 		super();
 		this.order_id = order_id;
 		this.component_id = component_id;
@@ -32,5 +34,17 @@ public class Carts {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public Components getComponent() {
+		return component;
+	}
+	public void setComponent(Components component) {
+		this.component = component;
+	}
+	public boolean isExist() {
+		return exist;
+	}
+	public void setExist(boolean exist) {
+		this.exist = exist;
 	}
 }

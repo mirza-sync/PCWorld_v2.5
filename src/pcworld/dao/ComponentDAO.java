@@ -391,7 +391,7 @@ public class ComponentDAO {
 		
 		cpus = cpudao.getAllCpu();
 		gpus = gpudao.getAllGpu();
-		mobos = mobodao.getAllMobo();
+		mobos = mobodao.getAllMotherboard();
 		rams = ramdao.getAllRam();
 		storages = storagedao.getAllStorage();
 		psus = psudao.getAllPsu();
@@ -627,7 +627,6 @@ public class ComponentDAO {
 					}
 					break;
 				default:		//office
-					System.out.println("office");
 					if(((CPU)x.gene[0]).base_clock <= 3){
 						fitness++;
 					}
@@ -656,9 +655,31 @@ public class ComponentDAO {
 			if(((Casing)x.gene[6]).model.contains("RGB")){
 				fitness++;
 			}
+			else {
+				fitness--;
+			}
+			
+			if(((RAM)x.gene[3]).model.contains("RGB")) {
+				fitness++;
+			}
+			else {
+				fitness--;
+			}
 		}else if(input.getStyle().equals("minimalist")){
 			if(!((Casing)x.gene[6]).model.contains("RGB")){
+				System.out.println("Casing : Minimal no RGB Yay");
 				fitness++;
+			}
+			else {
+				fitness--;
+			}
+			
+			if(!((RAM)x.gene[3]).model.contains("RGB")) {
+				System.out.println("Ram : Minimal no RGB Yay");
+				fitness++;
+			}
+			else {
+				fitness--;
 			}
 		}
 		
@@ -678,7 +699,7 @@ public class ComponentDAO {
 
 		//Compatibility check:
 		//ATX case can support ATX, mATX and miniITX
-		if(((Motherboard)x.gene[2]).formfactor.equals(((Casing)x.gene[6]).form)){
+		if(((Motherboard)x.gene[2]).formfactor.equals(((Casing)x.gene[6]).formfactor)){
 			fitness++;
 		}
 		else{
@@ -733,7 +754,7 @@ public class ComponentDAO {
 		
 		cpus = cpudao.getAllCpu();
 		gpus = gpudao.getAllGpu();
-		mobos = mobodao.getAllMobo();
+		mobos = mobodao.getAllMotherboard();
 		rams = ramdao.getAllRam();
 		storages = storagedao.getAllStorage();
 		psus = psudao.getAllPsu();

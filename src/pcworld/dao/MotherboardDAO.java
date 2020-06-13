@@ -91,7 +91,7 @@ public class MotherboardDAO {
 	    }
 	}
 	
-	public ArrayList<Motherboard> getAllMobo() {
+	public ArrayList<Motherboard> getAllMotherboard() {
 		ArrayList<Motherboard> mobos = new ArrayList<Motherboard>();
 		
 		String q = "select * from motherboard join components using(id)";
@@ -133,7 +133,7 @@ public class MotherboardDAO {
 	public Motherboard getMotherboardById(int id) {
 		Motherboard mobo = new Motherboard();
 		
-		String q = "select * from mobo join components using(id) where id='" + id + "'";
+		String q = "select * from motherboard join components using(id) where id='" + id + "'";
 
         try {
             currentCon = ConnectionManager.getConnection();
