@@ -37,10 +37,10 @@ public class ComponentController extends HttpServlet {
 	private static final String SAVE_DIR="img";
 	
 	String MAIN = "main.jsp";
-	String ADD_COMPONENT = "addComponent.jsp";
+	String ADD_COMPONENT = "staff-addComponent.jsp";
 	String VIEW_COMPONENTS = "viewAllComponents.jsp";
-	String UPDATE_FORM = "updateComponent.jsp";
-	String TEST_FORM = "testEdit.jsp";
+	String VIEW_A_COMPONENT = "viewComponent.jsp";
+	String EDIT_FORM = "staff-editComponent.jsp";
 	
     
 	ComponentDAO compdao = new ComponentDAO();
@@ -63,7 +63,7 @@ public class ComponentController extends HttpServlet {
 		String action = request.getParameter("action");
 		System.out.println("Get action : "+action);
 		
-		//View component
+		//View ALL component by type 
 		if(action.equalsIgnoreCase("viewComponents")) {
 			System.out.println("Viewing...");
 			String type = request.getParameter("type");
@@ -99,38 +99,6 @@ public class ComponentController extends HttpServlet {
 		else if(action.equalsIgnoreCase("viewCompById")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			String type = request.getParameter("type");
-			forward = UPDATE_FORM;
-			if(type.equals("CPU")) {
-				request.setAttribute("cpu", cpudao.getCpuById(id));
-			}
-			else if(type.equals("GPU")) {			
-				request.setAttribute("gpu", gpudao.getGpuById(id));
-			}
-			else if(type.equals("Motherboard")) {
-				request.setAttribute("mobo", mobodao.getMotherboardById(id));
-			}
-			else if(type.equals("RAM")) {
-				request.setAttribute("ram", ramdao.getRamById(id));
-			}
-			else if(type.equals("Storage")) {
-				request.setAttribute("stor", storagedao.getStorageById(id));
-			}
-			else if(type.equals("PSU")) {
-				request.setAttribute("psu", psudao.getPsuById(id));
-			}
-			else if(type.equals("Casing")) {
-				request.setAttribute("case", casingdao.getCasingById(id));
-			}
-			else {
-				System.out.println("Component not found.");
-			}
-		}
-		//Show update form
-		else if(action.equalsIgnoreCase("showEdit")) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			String type = request.getParameter("type");
-			//forward = UPDATE_FORM;
-			forward = TEST_FORM;
 			request.setAttribute("comp", compdao.getComponentById(id));
 			if(type.equals("CPU")) {
 				request.setAttribute("cpu", cpudao.getCpuById(id));
@@ -152,11 +120,42 @@ public class ComponentController extends HttpServlet {
 			}
 			else if(type.equals("Casing")) {
 				request.setAttribute("casing", casingdao.getCasingById(id));
-				System.out.println("Casing form : " + casingdao.getCasingById(id).getForm());
 			}
 			else {
 				System.out.println("Component not found.");
 			}
+			forward = VIEW_A_COMPONENT;
+		}
+		//Show update form
+		else if(action.equalsIgnoreCase("showEdit")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String type = request.getParameter("type");
+			request.setAttribute("comp", compdao.getComponentById(id));
+			if(type.equals("CPU")) {
+				request.setAttribute("cpu", cpudao.getCpuById(id));
+			}
+			else if(type.equals("GPU")) {			
+				request.setAttribute("gpu", gpudao.getGpuById(id));
+			}
+			else if(type.equals("Motherboard")) {
+				request.setAttribute("mobo", mobodao.getMotherboardById(id));
+			}
+			else if(type.equals("RAM")) {
+				request.setAttribute("ram", ramdao.getRamById(id));
+			}
+			else if(type.equals("Storage")) {
+				request.setAttribute("stor", storagedao.getStorageById(id));
+			}
+			else if(type.equals("PSU")) {
+				request.setAttribute("psu", psudao.getPsuById(id));
+			}
+			else if(type.equals("Casing")) {
+				request.setAttribute("casing", casingdao.getCasingById(id));
+			}
+			else {
+				System.out.println("Component not found.");
+			}
+			forward = EDIT_FORM;
 		}
 		//Delete component
 		else if(action.equalsIgnoreCase("delete")) {
@@ -186,7 +185,7 @@ public class ComponentController extends HttpServlet {
 			
 			Input input = new Input(budget, usage, style, color);
 			
-			forward = "recommend2.jsp";
+			forward = "result.jsp";
 			request.setAttribute("pc", compdao.recommendPC(input));
 			RequestDispatcher view = request.getRequestDispatcher(forward);
 			view.forward(request, response);
@@ -198,30 +197,31 @@ public class ComponentController extends HttpServlet {
 		double price;
 		Part image;
 		
-		image = request.getPart("image");
-		if(image != null) {
-			// gets absolute path of the web application
-	        String appPath = request.getServletContext().getRealPath("");
-	        // constructs path of the directory to save uploaded file
-	        String savePath = appPath + File.separator + SAVE_DIR;
-	        
-	        File fileSaveDir=new File(savePath);
-	        if(!fileSaveDir.exists()){
-	            fileSaveDir.mkdir();
-	        }
-			imageName=extractFileName(image);
-			
-			
-			image.write(savePath + File.separator + imageName);
-			imageLast = imageName;
-			System.out.println("SAVE PATH is : " + savePath);
-		}
-		else {
-			imageLast = "noimage.png";
-		}
+//		image = request.getPart("image");
+//		if(image != null) {
+//			// gets absolute path of the web application
+//	        String appPath = request.getServletContext().getRealPath("");
+//	        // constructs path of the directory to save uploaded file
+//	        String savePath = appPath + File.separator + SAVE_DIR;
+//	        
+//	        File fileSaveDir=new File(savePath);
+//	        if(!fileSaveDir.exists()){
+//	            fileSaveDir.mkdir();
+//	        }
+//			imageName=extractFileName(image);
+//			
+//			
+//			image.write(savePath + File.separator + imageName);
+//			imageLast = imageName;
+//			System.out.println("SAVE PATH is : " + savePath);
+//		}
+//		else {
+//			imageLast = "noimage.png";
+//		}
 		brand = request.getParameter("brand");
 		model = request.getParameter("model");
 		price = Double.parseDouble(request.getParameter("price"));
+		imageLast = request.getParameter("image");
 		type = request.getParameter("type");
 		
 		System.out.println("Brand is : " + brand);
@@ -372,15 +372,15 @@ public class ComponentController extends HttpServlet {
 		}
 	}
 	
-	private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length()-1);
-            }
-        }
-        return "";
-    }
+//	private String extractFileName(Part part) {
+//        String contentDisp = part.getHeader("content-disposition");
+//        String[] items = contentDisp.split(";");
+//        for (String s : items) {
+//            if (s.trim().startsWith("filename")) {
+//                return s.substring(s.indexOf("=") + 2, s.length()-1);
+//            }
+//        }
+//        return "";
+//    }
 
 }

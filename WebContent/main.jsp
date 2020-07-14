@@ -68,26 +68,32 @@
 		</div>
 		</div><!-- Close col -->
 	</div>
-	<div class="row justify-content-center">
-		<div class="card my-5 border-0">
-		<img class="card-img-top" src="img/banner1.jpg" class="float-right">
-			<div class="card-body">
-				<a href="recommend.jsp" class="float-right">
-					<button class="btn btn-success">Recommend</button>
-				</a>
+	<c:choose>
+		<c:when test="${session.role == 'staff'}">
+			<div class="row justify-content-center">
+				<div class="card my-5 border-0">
+				<img class="card-img-top" src="img/banner-nvidia1.jpg" class="float-right">
+					<div class="card-body">
+						<a href="staff-addComponent.jsp" class="float-right">
+							<button class="btn btn-success">Add Components</button>
+						</a>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row justify-content-center">
-		<div class="card my-5 border-0">
-		<img class="card-img-top" src="img/banner-nvidia1.jpg" class="float-right">
-			<div class="card-body">
-				<a href="addComponent.jsp" class="float-right">
-					<button class="btn btn-success">Add Components</button>
-				</a>
+		</c:when>
+		<c:otherwise>
+			<div class="row justify-content-center">
+				<div class="card my-5 border-0">
+				<img class="card-img-top" src="img/banner1.jpg" class="float-right">
+					<div class="card-body">
+						<a href="recommend.jsp" class="float-right">
+							<button class="btn btn-success">Recommend</button>
+						</a>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
+		</c:otherwise>
+	</c:choose>
 </div>
 <script src="js/myjs.js"></script>
 </body>

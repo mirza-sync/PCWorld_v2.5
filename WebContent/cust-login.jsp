@@ -10,7 +10,6 @@
 </head>
 <body>
 <div class="container-fluid">
-<%@include file="sidebar.jsp"%>
 <div id="main" class="row">
 	<div class="col-md-6 offset-md-3">
 		<div class="card mt-5">

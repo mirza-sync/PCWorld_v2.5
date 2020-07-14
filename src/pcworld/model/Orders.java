@@ -8,6 +8,7 @@ public class Orders {
 	private double total_price;
 	private int staff_id;
 	private boolean exist;
+	private String staff_name;
 	
 	public Orders() {
 		super();
@@ -68,5 +69,11 @@ public class Orders {
 	}
 	public void setExist(boolean exist) {
 		this.exist = exist;
+	}
+	public String getStaff_name() {
+		return staff_name;
+	}
+	public void setStaff_name(String staff_name) {
+		this.staff_name = staff_name;
 	}
 }

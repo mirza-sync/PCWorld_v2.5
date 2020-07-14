@@ -1,6 +1,7 @@
 package pcworld.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import pcworld.dao.CustomerDAO;
 import pcworld.dao.OrderDAO;
@@ -48,48 +51,55 @@ public class OrderController extends HttpServlet {
 		
 		//Creating new draft (Only if draft doesn't exist)
 		if(action.equals("add")) {
-			int cust_id = Integer.parseInt(request.getParameter("cust_id"));
+			String cust_temp = request.getParameter("cust_id");
 			
-			// Get component/item
-			// recommend2.jsp - Array of items
-			// component.jsp - Single item
-			String[] items = request.getParameterValues("items");
-			
-			//Check if customer has a cart or not
-			Orders draft = orderdao.getDraftByCustId(cust_id);
-			System.out.println("OrderCont -> Draft id is : "+draft.getId());
-			if(draft.isExist() == false) {	//if customer has no cart
-				//Create new order; since a cart is dependent on order
-				int latest_id = orderdao.add(cust_id);
-				System.out.println("OrderCont latest id:" + latest_id);
-				
-				for(int i=0; i<items.length; i++) {
-					int item = Integer.parseInt(items[i]);
-					OrderItem orderitem = new OrderItem(latest_id, item, 1);
-					//Create new cart/orderitems
-					orderitemdao.add(orderitem);
-				}
+			if(cust_temp.equals("")) {
+				forward = "cust-login.jsp";
 			}
-			else {	//if cart already exist
-				for(int i=0; i<items.length; i++) {
-					int item_id = Integer.parseInt(items[i]);
-					OrderItem item = orderitemdao.getItemFromOrder(item_id, draft.getId());
-					System.out.println("Existed item id : "+item.getComponent_id());
-					if(item.isExist() == false) {		// If item doesn't exist in cart, add new item to cart
-						// Find latest draft
-						int draft_id = orderdao.getDraftId(cust_id);
-						// Insert the component with qty=1 in draft
-						OrderItem orderitem = new OrderItem(draft_id, item_id, 1);
+			else {
+				int cust_id = Integer.parseInt(cust_temp);
+				// Get component/item
+				// recommend2.jsp - Array of items
+				// component.jsp - Single item
+				String[] items = request.getParameterValues("items");
+				
+				//Check if customer has a cart or not
+				Orders draft = orderdao.getDraftByCustId(cust_id);
+				System.out.println("OrderCont -> Draft id is : "+draft.getId());
+				if(draft.isExist() == false) {	//if customer has no cart
+					//Create new order; since a cart is dependent on order
+					int latest_id = orderdao.add(cust_id);
+					System.out.println("OrderCont latest id:" + latest_id);
+					
+					for(int i=0; i<items.length; i++) {
+						int item = Integer.parseInt(items[i]);
+						OrderItem orderitem = new OrderItem(latest_id, item, 1);
+						//Create new cart/orderitems
 						orderitemdao.add(orderitem);
 					}
-					else {		// If component already exist, update quantity
-						System.out.println("Item already exist");
-						OrderItem orderitem = new OrderItem(draft.getId(), item_id, item.getQuantity()+1);
-						orderitemdao.updateQuantity(orderitem);
+				}
+				else {	//if cart already exist
+					for(int i=0; i<items.length; i++) {
+						int item_id = Integer.parseInt(items[i]);
+						OrderItem item = orderitemdao.getItemFromOrder(item_id, draft.getId());
+						System.out.println("Existed item id : "+item.getComponent_id());
+						if(item.isExist() == false) {		// If item doesn't exist in cart, add new item to cart
+							// Find latest draft
+							int draft_id = orderdao.getDraftId(cust_id);
+							// Insert the component with qty=1 in draft
+							OrderItem orderitem = new OrderItem(draft_id, item_id, 1);
+							orderitemdao.add(orderitem);
+						}
+						else {		// If component already exist, update quantity
+							System.out.println("Item already exist");
+							OrderItem orderitem = new OrderItem(draft.getId(), item_id, item.getQuantity()+1);
+							orderitemdao.updateQuantity(orderitem);
+						}
 					}
 				}
+				// forward = ORDERITEM_act+"&role=customer&order_id="+draft.getId();
+				forward = MAIN;
 			}
-			forward = ORDERITEM_act+"&role=customer&order_id="+draft.getId();
 		}
 		else if(action.equals("confirm")) {
 			int order_id = Integer.parseInt(request.getParameter("order_id"));
@@ -201,9 +211,20 @@ public class OrderController extends HttpServlet {
 		}
 		else if(action.equals("deleteorder")) {
 			int order_id = Integer.parseInt(request.getParameter("order_id"));
-			int cust_id = Integer.parseInt(request.getParameter("cust_id"));
+			String role = request.getParameter("role");
 			orderdao.deleteOrder(order_id);
-			forward = ORDERLIST_act+"&cust_id="+cust_id;
+			forward = ORDERLIST_act+"&role="+role;
+		}
+		else if(action.equals("orderby")) {
+			int staff_id = Integer.parseInt(request.getParameter("staff_id"));
+			String status = request.getParameter("status");
+			Gson gson = new Gson();
+			List<Orders> orders = orderdao.orderBy(status, staff_id);
+			PrintWriter out = response.getWriter();
+			out.print(gson.toJson(orders));
+			out.flush();
+			out.close();
+			return;
 		}
 		else {
 			System.out.println("No action found");

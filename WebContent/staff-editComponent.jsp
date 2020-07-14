@@ -6,18 +6,19 @@
 <head>
 <meta charset="ISO-8859-1">
 <%@include file="header.jsp"%>
-<title>Edit CPU</title>
+<title>Edit Component</title>
 </head>
 <body>
 <div class="container-fluid">
+<%@include file="sidebar.jsp"%>
 <div class="row">
-	<%@include file="sidebar.jsp"%>
-	<div class="col-md-8">
+	<div class="col-md-8 offset-md-2">
 		<div class="card">
 			<div class="card-header">
 				<h5>Edit Component</h5>
 			</div>
-			<form method="POST" action="ComponentController" enctype="multipart/form-data">
+			<!-- <form method="POST" action="ComponentController" enctype="multipart/form-data"> -->
+			<form method="POST" action="ComponentController">
 				<input type="hidden" name="action" value="edit"/>
 				<input type="hidden" name="id" value="${comp.id}"/>
 				<div class="card-body">
@@ -55,7 +56,7 @@
 									<label class="col-form-label">Image</label>
 								</div>
 								<div class="col-md-10">
-									<input type="file" class="form-control" name="image"/>
+									<input type="text" class="form-control" name="image" value="${comp.image}"/>
 								</div>
 							</div>
 						</div>
@@ -93,7 +94,16 @@
 									<div class="mb-3">
 										<h6>Multi-Thread</h6>
 										<select id="multithread" name="multithread" class="form-control">
-											<option selected hidden disabled value="${cpu.multithread}"><c:out value="${cpu.multithread}"/></option>
+											<option value="${cpu.multithread}">
+												<c:choose>
+													<c:when test="${cpu.multithread == 1}">
+														Yes
+													</c:when>
+													<c:otherwise>
+														No
+													</c:otherwise>
+												</c:choose>
+											</option>
 											<option value="1">Yes</option>
 											<option value="0">No</option>
 										</select>
@@ -237,14 +247,14 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Capacity</h6>
-										<input type="number" class="form-control" name="storage_capacity" value="${stor.capacity}">
+										<input type="text" class="form-control" name="storage_capacity" value="${stor.capacity}">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Form Factor</h6>
 										<select id="storage_form" name="storage_form" class="form-control">
-											<option value="${stor.formfactor}"><c:out value="${stor.formfactor}"/></option>
+											<option value="${stor.form}"><c:out value="${stor.form}"/></option>
 											<option value='2.5"'>2.5 inch</option>
 											<option value='3.5"'>3.5 inch</option>
 											<option value="M.2-2280">M.2-2280</option>
@@ -269,7 +279,7 @@
 									<div class="mb-3">
 										<h6>PSU type</h6>
 										<select id="modularity" name="modularity" class="form-control">
-											<option value="${psu.modularity}"><c:out value="${psu.modularity}"/></option>
+											<option hidden="true" value="${psu.modularity}"><c:out value="${psu.modularity}"/></option>
 											<option value="No">No</option>
 											<option value="Semi">Semi</option>
 											<option value="Full">Full</option>
@@ -300,13 +310,13 @@
 					</c:when>
 					<c:when test="${comp.type == 'Casing'}">
 						<div>
-							<h4 class="mb-2">Casing ${casing.formfactor}</h4>
+							<h4 class="mb-2">Casing</h4>
 							<ul class="list-group mb-3">
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Form Factor</h6>
 										<select id="case_form" name="case_form" class="form-control">
-											<%-- <option value="${casing.formfactor}"><c:out value="${casing.formfactor}"/></option> --%>
+											<option value="${casing.form}"><c:out value="${casing.form}"/></option>
 											<option value="ATX">ATX</option>
 											<option value="Micro ATX">Micro ATX</option>
 											<option value="Mini ITX">Mini ITX</option>

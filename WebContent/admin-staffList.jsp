@@ -41,6 +41,9 @@
 	  			</c:forEach>
 	  		</tbody>
 	  	</table>
+	  	<div class="float-right">
+  			<a href="staff-register.jsp" class="btn btn-primary">New Staff</a>
+  		</div>
 	</div>
 </div>
 </div>

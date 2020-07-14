@@ -45,7 +45,7 @@
 								</c:when>
 								<c:otherwise>
 									<div class="d-block">
-										<small class="text-muted font-weight-bold">quantity : </small>
+										<small class="text-muted font-weight-bold">qty : </small>
 										<strong>${item.quantity}</strong>
 									</div>
 								</c:otherwise>

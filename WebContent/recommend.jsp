@@ -12,7 +12,7 @@
 <div class="container-fluid">
 <%@include file="sidebar.jsp"%>
 <div class="row">
-<div class="bg-danger col-md-10 offset-md-2">
+<div class="col-md-10 offset-md-2">
 	<div class="m-5 card">
 		<div class="card-header">
 			<h6>Lets answer a few questions :</h6>
@@ -28,18 +28,19 @@
 			<div class="form-group row">
 				<label class="col-md-3 col-form-label">What is the purpose of your PC?</label>
 				<div class="col-md-9">
+					<input type="checkbox" name="c_usage" value="gaming">
+					<label for="vehicle2">Gaming</label><br>
+					<input type="checkbox" name="c_usage" value="video3d">
+					<label for="vehicle3">Video editing / 3D modeling / Streaming</label><br>
 					<input type="checkbox" name="c_usage" value="office">
 					<label for="vehicle1">Office work</label><br>
 					<input type="checkbox" name="c_usage" value="office">
 					<label for="vehicle3">Web browsing</label><br>
-					<input type="checkbox" name="c_usage" value="gaming">
-					<label for="vehicle2">Gaming</label><br>
-					<input type="checkbox" name="c_usage" value="video3d">
-					<label for="vehicle3">Video editing</label><br>
-					<input type="checkbox" name="c_usage" value="video3d">
-					<label for="vehicle3">3D modeling</label><br>
+					<!-- <input type="checkbox" name="c_usage" value="video3d">
+					<label for="vehicle3">3D modeling</label><br> -->
 				</div>
 			</div>
+			<hr>
 			<!-- <div class="form-group row">
 				<label class="col-md-3 col-form-label">What games do you play?</label>
 				<div class="col-md-9">
@@ -58,12 +59,13 @@
 					<label for="male">"Gamer"-ish</label><br>
 					<input type="radio" id="female" name="r_style" value="minimalist">
 					<label for="female">Minimalist</label><br>
-					<input type="radio" id="other" name="r_style" value="low_profile">
+					<!-- <input type="radio" id="other" name="r_style" value="low_profile">
 					<label for="other">Low Profile</label><br>
 					<input type="radio" id="meh" name="r_style" value="anything">
-					<label for="meh">I don't care</label>
+					<label for="meh">I don't care</label> -->
 				</div>
 			</div>
+			<hr>
 			<div class="form-group row">
 				<label class="col-md-3 col-form-label">What color do you want for your PC?</label>
 				<div class="col-md-9">
@@ -71,10 +73,10 @@
 					<label for="male">Black</label><br>
 					<input type="radio" id="r2" name="r_color" value="White">
 					<label for="female">White</label><br>
-					<input type="radio" id="r3" name="r_color" value="other">
+					<!-- <input type="radio" id="r3" name="r_color" value="other">
 					<label for="other">Other</label><br>
 					<input type="radio" id="r4" name="r_color" value="anything">
-					<label for="meh">I don't care</label>
+					<label for="meh">I don't care</label> -->
 				</div>
 			</div>
 		</div>

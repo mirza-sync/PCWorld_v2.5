@@ -31,7 +31,7 @@ public class StorageDAO {
 			stmt = currentCon.createStatement();
 			System.out.println("Storage ID : "+id);
            						
-			ps=currentCon.prepareStatement("insert into storage (id, storage_type, capacity, formfactor) values (?,?,?,?)");
+			ps=currentCon.prepareStatement("insert into storage (id, storage_type, capacity, form) values (?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, storage_type);
 			ps.setString(3, capacity);
@@ -74,7 +74,7 @@ public class StorageDAO {
 		capacity = storage.getCapacity();
 		form = storage.getForm();
 		
-		String q = "UPDATE storage SET storage_type = '"+storage_type+"',  capacity = '"+capacity+"', formfactor = '"+form+"' WHERE id = '"+id+"'";
+		String q = "UPDATE storage SET storage_type = '"+storage_type+"',  capacity = '"+capacity+"', form = '"+form+"' WHERE id = '"+id+"'";
 		
 		System.out.println("Update query : "+q);
 		
@@ -118,7 +118,7 @@ public class StorageDAO {
 				storage.setType(rs.getString("type"));
 				storage.setStorage_type(rs.getString("storage_type"));
             	storage.setCapacity(rs.getString("capacity"));
-            	storage.setForm(rs.getString("formfactor"));
+            	storage.setForm(rs.getString("form"));
             	
 				storages.add(storage);
 			}
@@ -181,7 +181,7 @@ public class StorageDAO {
             	storage.setType(rs.getString("type"));
             	storage.setStorage_type(rs.getString("storage_type"));
             	storage.setCapacity(rs.getString("capacity"));
-            	storage.setForm(rs.getString("formfactor"));
+            	storage.setForm(rs.getString("form"));
            	}
            
             else {

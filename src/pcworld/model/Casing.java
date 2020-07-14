@@ -2,21 +2,21 @@ package pcworld.model;
 
 public class Casing extends Components {
 	public int id;
-	public String formfactor;
+	public String form;
 	public String color;
 	
 	public Casing() {
 		super();
 	}
-	public Casing(int id, String formfactor, String color) {
+	public Casing(int id, String form, String color) {
 		super();
 		this.id = id;
-		this.formfactor = formfactor;
+		this.form = form;
 		this.color = color;
 	}
-	public Casing(int id, String brand, String model, double price, String image, String type, String formfactor, String color) {
+	public Casing(int id, String brand, String model, double price, String image, String type, String form, String color) {
 		super(id, brand, model, price, image, type);
-		this.formfactor = formfactor;
+		this.form = form;
 		this.color = color;
 	}
 	
@@ -27,10 +27,10 @@ public class Casing extends Components {
 		this.id = id;
 	}
 	public String getForm() {
-		return formfactor;
+		return form;
 	}
-	public void setForm(String formfactor) {
-		this.formfactor = formfactor;
+	public void setForm(String form) {
+		this.form = form;
 	}
 	public String getColor() {
 		return color;

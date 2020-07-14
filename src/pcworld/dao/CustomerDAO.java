@@ -198,7 +198,7 @@ public class CustomerDAO {
 	}
 
 
-	public void updateAccount(Customers customer) {
+	public Customers updateAccount(Customers customer) {
 		
 		id = customer.getId();
 		name = customer.getName();
@@ -236,6 +236,8 @@ public class CustomerDAO {
 				currentCon = null;
 			}
 		}
+		customer = getCustomerById(id);
+		return customer;
 	}
 
 	public List<Customers> getAllCustomer() {

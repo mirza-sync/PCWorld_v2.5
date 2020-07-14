@@ -39,12 +39,21 @@
 					<div class="d-flex justify-content-between">
 						<div>Status</div>
 						<div>
-							<select name="status" style="width: 300px">
-								<option value="${order.status}"><c:out value="${order.status}"/></option>
-								<option value="Processing">Processing</option>
-								<option value="Completed">Completed</option>
-								<option value="Cancelled">Cancelled</option>
-							</select>
+							<c:choose>
+								<c:when test="${(order.status == 'Cancelled') || (order.status == 'Completed')}">
+									<select name="status" style="width: 300px" disabled>
+										<option value="${order.status}"><c:out value="${order.status}"/></option>
+									</select>
+								</c:when>
+								<c:otherwise>
+									<select name="status" style="width: 300px">
+										<option value="${order.status}"><c:out value="${order.status}"/></option>
+										<option value="Processing">Processing</option>
+										<option value="Completed">Completed</option>
+										<option value="Cancelled">Cancelled</option>
+									</select>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 					<hr class="my-2">
@@ -63,7 +72,9 @@
 					</div>
 				</div>
 				<div class="card-footer p-2 pr-3 bg-white">
-					<button type="submit" class="btn btn-success font-weight-bold float-right" style="padding: 3px 10px">Save</button>
+					<c:if test="${(order.status == 'Pending') || (order.status == 'Processing')}">
+						<button type="submit" class="btn btn-success font-weight-bold float-right" style="padding: 3px 10px">Save</button>
+					</c:if>
 				</div>
 			</div>
 		</form>
@@ -71,27 +82,30 @@
 	</div> <!-- Close first row -->
 	<div class="row">
 	<div class="col-md-12">
-	<form action="OrderController" method="get">
 		<ul class="list-group mb-5 pb-5">
 			<c:forEach items="${orderitems}" var="item">
 				<li class="list-group-item d-flex media position-relative">
 					<img src="${item.component.image}" class="ml-3 mr-5 align-self-center" style="width:50px; height:50px"/>
-					<input type="hidden" name="itemArray" value="${item.component.id}">
 					<div class="media-body">
 						<div class="d-flex justify-content-between">
 							<div><c:out value="${item.component.type}" /> : <c:out value="${item.component.brand}"/> <c:out value="${item.component.model}" /></div>
 							<div>RM <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.component.price}"/></div>
-							<input type="hidden" id="price${item.component.id}" value="${item.component.price}">
 						</div>
 						<hr>
 						<div class="float-right">
-							<strong>Quantity : ${item.quantity}</strong>
+							<strong>Qty : ${item.quantity}</strong>
 						</div>
 					</div>
 				</li>
 			</c:forEach>
 		</ul>
-	</form>
+	</div>
+	<div class="fixed-bottom bg-light pr-4">
+		<div class="m-3 float-right">
+			<div>
+				<span class="font-weight-bold mr-3">Total : RM <span id="total"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${order.total_price}"/></span></span>
+			</div>
+		</div>
 	</div>
 	</div><!-- Close 2nd row -->
 </div> <!-- Close surrogate col -->

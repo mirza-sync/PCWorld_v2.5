@@ -30,7 +30,7 @@ public class CasingDAO {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			
-			ps=currentCon.prepareStatement("insert into Casing (id, formfactor, color) values (?,?,?)");
+			ps=currentCon.prepareStatement("insert into Casing (id, form, color) values (?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, form);
 			ps.setString(3, color);
@@ -69,7 +69,7 @@ public class CasingDAO {
 		form = casing.getForm();
 		color = casing.getColor();
 		
-		String q = "UPDATE Casing SET formfactor='"+form+"', color='"+color+"' WHERE id='"+id+"'";
+		String q = "UPDATE Casing SET form='"+form+"', color='"+color+"' WHERE id='"+id+"'";
 
 		try {
 
@@ -106,7 +106,7 @@ public class CasingDAO {
 				casing.setPrice(rs.getDouble("price"));
 				casing.setImage(imageName);
 				casing.setType(rs.getString("type"));
-				casing.setForm(rs.getString("formfactor"));
+				casing.setForm(rs.getString("form"));
             	casing.setColor(rs.getString("color"));
             	
             	casings.add(casing);
@@ -140,7 +140,7 @@ public class CasingDAO {
 				casing.setPrice(rs.getDouble("price"));
 				casing.setImage(imageName);
 				casing.setType(rs.getString("type"));
-				casing.setForm(rs.getString("formfactor"));
+				casing.setForm(rs.getString("form"));
             	casing.setColor(rs.getString("color"));
            	}
            

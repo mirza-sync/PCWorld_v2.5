@@ -29,13 +29,13 @@ public class Customers {
 			this.password = password;
 		}
 	
-	public Customers(int id, String name, String password, String email, String phone) {
+	public Customers(int id, String name,  String email, String phone, String password) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.password = password;
 		this.email = email;
 		this.phone = phone;
+		this.password = password;
 	}
 	
 	public int getId() {

@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import pcworld.dao.StaffDAO;
 import pcworld.model.Staffs;
@@ -19,8 +20,9 @@ public class StaffController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	String MAIN = "main.jsp";
-	String STAFF_LIST = "staff-list.jsp";
+	String STAFF_LIST = "admin-staffList.jsp";
 	String STAFF_ACCOUNT = "staff-account.jsp";
+	String EDIT_ACCOUNT = "admin-editAccount.jsp";
 	String STAFF_LOGIN = "staff-login.jsp";
 	String forward = "";
 	
@@ -41,16 +43,19 @@ public class StaffController extends HttpServlet {
 		}
 		else if(action.equals("view")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			Staffs staff = new Staffs();
-			staff = staffdao.getStaffById(id);
 			forward = STAFF_ACCOUNT;
-			request.setAttribute("staff", staff);
-			System.out.println("Rolee is : "+staff.getRole());
+			request.setAttribute("staff", staffdao.getStaffById(id));
+		}
+		else if(action.equals("showEdit")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			forward = EDIT_ACCOUNT;
+			request.setAttribute("staff", staffdao.getStaffById(id));
 		}
 		else if(action.equals("delete")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			staffdao.deleteStaff(id);
-			forward = STAFF_ACCOUNT;
+			forward = STAFF_LIST;
+			request.setAttribute("staffs", staffdao.getAllStaff());
 		}
 		else {
 			forward = MAIN;
@@ -72,11 +77,17 @@ public class StaffController extends HttpServlet {
 		if(action.equals("add")) {
 			//Register new staff
 			staffdao.add(staff);
-			forward = STAFF_LOGIN;
 		} else {
+			int id = Integer.parseInt(request.getParameter("id"));
+			staff.setId(id);
 			staffdao.updateStaff(staff);
-			forward = MAIN;
+			HttpSession session = request.getSession(true);
+			Staffs admin = (Staffs) session.getAttribute("session");
+			admin = staffdao.getStaffById(admin.getId());
+			session.setAttribute("sessionname", admin.getName());
 		}
+		forward = STAFF_LIST;
+		request.setAttribute("staffs", staffdao.getAllStaff());
 		
 		RequestDispatcher view = request.getRequestDispatcher(forward);
 		view.forward(request, response);

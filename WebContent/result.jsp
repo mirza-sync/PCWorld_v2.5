@@ -11,12 +11,12 @@
 </head>
 <body>
 <div class="container-fluid">
-<div class="row">
 <%@include file="sidebar.jsp"%>
-<div class="col-md-10">
+<div class="row">
+<div class="col-md-10 offset-md-1">
 <form action="OrderController" method="get">
 <input type="hidden" name="cust_id" value="${session.id}">
-	<div class="my-5">
+	<div class="mb-5">
 		<ul class="list-group mb-3">
 			<li class="list-group-item d-flex media">
 				<img src="${pc.cpu.image}" class="ml-3 mr-5 align-self-center" style="width:80px; height:80px"/>
@@ -170,13 +170,13 @@
 		</ul>
 	</div>
 	<hr>
-	<div>
+	<div class="fixed-bottom bg-light py-3 px-5">
 		<div class="d-flex justify-content-between">
 			<strong>
 			Total Price : <fmt:formatNumber value="${pc.totalPrice}" minFractionDigits="2"/>
 			<input type="hidden" name="total_price" value="${pc.totalPrice}">
 			</strong>
-			<button class="btn btn-lg btn-success">Add All to Order</button>
+			<button class="btn btn-success">Order Now</button>
 			<input type="hidden" name="action" value="add">
 		</div>
 	</div>

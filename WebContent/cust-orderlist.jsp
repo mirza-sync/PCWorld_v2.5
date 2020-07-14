@@ -41,6 +41,8 @@
 			</c:otherwise>
 		</c:choose>	
 	</div>
+	<hr>
+	<br>
 	<div>
 		<h5>My Orders</h5>
 		<table class="table table-bordered table-hover text-center bg-white">
@@ -61,7 +63,6 @@
 	  				<td>${order.status}</td>
 	  				<td>
 	  					<a href="OrderController?action=viewitems&order_id=${order.id}&role=${session.role}" class="btn btn-primary">View</a>
-	  					<a href="OrderController?action=deleteorder&order_id=${order.id}&cust_id=${session.id}" class="btn btn-danger">Delete</a>
 	  				</td>
 	  			</tr>
 	  		</c:forEach>

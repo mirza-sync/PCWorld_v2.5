@@ -95,7 +95,7 @@
 	<c:otherwise> <!-- GUEST -->
 		<div class="sidenav" id="mySidenav">
 			<div>
-				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;<small style="font-size:15px;">Welcome Guest</small></a>
+				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			</div>
 			<div class="h-100">
 				<h1><a href="main.jsp">PCWorld</a></h1>
@@ -134,11 +134,43 @@
 		</div>
 	</c:otherwise>
 </c:choose>
-<div>
-	<span id="menu" style="font-size:30px;cursor:pointer" class="m-3" onclick="openNav()">&#9776;Menu</span>
-	<span>
-		<c:if test="${session != null}">
-			${session.id} : ${session.name}
-		</c:if>
-	</span>
+<div class="d-flex justify-content-between pt-2 px-2">
+	<div id="menu" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;Menu</div>
+	<div class="d-flex align-self-center" style="font-size: 20px">
+		<div class="mr-2">
+			<c:choose>
+				<c:when test="${session.role == 'customer'}">
+					Welcome Customer : ${sessionname}
+				</c:when>
+				<c:when test="${session.role == 'staff'}">
+					Welcome Staff : ${sessionname}
+				</c:when>
+				<c:when test="${session.role == 'admin'}">
+					Welcome Admin : ${sessionname}
+				</c:when>
+				<c:otherwise>
+					Welcome Guest
+				</c:otherwise>
+			</c:choose>
+		</div>
+			<c:choose>
+				<c:when test="${session.role == 'customer'}">
+					<a href="OrderController?action=orderlist&cust_id=${session.id}&role=customer" class="btn btn-success mx-1"><i class="fa fa-lg fa-shopping-cart"></i></a>
+					<a href="CustomerController?action=view&id=${session.id}" class="btn btn-primary mx-1"><i class="fa fa-lg fa-user-circle"></i></a>
+					<a href="LogoutController" class="btn btn-danger mx-1"><i class="fa fa-power-off"></i></a>
+				</c:when>
+				<c:when test="${session.role == 'staff'}">
+					<a href="StaffController?action=view&id=${session.id}" class="btn btn-primary mx-1"><i class="fa fa-lg fa-user-circle"></i></a>
+					<a href="LogoutController" class="btn btn-danger mx-1"><i class="fa fa-power-off"></i></a>
+				</c:when>
+				<c:when test="${session.role == 'admin'}">
+					<a href="StaffController?action=view&id=${session.id}" class="btn btn-primary mx-1"><i class="fa fa-lg fa-user-circle"></i></a>
+					<a href="LogoutController" class="btn btn-danger mx-1"><i class="fa fa-power-off"></i></a>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
+		
+		
+	</div>
 </div>

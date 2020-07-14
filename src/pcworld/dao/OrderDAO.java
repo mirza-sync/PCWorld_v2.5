@@ -67,33 +67,21 @@ public class OrderDAO {
 		return latest_id;
 	}
 	
-	// Customer - confirm order
-	public void confirm() {
-		try {
-        	currentCon = ConnectionManager.getConnection();
-        	stat = currentCon.createStatement();
-        	String sql = "UPDATE orders SET date = SYSDATE status = '"+status+"' WHERE id = '"+id+"'";
-            stat.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-	}
-	
 	//Staff - get all order to display in order-list.jsp
 	public List<Orders> getAllOrder() {
         List<Orders> orders = new ArrayList<Orders>();
         try {
         	currentCon = ConnectionManager.getConnection();
         	stat = currentCon.createStatement();
-        	String sql = "SELECT * FROM orders ORDER BY FIELD(status, 'Pending','Processing','Completed','Cancelled')";
+        	String sql = "SELECT * FROM orders LEFT OUTER JOIN staffs ON orders.staff_id=staffs.id ORDER BY FIELD(status, 'Pending','Processing','Completed','Cancelled')";
             ResultSet rs = stat.executeQuery(sql);
-            System.out.println("RS order: "+ rs.next());
             while (rs.next()) {
                 Orders order = new Orders();
                 order.setId(rs.getInt("id"));
                 order.setCustomer_id(rs.getInt("customer_id"));
                 order.setDate(rs.getString("order_date"));
                 order.setStaff_id(rs.getInt("staff_id"));
+                order.setStaff_name(rs.getString("name"));
                 order.setTotal_price(rs.getDouble("total_price"));
                 order.setStatus(rs.getString("status"));
                 
@@ -127,7 +115,7 @@ public class OrderDAO {
 	public  void deleteOrder(int id) {
         try {
         	currentCon = ConnectionManager.getConnection();
-        	ps=currentCon.prepareStatement("delete from orders where id = ?");
+        	ps=currentCon.prepareStatement("UPDATE orders SET status='Cancelled' WHERE id = ?");
             ps.setInt(1, id);
             ps.executeUpdate();
         } 
@@ -152,6 +140,7 @@ public class OrderDAO {
 	        	order.setId(rs.getInt("id"));
                 order.setCustomer_id(rs.getInt("customer_id"));
                 order.setDate(rs.getString("order_date"));
+                order.setTotal_price(rs.getDouble("total_price"));
                 order.setStaff_id(rs.getInt("staff_id"));
                 order.setStatus(rs.getString("status"));
         	}
@@ -256,5 +245,44 @@ public class OrderDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<Orders> orderBy(String status, int staff_id){
+		List<Orders> orders = new ArrayList<Orders>();
+		String sql = "";
+		if(status.equals("assigned")) {
+			sql = "select * from orders LEFT OUTER JOIN staffs ON orders.staff_id=staffs.id where staff_id = '"+staff_id+"'";
+		}
+		else if(status.equals("all")) {
+			orders = getAllOrder();
+			return orders;
+		}
+		else {
+			sql = "select * from orders LEFT OUTER JOIN staffs ON orders.staff_id=staffs.id where status = '"+status+"'";
+		}
+		
+		try {
+	    	currentCon = ConnectionManager.getConnection();
+	        ps=currentCon.prepareStatement(sql);
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+				Orders order = new Orders();
+	        	order.setId(rs.getInt("id"));
+                order.setCustomer_id(rs.getInt("customer_id"));
+                order.setDate(rs.getString("order_date"));
+                order.setTotal_price(rs.getDouble("total_price"));
+                order.setStaff_id(rs.getInt("staff_id"));
+                order.setStaff_name(rs.getString("name"));
+                order.setStatus(rs.getString("status"));
+                
+                orders.add(order);
+        	}
+	    }
+	        catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		
+		return orders;
 	}
 }

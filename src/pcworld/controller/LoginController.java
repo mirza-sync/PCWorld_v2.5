@@ -52,6 +52,7 @@ public class LoginController extends HttpServlet {
 				session = request.getSession();
 				customer.setRole("customer");
 				session.setAttribute("session", customer);
+				session.setAttribute("sessionname", customer.getName());
 				forward = MAIN;
 			}
 		}
@@ -67,6 +68,7 @@ public class LoginController extends HttpServlet {
 			else {
 				session = request.getSession();
 				session.setAttribute("session", staff);
+				session.setAttribute("sessionname", staff.getName());
 				forward = MAIN;
 			}
 		}

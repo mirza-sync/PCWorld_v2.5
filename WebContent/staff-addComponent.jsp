@@ -7,51 +7,62 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
-<title>Edit Component</title>
+<title>Add Component</title>
 <%@include file="header.jsp"%>
 </head>
 <body>
-<div class="row">
+<div class="container-fluid">
 <%@include file="sidebar.jsp"%>
+<div class="row">
 <div class="container my-5">
 	<div class="row">
 		<div class="col-md-8 offset-md-2">
 			<div class="card">
 				<div class="card-header">
-					<h5>Edit Component</h5>
+					<h5 id="add_title">Add New Component</h5>
 				</div>
-				<form method="POST" action="ComponentController" enctype="multipart/form-data">
-					<input type="hidden" name="action" value="edit"/>
+				<!-- <form method="POST" action="ComponentController" enctype="multipart/form-data"> -->
+				<form method="POST" action="ComponentController">
+					<input type="hidden" name="action" value="add"/>
 					<div class="card-body">
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Type</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control-plaintext" name="type" value="${comp.type}" readonly/>
+								<select id="opts" name="type" class="form-control" onchange="showForm()">
+									<option value="">Select Component Type</option>
+									<option value="CPU">CPU</option>
+									<option value="GPU">GPU</option>
+									<option value="Motherboard">Motherboard</option>
+									<option value="RAM">RAM</option>
+									<option value="Storage">Storage</option>
+									<option value="PSU">PSU</option>
+									<option value="Cooler">Cooler</option>
+									<option value="Casing">Casing</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Brand</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="brand" value="${comp.brand}"/>
+								<input type="text" class="form-control" name="brand"/>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Model</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="model" value="${comp.model}"/>
+								<input type="text" class="form-control" name="model"/>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Price</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="price" value="${comp.price}"/>
+								<input type="text" class="form-control" name="price"/>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-3 col-form-label">Image</label>
 							<div class="col-md-9">
-								<input type="file" class="form-control" name="image"/>
-								<img src="img/noimage.png"/>
+								<input type="text" class="form-control" name="image"/>
 							</div>
 						</div>
 						<!-- Hidden forms inside card body-->
@@ -61,32 +72,31 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Socket</h6>
-										<input type="text" class="form-control" name="cpu_socket" value="${cpu.socket}">
+										<input type="text" class="form-control" name="cpu_socket" placeholder="Enter socket type">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Base Clock</h6>
-										<input type="number" class="form-control" name="base_clock" value="${comp.base_clock}">
+										<input type="text" class="form-control" name="base_clock" placeholder="Enter clock speed">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Max Clock</h6>
-										<input type="number" class="form-control" name="max_clock" value="${comp.max_clock}">
+										<input type="text" class="form-control" name="max_clock" placeholder="Enter clock speed">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Number of Cores</h6>
-										<input type="number" class="form-control" name="num_core" value="${comp.num_core}">
+										<input type="number" class="form-control" name="num_core" placeholder="Enter number of cores">
 									</div>
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
-										<h6>Number of Threads</h6>
+										<h6>Multi-Thread</h6>
 										<select id="multithread" name="multithread" class="form-control">
-											<option selected hidden disabled value="${comp.multithread}"><c:out value="${comp.multithread}"></c:out></option>
 											<option value="1">Yes</option>
 											<option value="0">No</option>
 										</select>
@@ -95,7 +105,7 @@
 								<li class="list-group-item">
 									<div class="mb-3">
 										<h6>Power Usage</h6>
-										<input type="number" class="form-control" name="cpu_watt" value="${comp.wattage}">
+										<input type="number" class="form-control" name="cpu_watt" placeholder="Enter power in watt">
 									</div>
 								</li>
 							</ul>
@@ -380,7 +390,95 @@
 		</div>
 	</div>
 </div>
+</div> <!-- Close main row : nav + main-->
 </div>
+
+<script type="text/javascript">
+function showForm() {
+	var selopt = document.getElementById("opts").value;
+	document.getElementById("add_title").innerHTML = "Add " + selopt;
+	if (selopt == "CPU") {
+		document.getElementById("f1").style.display = "block";
+		document.getElementById("f2").style.display = "none";
+		document.getElementById("f3").style.display = "none";
+		document.getElementById("f4").style.display = "none";
+		document.getElementById("f5").style.display = "none";
+		document.getElementById("f6").style.display = "none";
+		document.getElementById("f7").style.display = "none";
+		document.getElementById("f8").style.display = "none";
+	}
+	if (selopt == "GPU") {
+		document.getElementById("f1").style.display = "none";
+		document.getElementById("f2").style.display = "block";
+		document.getElementById("f3").style.display = "none";
+		document.getElementById("f4").style.display = "none";
+		document.getElementById("f5").style.display = "none";
+		document.getElementById("f6").style.display = "none";
+		document.getElementById("f7").style.display = "none";
+		document.getElementById("f8").style.display = "none";
+	}
+	if (selopt == "Motherboard") {
+		document.getElementById("f2").style.display = "none";
+		document.getElementById("f1").style.display = "none";
+		document.getElementById("f3").style.display = "block";
+		document.getElementById("f4").style.display = "none";
+		document.getElementById("f5").style.display = "none";
+		document.getElementById("f6").style.display = "none";
+		document.getElementById("f7").style.display = "none";
+		document.getElementById("f8").style.display = "none";
+	}
+	if (selopt == "RAM") {
+		document.getElementById("f2").style.display = "none";
+		document.getElementById("f1").style.display = "none";
+		document.getElementById("f3").style.display = "none";
+		document.getElementById("f4").style.display = "block";
+		document.getElementById("f5").style.display = "none";
+		document.getElementById("f6").style.display = "none";
+		document.getElementById("f7").style.display = "none";
+		document.getElementById("f8").style.display = "none";
+	}
+	if (selopt == "Storage") {
+		document.getElementById("f2").style.display = "none";
+		document.getElementById("f1").style.display = "none";
+		document.getElementById("f3").style.display = "none";
+		document.getElementById("f4").style.display = "none";
+		document.getElementById("f5").style.display = "block";
+		document.getElementById("f6").style.display = "none";
+		document.getElementById("f7").style.display = "none";
+		document.getElementById("f8").style.display = "none";
+	}
+	if (selopt == "PSU") {
+		document.getElementById("f2").style.display = "none";
+		document.getElementById("f1").style.display = "none";
+		document.getElementById("f3").style.display = "none";
+		document.getElementById("f4").style.display = "none";
+		document.getElementById("f5").style.display = "none";
+		document.getElementById("f6").style.display = "block";
+		document.getElementById("f7").style.display = "none";
+		document.getElementById("f8").style.display = "none";
+	}
+	if (selopt == "Cooler") {
+		document.getElementById("f2").style.display = "none";
+		document.getElementById("f1").style.display = "none";
+		document.getElementById("f3").style.display = "none";
+		document.getElementById("f4").style.display = "none";
+		document.getElementById("f5").style.display = "none";
+		document.getElementById("f6").style.display = "none";
+		document.getElementById("f7").style.display = "block";
+		document.getElementById("f8").style.display = "none";
+	}
+	if (selopt == "Casing") {
+		document.getElementById("f2").style.display = "none";
+		document.getElementById("f1").style.display = "none";
+		document.getElementById("f3").style.display = "none";
+		document.getElementById("f4").style.display = "none";
+		document.getElementById("f5").style.display = "none";
+		document.getElementById("f6").style.display = "none";
+		document.getElementById("f7").style.display = "none";
+		document.getElementById("f8").style.display = "block";
+	}
+}
+</script>
 <script src="js/myjs.js"></script>
 </body>
 </html>

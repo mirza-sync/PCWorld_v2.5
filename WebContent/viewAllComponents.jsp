@@ -61,7 +61,7 @@
 							</a>
 						</c:when>
 						<c:when test="${session.role == 'customer'}">
-							<a href="ComponentController?action=showEdit&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 							<a href="OrderController?action=add&items=${cpus.id}&cust_id=${session.id}" class="btn btn-success btn-sm">
@@ -69,7 +69,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="ComponentController?action=showEdit&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${cpus.id}&type=${cpus.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
@@ -123,7 +123,7 @@
 							</a>
 						</c:when>
 						<c:when test="${session.role == 'customer'}">
-							<a href="ComponentController?action=showEdit&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 							<a href="OrderController?action=add&id=${gpus.id}&type=${gpus.type}" class="btn btn-success btn-sm">
@@ -131,7 +131,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="ComponentController?action=showEdit&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
@@ -187,7 +187,7 @@
 							</a>
 						</c:when>
 						<c:when test="${session.role == 'customer'}">
-							<a href="ComponentController?action=showEdit&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 							<a href="OrderController?action=add&id=${mobos.id}&type=${mobos.type}" class="btn btn-success btn-sm">
@@ -195,7 +195,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="ComponentController?action=showEdit&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
@@ -251,7 +251,7 @@
 							</a>
 						</c:when>
 						<c:when test="${session.role == 'customer'}">
-							<a href="ComponentController?action=showEdit&id=${rams.id}&type=${rams.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${rams.id}&type=${rams.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 							<a href="OrderController?action=add&id=${rams.id}&type=${rams.type}" class="btn btn-success btn-sm">
@@ -259,7 +259,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="ComponentController?action=showEdit&id=${rams.id}&type=${rams.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${rams.id}&type=${rams.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
@@ -311,7 +311,7 @@
 							</a>
 						</c:when>
 						<c:when test="${session.role == 'customer'}">
-							<a href="ComponentController?action=showEdit&id=${stors.id}&type=${stors.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${stors.id}&type=${stors.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 							<a href="OrderController?action=add&id=${stors.id}&type=${stors.type}" class="btn btn-success btn-sm">
@@ -319,7 +319,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="ComponentController?action=showEdit&id=${stors.id}&type=${stors.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${stors.id}&type=${stors.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
@@ -373,7 +373,7 @@
 							</a>
 						</c:when>
 						<c:when test="${session.role == 'customer'}">
-							<a href="ComponentController?action=showEdit&id=${psus.id}&type=${psus.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${psus.id}&type=${psus.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 							<a href="OrderController?action=add&id=${psus.id}&type=${psus.type}" class="btn btn-success btn-sm">
@@ -381,7 +381,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="ComponentController?action=showEdit&id=${psus.id}&type=${psus.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${psus.id}&type=${psus.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
@@ -431,7 +431,7 @@
 							</a>
 						</c:when>
 						<c:when test="${session.role == 'customer'}">
-							<a href="ComponentController?action=showEdit&id=${cases.id}&type=${cases.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${cases.id}&type=${cases.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 							<a href="OrderController?action=add&id=${cases.id}&type=${cases.type}" class="btn btn-success btn-sm">
@@ -439,7 +439,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="ComponentController?action=showEdit&id=${cases.id}&type=${cases.type}" class="btn btn-primary btn-sm">
+							<a href="ComponentController?action=viewCompById&id=${cases.id}&type=${cases.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
@@ -452,7 +452,7 @@
 		</c:when>
 		</c:choose>
 		
-		<a href="addComponent.jsp">
+		<a href="staff-addComponent.jsp">
 			<button class="btn btn-success">Add New Component</button>
 		</a>
 		<a href="main.jsp">

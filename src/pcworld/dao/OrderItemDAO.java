@@ -37,12 +37,10 @@ public class OrderItemDAO {
 			ps.setInt(3,quantity);
 			ps.executeUpdate();
 		}
-		
 		catch (Exception ex) {
 			System.out.println("Hhaha FK error");
 			System.out.println("failed: An Exception has occured!" + ex);
 		}
-		
 		finally {
 			if (ps != null){
 				try {
