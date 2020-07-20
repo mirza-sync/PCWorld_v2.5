@@ -12,7 +12,7 @@
 <div class="container-fluid">
 <%@include file="sidebar.jsp"%>
 <div class="row">
-<div class="col-md-10 offset-md-2">
+<div class="col-md-10 offset-md-1">
 	<div class="m-5 card">
 		<div class="card-header">
 			<h6>Lets answer a few questions :</h6>
@@ -25,6 +25,7 @@
 					<input type="text" class="form-control" name="budget"/>
 				</div>
 			</div>
+			<hr>
 			<div class="form-group row">
 				<label class="col-md-3 col-form-label">What is the purpose of your PC?</label>
 				<div class="col-md-9">
@@ -33,9 +34,7 @@
 					<input type="checkbox" name="c_usage" value="video3d">
 					<label for="vehicle3">Video editing / 3D modeling / Streaming</label><br>
 					<input type="checkbox" name="c_usage" value="office">
-					<label for="vehicle1">Office work</label><br>
-					<input type="checkbox" name="c_usage" value="office">
-					<label for="vehicle3">Web browsing</label><br>
+					<label for="vehicle1">Office work / Web browsing</label><br>
 					<!-- <input type="checkbox" name="c_usage" value="video3d">
 					<label for="vehicle3">3D modeling</label><br> -->
 				</div>
