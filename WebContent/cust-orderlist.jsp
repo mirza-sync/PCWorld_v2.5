@@ -30,7 +30,6 @@
 			  				<td>${draft.status}</td>
 			  				<td>
 			  					<a href="OrderController?action=viewitems&order_id=${draft.id}&role=${session.role}" class="btn btn-primary">View</a>
-			  					<a href="OrderController?action=deleteorder&order_id=${draft.id}&cust_id=${session.id}" class="btn btn-danger">Delete</a>
 			  				</td>
 			  			</tr>
 			  		</tbody>

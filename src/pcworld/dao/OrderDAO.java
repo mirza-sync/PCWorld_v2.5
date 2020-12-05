@@ -202,7 +202,7 @@ public class OrderDAO {
 		List<Orders> orders = new ArrayList<Orders>();
 	    try {
 	    	currentCon = ConnectionManager.getConnection();
-	        ps=currentCon.prepareStatement("select * from orders where customer_id = ? AND status != 'Draft'");
+	        ps=currentCon.prepareStatement("select * from orders where customer_id = ? AND status != 'Draft' order by orders.id desc");
 	        
 	        ps.setInt(1, customer_id);
 
@@ -251,14 +251,14 @@ public class OrderDAO {
 		List<Orders> orders = new ArrayList<Orders>();
 		String sql = "";
 		if(status.equals("assigned")) {
-			sql = "select * from orders LEFT OUTER JOIN staffs ON orders.staff_id=staffs.id where staff_id = '"+staff_id+"'";
+			sql = "select * from orders LEFT OUTER JOIN staffs ON orders.staff_id=staffs.id where staff_id = '"+staff_id+"' order by orders.id desc";
 		}
 		else if(status.equals("all")) {
 			orders = getAllOrder();
 			return orders;
 		}
 		else {
-			sql = "select * from orders LEFT OUTER JOIN staffs ON orders.staff_id=staffs.id where status = '"+status+"'";
+			sql = "select * from orders LEFT OUTER JOIN staffs ON orders.staff_id=staffs.id where status = '"+status+"' order by orders.id desc";
 		}
 		
 		try {

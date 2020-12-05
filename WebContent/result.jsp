@@ -34,7 +34,9 @@
 							<div>Max Clock : <c:out value="${pc.cpu.max_clock}" /> MHz</div>
 						</div>
 						<div class="align-self-center">
-							<button class="btn btn-primary">Add to Order</button>
+							<a href="ComponentController?action=viewCompById&id=${pc.cpu.id}&type=${pc.cpu.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
 							<input type="hidden" name="items" value="${pc.cpu.id}">
 						</div>
 					</div>
@@ -56,7 +58,9 @@
 							<div>VRAM : <c:out value="${pc.gpu.num_vram}" />GB</div>
 						</div>
 						<div class="align-self-center">
-							<button class="btn btn-primary">Add to Order</button>
+							<a href="ComponentController?action=viewCompById&id=${pc.gpu.id}&type=${pc.gpu.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
 							<input type="hidden" name="items" value="${pc.gpu.id}">
 						</div>
 					</div>
@@ -76,7 +80,9 @@
 							<div>Socket : <c:out value="${pc.mobo.socket}" /></div>
 						</div>
 						<div class="align-self-center">
-							<button class="btn btn-primary">Add to Order</button>
+							<a href="ComponentController?action=viewCompById&id=${pc.mobo.id}&type=${pc.mobo.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
 							<input type="hidden" name="items" value="${pc.mobo.id}">
 						</div>
 					</div>
@@ -98,7 +104,9 @@
 								<div>Color : <c:out value="${pc.ram.color}" /></div>
 							</div>
 							<div class="align-self-center">
-								<button class="btn btn-primary">Add to Order</button>
+								<a href="ComponentController?action=viewCompById&id=${pc.ram.id}&type=${pc.ram.type}" class="btn btn-primary btn-sm">
+									<i class="fa fa-eye"></i>
+								</a>
 								<input type="hidden" name="items" value="${pc.ram.id}">
 							</div>
 						</div>
@@ -119,7 +127,9 @@
 							<div>Form : <c:out value="${pc.storage.form}" /></div>
 						</div>
 						<div class="align-self-center">
-							<button class="btn btn-primary">Add to Order</button>
+							<a href="ComponentController?action=viewCompById&id=${pc.storage.id}&type=${pc.storage.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
 							<input type="hidden" name="items" value="${pc.storage.id}">
 						</div>
 					</div>
@@ -141,7 +151,9 @@
 							<div>Color : <c:out value="${pc.psu.color}" /></div>
 						</div>
 						<div class="align-self-center">
-							<button class="btn btn-primary">Add to Order</button>
+							<a href="ComponentController?action=viewCompById&id=${pc.psu.id}&type=${pc.psu.type}" class="btn btn-primary btn-sm">
+								<i class="fa fa-eye"></i>
+							</a>
 							<input type="hidden" name="items" value="${pc.psu.id}">
 						</div>
 					</div>
@@ -161,7 +173,9 @@
 						<div>Form : <c:out value="${pc.casing.form}" /></div>
 					</div>
 					<div class="align-self-center">
-						<button class="btn btn-primary">Add to Order</button>
+						<a href="ComponentController?action=viewCompById&id=${pc.casing.id}&type=${pc.casing.type}" class="btn btn-primary btn-sm">
+							<i class="fa fa-eye"></i>
+						</a>
 						<input type="hidden" name="items" value="${pc.casing.id}">
 					</div>
 				</div>

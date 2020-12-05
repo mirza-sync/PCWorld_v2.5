@@ -36,7 +36,6 @@
 									<option value="RAM">RAM</option>
 									<option value="Storage">Storage</option>
 									<option value="PSU">PSU</option>
-									<option value="Cooler">Cooler</option>
 									<option value="Casing">Casing</option>
 								</select>
 							</div>
@@ -251,18 +250,6 @@
 										</select>
 									</div>
 								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Read Speed</h6>
-										<input type="number" class="form-control" name="r_speed" placeholder="Enter read speed">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Write Speed</h6>
-										<input type="number" class="form-control" name="w_speed" placeholder="Enter write speed">
-									</div>
-								</li>
 							</ul>
 						</div> <!--Close Storage-->
 						<div id="f6" style="display: none">
@@ -276,7 +263,7 @@
 								</li>
 								<li class="list-group-item">
 									<div class="mb-3">
-										<h6>PSU type</h6>
+										<h6>PSU Modularity</h6>
 										<select id="modularity" name="modularity" class="form-control">
 											<option value="No">No</option>
 											<option value="Semi">Semi</option>
@@ -305,44 +292,6 @@
 							</ul>
 						</div> <!--Close PSU-->
 						<div id="f7" style="display: none">
-							<h4 class="mb-2">Cooler</h4>
-							<ul class="list-group mb-3">
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Cooler Type</h6>
-										<select id="cooler_type" name="cooler_type" class="form-control">
-											<option value="Air Cooler">Air Cooler</option>
-											<option value="AIO Liquid Cooler">AIO Liquid Cooler</option>
-										</select>
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Length</h6>
-										<input type="number" class="form-control" value="0" name="cooler_length" placeholder="Enter length">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Width</h6>
-										<input type="number" class="form-control" value="0" name="cooler_width" placeholder="Enter width">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Height</h6>
-										<input type="number" class="form-control" value="0" name="cooler_height" placeholder="Enter height">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Color</h6>
-										<input type="text" class="form-control" name="cooler_color" placeholder="Enter color">
-									</div>
-								</li>
-							</ul>
-						</div> <!--Close Cooler-->
-						<div id="f8" style="display: none">
 							<h4 class="mb-2">Casing</h4>
 							<ul class="list-group mb-3">
 								<li class="list-group-item">
@@ -353,24 +302,6 @@
 											<option value="Micro ATX">Micro ATX</option>
 											<option value="Mini ITX">Mini ITX</option>
 										</select>
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Length</h6>
-										<input type="text" class="form-control" name="case_length" placeholder="Enter length">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Width</h6>
-										<input type="text" class="form-control" name="case_width" placeholder="Enter width">
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="mb-3">
-										<h6>Height</h6>
-										<input type="text" class="form-control" name="case_height" placeholder="Enter height">
 									</div>
 								</li>
 								<li class="list-group-item">
@@ -457,16 +388,6 @@ function showForm() {
 		document.getElementById("f7").style.display = "none";
 		document.getElementById("f8").style.display = "none";
 	}
-	if (selopt == "Cooler") {
-		document.getElementById("f2").style.display = "none";
-		document.getElementById("f1").style.display = "none";
-		document.getElementById("f3").style.display = "none";
-		document.getElementById("f4").style.display = "none";
-		document.getElementById("f5").style.display = "none";
-		document.getElementById("f6").style.display = "none";
-		document.getElementById("f7").style.display = "block";
-		document.getElementById("f8").style.display = "none";
-	}
 	if (selopt == "Casing") {
 		document.getElementById("f2").style.display = "none";
 		document.getElementById("f1").style.display = "none";
@@ -474,8 +395,7 @@ function showForm() {
 		document.getElementById("f4").style.display = "none";
 		document.getElementById("f5").style.display = "none";
 		document.getElementById("f6").style.display = "none";
-		document.getElementById("f7").style.display = "none";
-		document.getElementById("f8").style.display = "block";
+		document.getElementById("f7").style.display = "block";
 	}
 }
 </script>

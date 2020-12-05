@@ -17,9 +17,11 @@
 		<ul class="list-group mb-5 pb-5">
 			<c:forEach items="${orderitems}" var="item">
 				<li class="list-group-item d-flex media position-relative">
-					<a onclick="deleteItem(${item.component.id},${order.id},event)" class="position-absolute btn btn-sm btn-danger" style="top:0;left:0;margin-top:5px;margin-left:5px">
-						<i class="fa fa-times" style="color:#fff"></i>
-					</a>
+					<c:if test="${order.status == 'Draft'}">
+						<a onclick="deleteItem(${item.component.id},${order.id},event)" class="position-absolute btn btn-sm btn-danger" style="top:0;left:0;margin-top:5px;margin-left:5px">
+							<i class="fa fa-times" style="color:#fff"></i>
+						</a>
+					</c:if>
 					<img src="${item.component.image}" class="ml-3 mr-5 align-self-center" style="width:50px; height:50px"/>
 					<div class="media-body">
 						<div class="d-flex justify-content-between">

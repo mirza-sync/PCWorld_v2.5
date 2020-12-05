@@ -432,6 +432,12 @@ public class ComponentDAO {
 		Instant finish = Instant.now();
 		double timeElapsed = Duration.between(startTime, finish).toMillis();
 		
+		//Print last population
+		System.out.println("++++++++++++++++++++++Final Population :+++++++++++++++++++++++++++");
+		for(int i = 0; i < population; i++) {			
+            System.out.println("P:"+(i+1)+" | Fitness: " + pc[i].fitness + " | Price : RM" + pc[i].totalPrice + " ["+pc[0].gene[0].getBrand()+" "+pc[i].gene[0].getModel()+"|"+pc[i].gene[1].getModel()+"|"+pc[i].gene[2].getModel()+"|"+pc[i].gene[3].getModel()+"|"+pc[i].gene[4].getModel()+"|"+pc[i].gene[5].getModel()+"|"+pc[i].gene[6].getModel()+"]");
+		}
+		
 		System.out.println("==========End "+generation+" generation : [Time taken: " + String.format("%.2f",timeElapsed) + " milliseconds]==========");
 		System.out.println("Budget : "+input.getBudget());
 		for(String use : input.getUsage()) {

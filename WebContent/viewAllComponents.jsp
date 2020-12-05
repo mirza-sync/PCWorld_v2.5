@@ -47,7 +47,15 @@
 				<td><c:out value="${cpus.base_clock}" /> Ghz</td>
 				<td><c:out value="${cpus.max_clock}" /> Ghz</td>
 				<td><c:out value="${cpus.num_core}" /></td>
-				<td><c:out value="${cpus.multithread}" /></td>
+				<td>
+				<c:choose>
+					<c:when test="${cpus.multithread==1}">
+						Yes
+					</c:when>
+					<c:otherwise>
+						No
+					</c:otherwise>
+				</c:choose>
 				<td><c:out value="${cpus.wattage}" /> Watt</td>
 				<td>RM<c:out value="${cpus.price}" /></td>
 				<td>
@@ -126,7 +134,7 @@
 							<a href="ComponentController?action=viewCompById&id=${gpus.id}&type=${gpus.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
-							<a href="OrderController?action=add&id=${gpus.id}&type=${gpus.type}" class="btn btn-success btn-sm">
+							<a href="OrderController?action=items&id=${gpus.id}&cust_id=${session.id}" class="btn btn-success btn-sm">
 								<i class="fa fa-shopping-cart"></i>
 							</a>
 						</c:when>
@@ -190,7 +198,7 @@
 							<a href="ComponentController?action=viewCompById&id=${mobos.id}&type=${mobos.type}" class="btn btn-primary btn-sm">
 								<i class="fa fa-eye"></i>
 							</a>
-							<a href="OrderController?action=add&id=${mobos.id}&type=${mobos.type}" class="btn btn-success btn-sm">
+							<a href="OrderController?action=items&id=${mobos.id}&cust_id=${session.id}" class="btn btn-success btn-sm">
 								<i class="fa fa-shopping-cart"></i>
 							</a>
 						</c:when>
