@@ -30,13 +30,11 @@
 				<label class="col-md-3 col-form-label">What is the purpose of your PC?</label>
 				<div class="col-md-9">
 					<input type="checkbox" name="c_usage" value="gaming">
-					<label for="vehicle2">Gaming</label><br>
+					<label>Gaming</label><br>
 					<input type="checkbox" name="c_usage" value="video3d">
-					<label for="vehicle3">Video editing / 3D modeling / Streaming</label><br>
+					<label>Video editing / 3D modeling / Streaming</label><br>
 					<input type="checkbox" name="c_usage" value="office">
-					<label for="vehicle1">Office work / Web browsing</label><br>
-					<!-- <input type="checkbox" name="c_usage" value="video3d">
-					<label for="vehicle3">3D modeling</label><br> -->
+					<label>Office work / Web browsing</label><br>
 				</div>
 			</div>
 			<hr>
